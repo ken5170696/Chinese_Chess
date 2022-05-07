@@ -146,6 +146,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Board.cpp" />
+    <ClCompile Include="Chess.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
@@ -154,6 +156,8 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="Reference\Project2 Grading Sheet.txt" />
+    <ClInclude Include="Board.h" />
+    <ClInclude Include="Chess.h" />
     <ClInclude Include="GameManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
