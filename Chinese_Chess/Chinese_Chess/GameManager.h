@@ -8,15 +8,15 @@
 
 
 
-class Game
+class GameManager
 {
 private:
 	sf::RenderWindow *window;
 	sf::VideoMode videoMode;
 	sf::Event ev;
 public:
-	Game();
-	~Game();
+	GameManager();
+	~GameManager();
 	void run();
 
 private:
