@@ -11,6 +11,15 @@ Game::~Game()
 	delete window;
 }
 
+void Game::run()
+{
+	while (this->window->isOpen())
+	{
+		this->update();
+		this->render();
+	}
+}
+
 void Game::initWindow()
 {
 	this->videoMode.width = 800;
@@ -36,9 +45,8 @@ void Game::pullEvent()
 	}
 }
 
-bool Game::windowIsOpen()
+void Game::processEvent()
 {
-	return this->window->isOpen();
 }
 
 void Game::update()

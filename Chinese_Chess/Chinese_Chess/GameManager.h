@@ -17,13 +17,14 @@ private:
 public:
 	Game();
 	~Game();
+	void run();
 
-
+private:
 	void initWindow();
 	void initVar();
 	void pullEvent();
-	bool windowIsOpen();
 
+	void processEvent();
 	void update();
 	void render();
 };
