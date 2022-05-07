@@ -151,13 +151,16 @@
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="Viewer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
     <None Include="Reference\Project2 Grading Sheet.docx" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Viewer.h" />
     <Text Include="Reference\Project2 Grading Sheet.txt" />
     <ClInclude Include="Board.h" />
     <ClInclude Include="Chess.h" />

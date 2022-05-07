@@ -16,6 +16,8 @@ private:
 
 public:
 	Board();
-
+	sf::Sprite& getSprite();
+	sf::Vector2f getBoardSize() const;
+	void setSpritePosition(const sf::Vector2f& pos);
 };
 
