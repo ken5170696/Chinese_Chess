@@ -34,6 +34,7 @@
     <None Include="Reference\Project2 Grading Sheet.docx">
       <Filter>Reference</Filter>
     </None>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Reference\Project2 Grading Sheet.txt">

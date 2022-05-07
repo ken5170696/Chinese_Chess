@@ -56,6 +56,6 @@ void GameManager::update()
 
 void GameManager::render()
 {
-	window->clear();
+	window->clear(sf::Color::White);
 	window->display();
 }
