@@ -2,4 +2,5 @@
 
 Board::Board()
 {
+	textTure.loadFromFile(checkboardImgPath);
 }

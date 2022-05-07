@@ -1,16 +1,15 @@
 #pragma once
 
-#include <SFML/Audio.hpp>
-#include <SFML/Graphics.hpp>
-#include <SFML/Network.hpp>
-#include <SFML/System.hpp>
-#include <SFML/Window.hpp>
+#include <vector>
 
+#include "GameHeader.h"
+#include "Chess.h"
 
 
 class Board
 {
 private:
+	std::vector <std::vector<Chess*>> boardArray;
 	sf::Texture textTure;
 	sf::Sprite sprite;
 public:

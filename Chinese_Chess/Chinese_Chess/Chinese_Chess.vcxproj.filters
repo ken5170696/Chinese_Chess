@@ -41,6 +41,9 @@
     <ClInclude Include="Chess.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GameHeader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Reference\Project2 Grading Sheet.docx">
