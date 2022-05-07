@@ -4,6 +4,7 @@
 
 class GameManager
 {
+
 private:
 	sf::RenderWindow *window;
 	sf::VideoMode videoMode;
