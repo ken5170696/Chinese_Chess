@@ -150,6 +150,10 @@
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Reference\Project2 Grading Sheet.docx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Reference\Project2 Grading Sheet.txt" />
     <ClInclude Include="GameManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

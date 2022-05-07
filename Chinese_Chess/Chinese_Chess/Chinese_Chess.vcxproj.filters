@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Reference">
+      <UniqueIdentifier>{1b51bb4a-7ebb-4553-9e6a-4e47bb337e62}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
@@ -26,5 +29,15 @@
     <ClInclude Include="GameManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Reference\Project2 Grading Sheet.docx">
+      <Filter>Reference</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Reference\Project2 Grading Sheet.txt">
+      <Filter>Reference</Filter>
+    </Text>
   </ItemGroup>
 </Project>
