@@ -3,6 +3,6 @@
 
 int main()
 {
-	Game game;
+	GameManager game;
 	game.run();
 }

@@ -1,17 +1,17 @@
 #include "GameManager.h"
 
-Game::Game()
+GameManager::GameManager()
 {
 	this->initVar();
 	this->initWindow();
 }
 
-Game::~Game()
+GameManager::~GameManager()
 {
 	delete window;
 }
 
-void Game::run()
+void GameManager::run()
 {
 	while (this->window->isOpen())
 	{
@@ -20,19 +20,19 @@ void Game::run()
 	}
 }
 
-void Game::initWindow()
+void GameManager::initWindow()
 {
 	this->videoMode.width = 800;
 	this->videoMode.height = 600;
 	this->window = new sf::RenderWindow(videoMode, "Game1", sf::Style::Titlebar | sf::Style::Close);
 }
 
-void Game::initVar()
+void GameManager::initVar()
 {
 	this->window = nullptr;
 }
 
-void Game::pullEvent()
+void GameManager::pullEvent()
 {
 	while (this->window->pollEvent(this->ev))
 	{
@@ -45,16 +45,16 @@ void Game::pullEvent()
 	}
 }
 
-void Game::processEvent()
+void GameManager::processEvent()
 {
 }
 
-void Game::update()
+void GameManager::update()
 {
 	this->pullEvent();
 }
 
-void Game::render()
+void GameManager::render()
 {
 	window->clear();
 	window->display();
