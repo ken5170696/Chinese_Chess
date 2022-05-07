@@ -6,6 +6,9 @@
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 
+#define chessImgPath "./Chinese_Chess/Asset/Image/Chess"
+#define checkboardImgPath "./Chinese_Chess/Asset/Image/Checkboard"
+
 class GameManager
 {
 private:

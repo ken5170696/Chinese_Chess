@@ -150,6 +150,7 @@
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram.cd" />
     <None Include="Reference\Project2 Grading Sheet.docx" />
   </ItemGroup>
   <ItemGroup>
