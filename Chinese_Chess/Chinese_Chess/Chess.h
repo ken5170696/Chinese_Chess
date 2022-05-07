@@ -25,5 +25,5 @@ public:
 class Factory {
 	//工廠返回商品
 public:
-	virtual Chess* getProduct() = 0;
+	virtual Chess* getChess(Characters ch);
 };
