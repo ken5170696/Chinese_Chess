@@ -65,7 +65,7 @@ public:
 
 
 class Factory {
-	//工廠返回商品
+	//瞻u翹t穠簸礎^簞��竄~
 public:
 	Chess* getChess(Characters ch)
 	{
@@ -87,5 +87,4 @@ public:
 			return new Soldiers;
 		}
 	}
-
 };
