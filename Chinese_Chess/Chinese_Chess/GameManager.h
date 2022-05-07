@@ -6,14 +6,13 @@
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 
-
-
 class GameManager
 {
 private:
 	sf::RenderWindow *window;
 	sf::VideoMode videoMode;
 	sf::Event ev;
+
 public:
 	GameManager();
 	~GameManager();
