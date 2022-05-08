@@ -26,9 +26,21 @@
 #define WINDOW_RESOLUTION_WIDTH 1280
 #define WINDOW_RESOLUTION_HEIGHT 800
 
-#define CHESS_IMG_SCALE 0.1f
-#define CHESSBOARD_IMG_SCALE 0.3f
+#define CHESS_IMG_SCALE 0.11f
+#define CHESSBOARD_IMG_SCALE 0.31f
 
+enum class Status
+{
+	WaitForBlack,
+	BlackChessPressed,
+	BlackChessPathPressed,
+	BlackMove,
+
+	WaitForRed,
+	RedChessPressed,
+	RedChessPathPressed,
+	RedMove,
+};
 enum class Characters
 {
 	King,
