@@ -1,26 +1,4 @@
 ﻿#include "Player.h"
-/*
-  0 1 2 3 4 5 6 7 8
-0  _ _ _ _ _ _ _ _
-  | | | |\|/| | | |
-1  ─ ─ ─ ─X─ ─ ─ ─
-  | | | |/|\| | | |
-2  ─*─ ─ ─ ─ ─ ─*─
-  | | | | | | | | |
-3 *─ ─*─ ─*─ ─*─ ─*
-  | | | | | | | | |
-4  ‾ ‾ ‾ ‾ ‾ ‾ ‾ ‾
-  |               |
-5  _ _ _ _ _ _ _ _
-  | | | | | | | | |
-6 *─ ─*─ ─*─ ─*─ ─*
-  | | | | | | | | |
-7  ─*─ ─ ─ ─ ─ ─*─ 
-  | | | |\|/| | | |
-8  ─ ─ ─ ─X─ ─ ─ ─
-  | | | |/|\| | | |
-9  ‾ ‾ ‾ ‾ ‾ ‾ ‾ ‾
-*/
 
 Player::Player(Team _team)
 {
@@ -28,16 +6,18 @@ Player::Player(Team _team)
 
 	Factory chessFac;
 	Chess* tmpChess;
-	tmpChess = chessFac.getChess(Characters::King, team);
+	
+	int tmpId = 0;
+	tmpChess = chessFac.getChess(Characters::King, team, tmpId++);
 	chessList.push_back(tmpChess);
 	for (int charIdx = int(Characters::Advisors); charIdx <= int(Characters::Cannons); charIdx++) {
 		for (int num = 0; num < 2; num++) {
-			tmpChess = chessFac.getChess(Characters(charIdx), team);
+			tmpChess = chessFac.getChess(Characters(charIdx), team, tmpId++);
 			chessList.push_back(tmpChess);
 		}
 	}
 	for (int num = 0; num < 5; num++) {
-		tmpChess = chessFac.getChess(Characters::Soldiers, team);
+		tmpChess = chessFac.getChess(Characters::Soldiers, team, tmpId++);
 		chessList.push_back(tmpChess);
 	}
 	setChess(chessList, *this);
@@ -45,7 +25,6 @@ Player::Player(Team _team)
 
 // set chess initial position
 void setChess(std::vector<Chess*>& chessList, Player& player) {
-	std::cout << chessList.size() << "\n";
 	if (player.team == Team::Red) {
 
 		chessList[0]->setPosition(sf::Vector2f(4, 0));
