@@ -252,6 +252,46 @@ ChessMovement King::findPath(const Board& board)
 			}
 		}
 	}
+	if (this->getTeam() == Team::Red)
+	{
+		for (int i = 0;i < 9;i++)
+		{
+			sf::Vector2f goalPos(direction[3].x* i, direction[3].y* i);
+			goalPos += boardPosition;
+			if (8 >= goalPos.x && goalPos.x >= 0 && 9 >= goalPos.y && goalPos.y >= 0)
+			{
+				if (board.getBoard()[goalPos.y][goalPos.x] != nullptr && 
+					board.getBoard()[goalPos.y][goalPos.x]->getCharacters()==Characters::King)
+				{
+					chessMovement.validPath.push_back(goalPos);
+				}
+				else if(board.getBoard()[goalPos.y][goalPos.x] != nullptr)
+				{
+					break;
+				}
+			}
+		}
+	}
+	else
+	{
+		for (int i = 0;i < 9;i++)
+		{
+			sf::Vector2f goalPos(direction[0].x * i, direction[0].y * i);
+			goalPos += boardPosition;
+			if (8 >= goalPos.x && goalPos.x >= 0 && 9 >= goalPos.y && goalPos.y >= 0)
+			{
+				if (board.getBoard()[goalPos.y][goalPos.x] != nullptr &&
+					board.getBoard()[goalPos.y][goalPos.x]->getCharacters() == Characters::King)
+				{
+					chessMovement.validPath.push_back(goalPos);
+				}
+				else if (board.getBoard()[goalPos.y][goalPos.x] != nullptr)
+				{
+					break;
+				}
+			}
+		}
+	}
 	return chessMovement;
 }
 void Advisors::move(Chess* chess, const Board& board)

@@ -29,6 +29,20 @@ void GameManager::run()
 	}
 }
 
+void GameManager::whoWin(const Player& playerBlack, const Player& playerRed)
+{
+	if (!playerBlack.getChessList()[0]->getActive())
+	{
+		std::cout << "RedPlayer Win\n";
+		exit(0);
+	}
+	if (!playerRed.getChessList()[0]->getActive())
+	{
+		std::cout << "BlackPlayer Win\n";
+		exit(0);
+	}
+}
+
 void GameManager::initWindow()
 {
 	this->videoMode.width = WINDOW_RESOLUTION_WIDTH;
@@ -82,6 +96,7 @@ void GameManager::processEvent()
 
 void GameManager::update()
 {
+	whoWin(playerBlack, playerRed);
 	showStatus();
 	board.update(playerBlack, playerRed);
 	for (auto chess : playerBlack.getChessList())
