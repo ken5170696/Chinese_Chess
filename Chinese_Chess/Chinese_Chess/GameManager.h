@@ -13,7 +13,6 @@ private:
 	sf::Event ev;
 	sf::CircleShape cir;
 	
-	
 private:
 	Player playerBlack;
 	Player playerRed;
