@@ -170,15 +170,17 @@ void GameManager::update()
 	for (auto& redChess : playerRed.getChessList()) {
 		if (!redChess->getActive())
 			continue;
+
 		redChess->setSpritePosition(BoardToWindowPosition(redChess->getPosition()));
 		switch (status)
 		{
 		case Status::WaitForRed:
 		{
+			std::cout << "status : 1\n";
 			chessMovement.release();
-			std::cout << "status : 3\n";
 			redChess->update(*(this->window), ev);
 			if (redChess->getIsPressed()) {
+
 				if (chessMovement == nullptr) {
 					selectChess = redChess;
 					chessMovement = std::make_unique<ChessMovement>(redChess->findPath(this->board));
@@ -190,8 +192,7 @@ void GameManager::update()
 		}
 		case Status::RedChessPressed:
 		{
-
-			std::cout << "status : 4\n";
+			std::cout << "status : 2\n";
 			if (chessMovement != nullptr) {
 				Factory tmpChessfac;
 				for (const auto& validPath : chessMovement.get()->validPath) {
@@ -202,6 +203,10 @@ void GameManager::update()
 						tmpChessObj.push_back(tmpChess);
 					}
 				}
+				for (const auto& validPath : chessMovement.get()->validToEat) {
+
+				}
+				chessMovement.release();
 			}
 
 			bool isPressed = false, validPressed = false;
@@ -224,7 +229,7 @@ void GameManager::update()
 						delete tmpChess;
 					}
 					tmpChessObj.clear();
-					status = Status::WaitForRed;
+					status = Status::WaitForBlack;
 				}
 				else {
 					for (auto& tmpChess : tmpChessObj) {
@@ -235,7 +240,6 @@ void GameManager::update()
 					tmpChessObj.clear();
 					status = Status::WaitForBlack;
 				}
-
 			}
 			break;
 		}
