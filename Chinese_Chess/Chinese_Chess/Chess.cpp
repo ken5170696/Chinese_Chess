@@ -22,7 +22,7 @@ void Chess::update(sf::RenderWindow& win, sf::Event ev)
 
 	if (sprite.getGlobalBounds().contains(win.mapPixelToCoords(sf::Mouse::getPosition(win)))) {
 		sprite.setScale(CHESS_IMG_SCALE + 0.01, CHESS_IMG_SCALE + 0.01);
-		if (ev.type == sf::Event::MouseButtonReleased)
+		if (ev.type == sf::Event::MouseButtonPressed)
 		{
 			sprite.setScale(CHESS_IMG_SCALE + 0.01, CHESS_IMG_SCALE + 0.01);
 			isPressed = true;
