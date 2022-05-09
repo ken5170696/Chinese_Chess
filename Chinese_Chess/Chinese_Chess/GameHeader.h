@@ -29,17 +29,18 @@
 #define CHESS_IMG_SCALE 0.11f
 #define CHESSBOARD_IMG_SCALE 0.31f
 
-#define DELAY_TIME 200
+#define DELAY_TIME 100
 enum class Status
 {
-	WaitForBlack,
-	BlackChessPressed,
-	BlackChessPathPressed,
+
+	WaitBlackPressed,
+	BlackFindPath,
+	WaitBlackPathPressed,
 	BlackMove,
 
-	WaitForRed,
-	RedChessPressed,
-	RedChessPathPressed,
+	WaitRedPressed,
+	RedFindPath,
+	WaitRedPathPressed,
 	RedMove,
 };
 enum class Characters

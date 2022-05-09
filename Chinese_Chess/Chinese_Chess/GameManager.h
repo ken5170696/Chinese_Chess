@@ -22,6 +22,7 @@ private:
 	std::unique_ptr<ChessMovement> chessMovement;
 	std::vector<Chess*> tmpChessObj;
 	Chess* selectChess;
+	Chess* selectPathChess;
 	sf::Clock inputClock;
 
 public:
@@ -40,5 +41,7 @@ private:
 	void processEvent();
 	void update();
 	void render();
+
+	void showStatus();
 };
 
