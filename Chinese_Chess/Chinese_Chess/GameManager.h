@@ -32,13 +32,15 @@ public:
 	void run();
 
 private:
+	void whoWin(const Player& playerBlack, const Player& playerRed);
+
 	void initWindow();
 	void initVar();
 	void pullEvent();
 
 	sf::Vector2f BoardToWindowPosition(sf::Vector2f boardPosition);
 	sf::Vector2f WindowToBoardPosition(sf::Vector2f windowPosition);
-
+	
 	void processEvent();
 	void update();
 	void render();
