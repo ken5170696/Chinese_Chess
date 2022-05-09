@@ -20,11 +20,11 @@ Player::Player(Team _team)
 		tmpChess = chessFac.getChess(Characters::Soldiers, team, tmpId++);
 		chessList.push_back(tmpChess);
 	}
-	setChess(chessList, *this);
+	setChessInitPos(chessList, *this);
 }
 
 // set chess initial position
-void setChess(std::vector<Chess*>& chessList, Player& player) {
+void setChessInitPos(std::vector<Chess*>& chessList, Player& player) {
 	if (player.team == Team::Red) {
 
 		chessList[0]->setPosition(sf::Vector2f(4, 0));

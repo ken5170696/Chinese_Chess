@@ -28,7 +28,7 @@ void Chess::update(sf::RenderWindow& win, sf::Event ev)
 			isPressed = true;
 		}
 		else {
-			isPressed = false;
+			isPressed = false; 
 		}
 	}
 	else {

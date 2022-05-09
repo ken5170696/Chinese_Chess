@@ -145,7 +145,7 @@ void GameManager::update()
 				}
 				tmpChess->setSpritePosition(BoardToWindowPosition(tmpChess->getPosition()));
 			}
-			if (inputClock.getElapsedTime().asMilliseconds() > 50 && isPressed == true) {
+			if (inputClock.getElapsedTime().asMilliseconds() > 10 && isPressed == true) {
 				inputClock.restart();
 				if (validPressed == false) {
 					// cancel move
@@ -220,7 +220,7 @@ void GameManager::update()
 					}
 					tmpChess->setSpritePosition(BoardToWindowPosition(tmpChess->getPosition()));
 				}
-				if (inputClock.getElapsedTime().asMilliseconds() > 50 && isPressed == true) {
+				if (inputClock.getElapsedTime().asMilliseconds() > 20 && isPressed == true) {
 					inputClock.restart();
 					if (validPressed == false) {
 						// cancel move

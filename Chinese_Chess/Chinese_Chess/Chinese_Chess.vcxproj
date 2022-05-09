@@ -151,6 +151,7 @@
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="ResourceHolder.cpp" />
     <ClCompile Include="Viewer.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -160,6 +161,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h" />
+    <ClInclude Include="ResourceHolder.h" />
     <ClInclude Include="Viewer.h" />
     <Text Include="Reference\Project2 Grading Sheet.txt" />
     <ClInclude Include="Board.h" />

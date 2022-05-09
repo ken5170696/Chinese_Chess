@@ -14,8 +14,8 @@ private:
 
 public:
 	Player(Team _team);
-	friend void setChess(std::vector<Chess*>& chessList, Player& player);
+	friend void setChessInitPos(std::vector<Chess*>& chessList, Player& player);
 	std::vector<Chess*> getChessList() const { return chessList; }
 };
 
-void setChess(std::vector<Chess*>& chessList, Player& player);
+void setChessInitPos(std::vector<Chess*>& chessList, Player& player);
