@@ -23,7 +23,7 @@ protected:
 	bool isPressed;
 
 public:
-	virtual void move() = 0;
+	virtual void move(const sf::Vector2f &pos,const Board& board) = 0;
 	virtual ChessMovement findPath(const Board& board) = 0;
 
 public:
@@ -43,8 +43,14 @@ public:
 	};
 	void setSpritePosition(sf::Vector2f _pos) { sprite.setPosition(_pos); };
 
-	
-
+	int getId()
+	{
+		return id;
+	}
+	void resetIsPressed()
+	{
+		isPressed = false;
+	}
 	bool getIsPressed() const
 	{
 		return this->isPressed;
@@ -55,21 +61,21 @@ class King :public Chess
 {
 public:
 	King(const Team& _team, int _id);
-	virtual void move() override;
+	virtual void move(const sf::Vector2f& pos, const Board& board) override;
 	virtual ChessMovement findPath(const Board& board) override;
 };
 class Advisors :public Chess
 {
 public:
 	Advisors(const Team& _team, int _id);
-	virtual void move() override;
+	virtual void move(const sf::Vector2f& pos, const Board& board) override;
 	virtual ChessMovement findPath(const Board& board) override;
 };
 class Minister :public Chess
 {
 public:
 	Minister(const Team& _team, int _id);
-	virtual void move() override;
+	virtual void move(const sf::Vector2f& pos, const Board& board) override;
 	virtual ChessMovement findPath(const Board& board) override;
 
 };
@@ -77,7 +83,7 @@ class Chariots :public Chess
 {
 public:
 	Chariots(const Team& _team, int _id);
-	virtual void move() override;
+	virtual void move(const sf::Vector2f& pos, const Board& board) override;
 	virtual ChessMovement findPath(const Board& board) override;
 
 };
@@ -85,7 +91,7 @@ class Knights :public Chess
 {
 public:
 	Knights(const Team& _team, int _id);
-	virtual void move() override;
+	virtual void move(const sf::Vector2f& pos, const Board& board) override;
 	virtual ChessMovement findPath(const Board& board) override;
 
 };
@@ -93,7 +99,7 @@ class Cannons :public Chess
 {
 public:
 	Cannons(const Team& _team, int _id);
-	virtual void move() override;
+	virtual void move(const sf::Vector2f& pos, const Board& board) override;
 	virtual ChessMovement findPath(const Board& board) override;
 
 };
@@ -101,7 +107,7 @@ class Soldiers :public Chess
 {
 public:
 	Soldiers(const Team& _team, int _id);
-	virtual void move() override;
+	virtual void move(const sf::Vector2f& pos, const Board& board) override;
 	virtual ChessMovement findPath(const Board& board) override;
 
 };
