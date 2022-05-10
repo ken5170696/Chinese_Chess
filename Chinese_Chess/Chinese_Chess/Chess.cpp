@@ -1,5 +1,10 @@
 #include "Chess.h"
 
+void Chess::draw(sf::RenderTarget& target, sf::RenderStates states) const
+{
+	target.draw(sprite, states);
+}
+
 Chess::Chess(const Team& _team, int _id)
 	: chessCharacter()
 {
@@ -22,9 +27,8 @@ void Chess::update(sf::RenderWindow& win, sf::Event ev)
 
 	if (sprite.getGlobalBounds().contains(win.mapPixelToCoords(sf::Mouse::getPosition(win)))) {
 		sprite.setScale(CHESS_IMG_SCALE + 0.01, CHESS_IMG_SCALE + 0.01);
-		if (ev.type == sf::Event::MouseButtonPressed)
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 		{
-			sprite.setScale(CHESS_IMG_SCALE + 0.01, CHESS_IMG_SCALE + 0.01);
 			isPressed = true;
 		}
 		else
@@ -209,7 +213,7 @@ void King::move(Chess* chess, const Board& board)
 	}
 
 }
-ChessMovement King::findPath(const Board& board)
+std::vector<sf::Vector2f> King::findPath(const Board& board)
 {
 	const std::vector<sf::Vector2f> direction{
 		sf::Vector2f(0,-1),
@@ -217,7 +221,7 @@ ChessMovement King::findPath(const Board& board)
 		sf::Vector2f(1,0),
 		sf::Vector2f(0,1),
 	};
-	struct ChessMovement chessMovement {};
+	std::vector<sf::Vector2f> validPath;
 	for (int i = 0; i < 4; i++) {
 		sf::Vector2f goalPos = boardPosition + direction[i];
 		if (team == Team::Red) {
@@ -225,14 +229,14 @@ ChessMovement King::findPath(const Board& board)
 			if (5 >= goalPos.x && goalPos.x >= 3 && 2 >= goalPos.y && goalPos.y >= 0) {
 				// 能走
 				if (board.getBoard()[goalPos.y][goalPos.x] == nullptr) {
-					chessMovement.validPath.push_back(goalPos);
+					validPath.push_back(goalPos);
 				}
 				//若目標Pos的不為空 && 隊伍不一樣 && 角色不為兵或卒 則可吃
 				else if (board.getBoard()[goalPos.y][goalPos.x] != nullptr &&
 					board.getBoard()[goalPos.y][goalPos.x]->getTeam() != this->getTeam() &&
 					board.getBoard()[goalPos.y][goalPos.x]->getCharacters() != Characters::Soldiers)
 				{
-					chessMovement.validPath.push_back(goalPos);
+					validPath.push_back(goalPos);
 				}
 			}
 		}
@@ -241,49 +245,52 @@ ChessMovement King::findPath(const Board& board)
 			if (5 >= goalPos.x && goalPos.x >= 3 && 9 >= goalPos.y && goalPos.y >= 7) {
 				// 能走
 				if (board.getBoard()[goalPos.y][goalPos.x] == nullptr) {
-					chessMovement.validPath.push_back(goalPos);
+					validPath.push_back(goalPos);
 				}
 				//若目標Pos的不為空 && 隊伍不一樣 && 角色不為兵或卒 則可吃
 				else if (board.getBoard()[goalPos.y][goalPos.x] != nullptr &&
 					board.getBoard()[goalPos.y][goalPos.x]->getTeam() != this->getTeam() &&
 					board.getBoard()[goalPos.y][goalPos.x]->getCharacters() != Characters::Soldiers) {
-					chessMovement.validPath.push_back(goalPos);
+					validPath.push_back(goalPos);
 				}
 			}
 		}
 	}
-	if (this->getTeam() == Team::Red)
+	if (team == Team::Red)
 	{
-		for (int i = 0;i < 9;i++)
+		for (int i = 1;i <= 9;i++)
 		{
-			sf::Vector2f goalPos(direction[3].x* i, direction[3].y* i);
-			goalPos += boardPosition;
+			sf::Vector2f dxy(direction[3].x * i, direction[3].y * i);
+			sf::Vector2f goalPos = boardPosition + dxy;
 			if (8 >= goalPos.x && goalPos.x >= 0 && 9 >= goalPos.y && goalPos.y >= 0)
 			{
 				if (board.getBoard()[goalPos.y][goalPos.x] != nullptr && 
-					board.getBoard()[goalPos.y][goalPos.x]->getCharacters()==Characters::King)
+					board.getBoard()[goalPos.y][goalPos.x]->getCharacters() == Characters::King)
 				{
-					chessMovement.validPath.push_back(goalPos);
+					validPath.push_back(goalPos);
 				}
 				else if(board.getBoard()[goalPos.y][goalPos.x] != nullptr)
 				{
 					break;
 				}
 			}
+			else {
+				break;
+			}
 		}
 	}
 	else
 	{
-		for (int i = 0;i < 9;i++)
+		for (int i = 1;i <= 10;i++)
 		{
-			sf::Vector2f goalPos(direction[0].x * i, direction[0].y * i);
-			goalPos += boardPosition;
+			sf::Vector2f dxy(direction[0].x * i, direction[0].y * i);
+			sf::Vector2f goalPos = boardPosition + dxy;
 			if (8 >= goalPos.x && goalPos.x >= 0 && 9 >= goalPos.y && goalPos.y >= 0)
 			{
 				if (board.getBoard()[goalPos.y][goalPos.x] != nullptr &&
 					board.getBoard()[goalPos.y][goalPos.x]->getCharacters() == Characters::King)
 				{
-					chessMovement.validPath.push_back(goalPos);
+					validPath.push_back(goalPos);
 				}
 				else if (board.getBoard()[goalPos.y][goalPos.x] != nullptr)
 				{
@@ -291,8 +298,8 @@ ChessMovement King::findPath(const Board& board)
 				}
 			}
 		}
-	}
-	return chessMovement;
+	}/**/
+	return validPath;
 }
 void Advisors::move(Chess* chess, const Board& board)
 {
@@ -326,7 +333,7 @@ void Advisors::move(Chess* chess, const Board& board)
 	}
 
 }
-ChessMovement Advisors::findPath(const Board& board)
+std::vector<sf::Vector2f> Advisors::findPath(const Board& board)
 {
 	const std::vector<sf::Vector2f> direction{
 		sf::Vector2f(-1,-1),
@@ -334,7 +341,7 @@ ChessMovement Advisors::findPath(const Board& board)
 		sf::Vector2f(1,-1),
 		sf::Vector2f(-1,1),
 	};
-	struct ChessMovement chessMovement {};
+	std::vector<sf::Vector2f> validPath;
 	for (int i = 0; i < 4; i++)
 	{
 		sf::Vector2f goalPos = boardPosition + direction[i];
@@ -343,12 +350,12 @@ ChessMovement Advisors::findPath(const Board& board)
 			if (5 >= goalPos.x && goalPos.x >= 3 && 2 >= goalPos.y && goalPos.y >= 0) {
 				// 能走
 				if (board.getBoard()[goalPos.y][goalPos.x] == nullptr) {
-					chessMovement.validPath.push_back(goalPos);
+					validPath.push_back(goalPos);
 				}
 				//若目標Pos的不為空 && 隊伍不一樣 則可吃
 				else if (board.getBoard()[goalPos.y][goalPos.x] != nullptr &&
 					board.getBoard()[goalPos.y][goalPos.x]->getTeam() != this->getTeam()) {
-					chessMovement.validPath.push_back(goalPos);
+					validPath.push_back(goalPos);
 				}
 			}
 		}
@@ -357,18 +364,18 @@ ChessMovement Advisors::findPath(const Board& board)
 			if (5 >= goalPos.x && goalPos.x >= 3 && 9 >= goalPos.y && goalPos.y >= 7) {
 				// 能走
 				if (board.getBoard()[goalPos.y][goalPos.x] == nullptr) {
-					chessMovement.validPath.push_back(goalPos);
+					validPath.push_back(goalPos);
 				}
 				//若目標Pos的不為空 && 隊伍不一樣 則可吃
 				else if (board.getBoard()[goalPos.y][goalPos.x] != nullptr &&
 					board.getBoard()[goalPos.y][goalPos.x]->getTeam() != this->getTeam()) {
-					chessMovement.validPath.push_back(goalPos);
+					validPath.push_back(goalPos);
 				}
 			}
 		}
 
 	}
-	return chessMovement;
+	return validPath;
 }
 void Minister::move(Chess* chess, const Board& board)
 {
@@ -402,7 +409,7 @@ void Minister::move(Chess* chess, const Board& board)
 	}
 
 }
-ChessMovement Minister::findPath(const Board& board)
+std::vector<sf::Vector2f> Minister::findPath(const Board& board)
 {
 	const std::vector<sf::Vector2f> direction{
 		sf::Vector2f(2,2),
@@ -416,7 +423,7 @@ ChessMovement Minister::findPath(const Board& board)
 		sf::Vector2f(1,-1),
 		sf::Vector2f(-1,-1),
 	};
-	struct ChessMovement chessMovement {};
+	std::vector<sf::Vector2f> validPath;
 	for (int i = 0; i < 4; i++) {
 		sf::Vector2f goalPos = boardPosition + direction[i];
 		sf::Vector2f throughPos = boardPosition + throughDirection[i];
@@ -425,13 +432,13 @@ ChessMovement Minister::findPath(const Board& board)
 			if (8 >= goalPos.x && goalPos.x >= 0 && 4 >= goalPos.y && goalPos.y >= 0) {
 				// 能走
 				if (board.getBoard()[goalPos.y][goalPos.x] == nullptr && board.getBoard()[throughPos.y][throughPos.x] == nullptr) {
-					chessMovement.validPath.push_back(goalPos);
+					validPath.push_back(goalPos);
 				}
 				//若目標Pos的不為空 && 隊伍不一樣 && 路上沒棋子 則可吃
 				else if (board.getBoard()[goalPos.y][goalPos.x] != nullptr &&
 					board.getBoard()[goalPos.y][goalPos.x]->getTeam() != this->getTeam() &&
 					board.getBoard()[throughPos.y][throughPos.x] == nullptr) {
-					chessMovement.validPath.push_back(goalPos);;
+					validPath.push_back(goalPos);;
 				}
 			}
 		}
@@ -441,20 +448,20 @@ ChessMovement Minister::findPath(const Board& board)
 				// 能走
 				if (board.getBoard()[goalPos.y][goalPos.x] == nullptr &&
 					board.getBoard()[throughPos.y][throughPos.x] == nullptr) {
-					chessMovement.validPath.push_back(goalPos);
+					validPath.push_back(goalPos);
 				}
 				//若目標Pos的不為空 && 隊伍不一樣 && 路上沒棋子 則可吃
 				else if (board.getBoard()[goalPos.y][goalPos.x] != nullptr &&
 					board.getBoard()[goalPos.y][goalPos.x]->getTeam() != this->getTeam() &&
 					board.getBoard()[throughPos.y][throughPos.x] == nullptr) {
-					chessMovement.validPath.push_back(goalPos);;
+					validPath.push_back(goalPos);;
 				}
 			}
 		}
 
 	}
 
-	return chessMovement;
+	return validPath;
 }
 void Chariots::move(Chess* chess, const Board& board)
 {
@@ -488,7 +495,7 @@ void Chariots::move(Chess* chess, const Board& board)
 	}
 
 }
-ChessMovement Chariots::findPath(const Board& board)
+std::vector<sf::Vector2f> Chariots::findPath(const Board& board)
 {
 	const std::vector<sf::Vector2f> direction{
 		sf::Vector2f(0,-1),
@@ -497,7 +504,7 @@ ChessMovement Chariots::findPath(const Board& board)
 		sf::Vector2f(-1,0),
 	};
 
-	struct ChessMovement chessMovement {};
+	std::vector<sf::Vector2f> validPath;
 	for (int i = 0;i < 4; i++)
 	{
 		for (int multiple = 1;multiple <= 9;multiple++)
@@ -508,13 +515,13 @@ ChessMovement Chariots::findPath(const Board& board)
 			{
 				// 能走
 				if (board.getBoard()[goalPos.y][goalPos.x] == nullptr) {
-					chessMovement.validPath.push_back(goalPos);
+					validPath.push_back(goalPos);
 				}
 				//若目標Pos的不為空 && 隊伍不一樣 則可吃
 				else if (board.getBoard()[goalPos.y][goalPos.x] != nullptr &&
 					board.getBoard()[goalPos.y][goalPos.x]->getTeam() != this->getTeam())
 				{
-					chessMovement.validPath.push_back(goalPos);
+					validPath.push_back(goalPos);
 					break;
 				}
 				//若目標Pos的不為空 && 隊伍一樣 跳出迴圈
@@ -526,7 +533,7 @@ ChessMovement Chariots::findPath(const Board& board)
 				break;
 		}
 	}
-	return chessMovement;
+	return validPath;
 }
 void Knights::move(Chess* chess, const Board& board)
 {
@@ -560,7 +567,7 @@ void Knights::move(Chess* chess, const Board& board)
 	}
 
 }
-ChessMovement Knights::findPath(const Board& board)
+std::vector<sf::Vector2f> Knights::findPath(const Board& board)
 {
 	const std::vector<sf::Vector2f> direction{
 		sf::Vector2f(-1,-2),
@@ -582,7 +589,7 @@ ChessMovement Knights::findPath(const Board& board)
 		sf::Vector2f(-1,0),
 		sf::Vector2f(-1,0),
 	};
-	struct ChessMovement chessMovement {};
+	std::vector<sf::Vector2f> validPath;
 	for (int i = 0; i < 8; i++)
 	{
 		sf::Vector2f goalPos = boardPosition + direction[i];
@@ -593,19 +600,19 @@ ChessMovement Knights::findPath(const Board& board)
 			// 能走
 			if (board.getBoard()[goalPos.y][goalPos.x] == nullptr && board.getBoard()[throughPos.y][throughPos.x] == nullptr)
 			{
-				chessMovement.validPath.push_back(goalPos);
+				validPath.push_back(goalPos);
 			}
 			//若目標Pos的不為空 && 隊伍不一樣 && 路上沒棋子 則可吃
 			else if (board.getBoard()[goalPos.y][goalPos.x] != nullptr &&
 				board.getBoard()[goalPos.y][goalPos.x]->getTeam() != this->getTeam() &&
 				board.getBoard()[throughPos.y][throughPos.x] == nullptr)
 			{
-				chessMovement.validPath.push_back(goalPos);;
+				validPath.push_back(goalPos);;
 			}
 		}
 	}
 
-	return chessMovement;
+	return validPath;
 }
 void Cannons::move(Chess* chess, const Board& board)
 {
@@ -639,7 +646,7 @@ void Cannons::move(Chess* chess, const Board& board)
 	}
 
 }
-ChessMovement Cannons::findPath(const Board& board)
+std::vector<sf::Vector2f> Cannons::findPath(const Board& board)
 {
 	const std::vector<sf::Vector2f> direction{
 	sf::Vector2f(0,-1),
@@ -648,7 +655,7 @@ ChessMovement Cannons::findPath(const Board& board)
 	sf::Vector2f(-1,0),
 	};
 
-	struct ChessMovement chessMovement {};
+	std::vector<sf::Vector2f> validPath;
 	for (int i = 0;i < 4; i++)
 	{
 		bool findChessToEat = false;
@@ -660,7 +667,7 @@ ChessMovement Cannons::findPath(const Board& board)
 			{
 				// 能走
 				if (board.getBoard()[goalPos.y][goalPos.x] == nullptr) {
-					chessMovement.validPath.push_back(goalPos);
+					validPath.push_back(goalPos);
 				}
 				//中間有棋子可以跳
 				else if (board.getBoard()[goalPos.y][goalPos.x] != nullptr)
@@ -678,7 +685,7 @@ ChessMovement Cannons::findPath(const Board& board)
 							if (board.getBoard()[goalPos.y][goalPos.x] != nullptr &&
 								board.getBoard()[goalPos.y][goalPos.x]->getTeam() != this->getTeam())
 							{
-								chessMovement.validPath.push_back(goalPos);
+								validPath.push_back(goalPos);
 								findChessToEat = true;
 								break;
 							}
@@ -693,7 +700,7 @@ ChessMovement Cannons::findPath(const Board& board)
 				break;
 		}
 	}
-	return chessMovement;
+	return validPath;
 }
 void Soldiers::move(Chess* chess, const Board& board)
 {
@@ -727,7 +734,7 @@ void Soldiers::move(Chess* chess, const Board& board)
 	}
 
 }
-ChessMovement Soldiers::findPath(const Board& board)
+std::vector<sf::Vector2f> Soldiers::findPath(const Board& board)
 {
 	const std::vector<sf::Vector2f> BlackDirection
 	{
@@ -741,13 +748,13 @@ ChessMovement Soldiers::findPath(const Board& board)
 	sf::Vector2f(-1,0),
 	sf::Vector2f(1,0),
 	};
-	struct ChessMovement chessMovement {};
+	std::vector<sf::Vector2f> validPath;
 
 	if (team == Team::Red)
 	{
 		if (boardPosition.y <= 4)
 		{
-			chessMovement.validPath.push_back(sf::Vector2f(0, 1) + boardPosition);
+			validPath.push_back(sf::Vector2f(0, 1) + boardPosition);
 		}
 		else
 		{
@@ -756,13 +763,13 @@ ChessMovement Soldiers::findPath(const Board& board)
 				if (8 >= goalPos.x && goalPos.x >= 0 && 9 >= goalPos.y && goalPos.y >= 5) {
 					// 能走
 					if (board.getBoard()[goalPos.y][goalPos.x] == nullptr) {
-						chessMovement.validPath.push_back(goalPos);
+						validPath.push_back(goalPos);
 					}
 					//若目標Pos的不為空 && 隊伍不一樣 && 則可吃
 					else if (board.getBoard()[goalPos.y][goalPos.x] != nullptr &&
 						board.getBoard()[goalPos.y][goalPos.x]->getTeam() != this->getTeam())
 					{
-						chessMovement.validPath.push_back(goalPos);
+						validPath.push_back(goalPos);
 					}
 				}
 			}
@@ -773,7 +780,7 @@ ChessMovement Soldiers::findPath(const Board& board)
 	{
 		if (boardPosition.y >= 5)
 		{
-			chessMovement.validPath.push_back(sf::Vector2f(0, -1) + boardPosition);
+			validPath.push_back(sf::Vector2f(0, -1) + boardPosition);
 		}
 		else
 		{
@@ -782,17 +789,17 @@ ChessMovement Soldiers::findPath(const Board& board)
 				if (8 >= goalPos.x && goalPos.x >= 0 && 4 >= goalPos.y && goalPos.y >= 0) {
 					// 能走
 					if (board.getBoard()[goalPos.y][goalPos.x] == nullptr) {
-						chessMovement.validPath.push_back(goalPos);
+						validPath.push_back(goalPos);
 					}
 					//若目標Pos的不為空 && 隊伍不一樣 則可吃
 					else if (board.getBoard()[goalPos.y][goalPos.x] != nullptr &&
 						board.getBoard()[goalPos.y][goalPos.x]->getTeam() != this->getTeam())
 					{
-						chessMovement.validPath.push_back(goalPos);
+						validPath.push_back(goalPos);
 					}
 				}
 			}
 		}
 	}
-	return chessMovement;
+	return validPath;
 }

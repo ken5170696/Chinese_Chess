@@ -5,12 +5,8 @@ class Board;
 #include <iostream>
 #include <vector>
 
-struct ChessMovement {
-	std::vector<sf::Vector2f> validPath;
-	std::vector<Chess*> validToEat;
-};
-
 class Chess
+	: public sf::Transformable, public sf::Drawable, private sf::NonCopyable
 {
 protected:
 	int id;
@@ -24,7 +20,8 @@ protected:
 
 public:
 	virtual void move(Chess* chess, const Board& board) = 0;
-	virtual ChessMovement findPath(const Board& board) = 0;
+	virtual std::vector<sf::Vector2f> findPath(const Board& board) = 0;
+	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
 public:
 	Chess(const Team& _team, int _id);
@@ -40,18 +37,18 @@ public:
 	void setTeam(const Team& _team) { team = _team; };
 
 	Characters getCharacters() const { return chessCharacter; };
-	
+
 	sf::Sprite getSprite() const { return this->sprite; };
-		
+
 
 	void setSpritePosition(sf::Vector2f _pos) { sprite.setPosition(_pos); };
 
 	int getId() { return id; };
-	
+
 	void resetIsPressed() { isPressed = false; };
 	bool getIsPressed() const { return this->isPressed; };
-		
-	
+
+
 };
 
 class King :public Chess
@@ -59,56 +56,55 @@ class King :public Chess
 public:
 	King(const Team& _team, int _id);
 	virtual void move(Chess* chess, const Board& board) override;
-	virtual ChessMovement findPath(const Board& board) override;
+	virtual std::vector<sf::Vector2f> findPath(const Board& board) override;
 };
 class Advisors :public Chess
 {
 public:
 	Advisors(const Team& _team, int _id);
-	virtual void move(Chess *chess, const Board& board) override;
-	virtual ChessMovement findPath(const Board& board) override;
+	virtual void move(Chess* chess, const Board& board) override;
+	virtual std::vector<sf::Vector2f> findPath(const Board& board) override;
 };
 class Minister :public Chess
 {
 public:
 	Minister(const Team& _team, int _id);
-	virtual void move(Chess *chess, const Board& board) override;
-	virtual ChessMovement findPath(const Board& board) override;
+	virtual void move(Chess* chess, const Board& board) override;
+	virtual std::vector<sf::Vector2f> findPath(const Board& board) override;
 
 };
 class Chariots :public Chess
 {
 public:
 	Chariots(const Team& _team, int _id);
-	virtual void move(Chess *chess, const Board& board) override;
-	virtual ChessMovement findPath(const Board& board) override;
+	virtual void move(Chess* chess, const Board& board) override;
+	virtual std::vector<sf::Vector2f> findPath(const Board& board) override;
 
 };
 class Knights :public Chess
 {
 public:
 	Knights(const Team& _team, int _id);
-	virtual void move(Chess *chess, const Board& board) override;
-	virtual ChessMovement findPath(const Board& board) override;
+	virtual void move(Chess* chess, const Board& board) override;
+	virtual std::vector<sf::Vector2f> findPath(const Board& board) override;
 
 };
 class Cannons :public Chess
 {
 public:
 	Cannons(const Team& _team, int _id);
-	virtual void move(Chess *chess, const Board& board) override;
-	virtual ChessMovement findPath(const Board& board) override;
+	virtual void move(Chess* chess, const Board& board) override;
+	virtual std::vector<sf::Vector2f> findPath(const Board& board) override;
 
 };
 class Soldiers :public Chess
 {
 public:
 	Soldiers(const Team& _team, int _id);
-	virtual void move(Chess *chess, const Board& board) override;
-	virtual ChessMovement findPath(const Board& board) override;
+	virtual void move(Chess* chess, const Board& board) override;
+	virtual std::vector<sf::Vector2f> findPath(const Board& board) override;
 
 };
-
 
 class Factory {
 

@@ -32,16 +32,11 @@
 #define DELAY_TIME 100
 enum class Status
 {
-
 	WaitBlackPressed,
-	BlackFindPath,
 	WaitBlackPathPressed,
-	BlackMove,
 
 	WaitRedPressed,
-	RedFindPath,
 	WaitRedPathPressed,
-	RedMove,
 };
 enum class Characters
 {

@@ -1,7 +1,7 @@
 #include "GameManager.h"
 
 GameManager::GameManager()
-	: playerBlack(Team::Black), playerRed(Team::Red), board()
+	: playerBlack(Team::Black), playerRed(Team::Red), board(), chessManager()
 {
 	this->initVar();
 	this->initWindow();
@@ -10,6 +10,11 @@ GameManager::GameManager()
 	window->setFramerateLimit(144);
 	this->status = Status::WaitBlackPressed;
 	board.update(playerBlack, playerRed);
+
+	if (!font.loadFromFile("arial.ttf"))
+	{
+		// error...
+	}
 }
 
 GameManager::~GameManager()
@@ -56,19 +61,6 @@ void GameManager::initVar()
 	this->window = nullptr;
 }
 
-void GameManager::pullEvent()
-{
-	while (this->window->pollEvent(this->ev))
-	{
-		switch (this->ev.type)
-		{
-		case sf::Event::Closed:
-			this->window->close();
-			break;
-		}
-	}
-}
-
 sf::Vector2f GameManager::BoardToWindowPosition(sf::Vector2f boardArrPosition)
 {
 	sf::Vector2f windowPosition;
@@ -91,279 +83,395 @@ sf::Vector2f GameManager::WindowToBoardPosition(sf::Vector2f windowPosition)
 
 void GameManager::processEvent()
 {
-	this->pullEvent();
+	while (this->window->pollEvent(this->ev))
+	{
+		switch (this->ev.type)
+		{
+		case sf::Event::Closed:
+			this->window->close();
+			break;
+		}
+	}
+	if (status == Status::WaitBlackPressed || status == Status::WaitBlackPathPressed)
+		playerBlack.handleRealtimeInput(chessManager, status, board);
+
+	if (status == Status::WaitRedPressed || status == Status::WaitRedPathPressed)
+		playerRed.handleRealtimeInput(chessManager, status, board);
 }
 
 void GameManager::update()
 {
-	whoWin(playerBlack, playerRed);
 	showStatus();
-	board.update(playerBlack, playerRed);
-	for (auto chess : playerBlack.getChessList())
-		chess->resetIsPressed();
-	for (auto chess : playerRed.getChessList())
-		chess->resetIsPressed();
+	whoWin(playerBlack, playerRed);
 
-	
+	board.update(playerBlack, playerRed);
+	for (auto chess : playerBlack.getChessList()) {
+		if (chess->getActive()) {
+			chess->resetIsPressed();
+			chess->setSpritePosition(BoardToWindowPosition(chess->getPosition()));
+			if (status == Status::WaitBlackPressed || status == Status::WaitBlackPathPressed)
+				chess->update(*window, ev);
+		}
+	}
+	for (auto chess : playerRed.getChessList()) {
+		if (chess->getActive()) {
+			chess->resetIsPressed();
+			chess->setSpritePosition(BoardToWindowPosition(chess->getPosition()));
+			if (status == Status::WaitRedPressed || status == Status::WaitRedPathPressed)
+				chess->update(*window, ev);
+		}
+	}
+	for (auto& tmpChess : tmpChessObj) {
+		if (tmpChess->getActive()) {
+			tmpChess->resetIsPressed();
+			tmpChess->setSpritePosition(BoardToWindowPosition(tmpChess->getPosition()));
+			tmpChess->update(*window, ev);
+		}
+	}
 	switch (status)
 	{
 	case Status::WaitBlackPressed:
-	{
-		for (auto& blackChess : playerBlack.getChessList())
-		{
-			if (!blackChess->getActive())
-				continue;
-			blackChess->setSpritePosition(BoardToWindowPosition(blackChess->getPosition()));
-			blackChess->update(*(this->window), ev);
-			if (blackChess->getIsPressed())
-			{
-				selectChess = blackChess;
-				status = Status::BlackFindPath;
-			}
-		}
-		for (auto& redChess : playerRed.getChessList())
-		{
-			redChess->setSpritePosition(BoardToWindowPosition(redChess->getPosition()));
-		}
-		break;
-	}
-	case Status::BlackFindPath:
-	{
-		chessMovement = std::make_unique<ChessMovement>(selectChess->findPath(this->board));
-		inputClock.restart();
-		if (chessMovement == nullptr)
-		{
-			status = Status::WaitBlackPressed;
-			break;
-		}
-		else
-		{
-			Factory tmpChessfac;
-			for (const auto& validPath : chessMovement.get()->validPath) {
-				// create tmp chess
-				if (selectChess != nullptr && selectChess->getActive()) 
-				{
-					Chess* tmpChess = (tmpChessfac.getChess(selectChess->getCharacters(), selectChess->getTeam(), -1));
-					tmpChess->setPosition(validPath);
-					tmpChessObj.push_back(tmpChess);
-				}
-				else
-				{
-					status = Status::WaitBlackPressed;
+		while (chessManager.getCommandNum()) {
+			std::vector<sf::Vector2f> tmpValidPath = chessManager.doCommand(*selectChess);
+			this->selectChess = chessManager.getSelectedChess();
+			playerBlack.setSelectChess(this->selectChess);
+			// if valid path number >= 1
+			if (tmpValidPath.size()) {
+				validPath = std::make_unique<std::vector<sf::Vector2f>>(tmpValidPath);
 
-					chessMovement.release();
-					break;
+				Factory tmpChessfac;
+				for (const auto& path : *(validPath.get())) {
+					// create tmp chess
+					if (selectChess != nullptr && selectChess->getActive())
+					{
+						Chess* tmpChess = (tmpChessfac.getChess(selectChess->getCharacters(), selectChess->getTeam(), -1));
+						tmpChess->setPosition(path);
+						tmpChessObj.push_back(tmpChess);
+					}
 				}
+				playerBlack.setValidMoveChessList(tmpChessObj);
+				status = Status::WaitBlackPathPressed;
 			}
-			status = Status::WaitBlackPathPressed;
-			break;
 		}
 		break;
-	}
 	case Status::WaitBlackPathPressed:
-	{
-		bool isPressed = false, validPressed = false;
-		
-		for (auto& tmpChess : tmpChessObj) {
-			tmpChess->setSpritePosition(BoardToWindowPosition(tmpChess->getPosition()));
-			tmpChess->update(*(this->window), ev);
-			if (ev.type == sf::Event::MouseButtonPressed)
-			{
-				isPressed = true;
-				if (tmpChess->getIsPressed()) 
-				{
-					validPressed = true;
-					selectPathChess = tmpChess;
-					break;
-				}
-			}
-			tmpChess->setSpritePosition(BoardToWindowPosition(tmpChess->getPosition()));
-		}
-		if (isPressed && validPressed)
-		{
-			status = Status::BlackMove;
-			chessMovement.release();
-			break;
-		}
-		else if(isPressed && !validPressed)
-		{
-			status = Status::WaitBlackPressed;
-			for (auto& tmpChess : tmpChessObj)
-			{
-				delete tmpChess;
-			}
-			tmpChessObj.clear();
-			chessMovement.release();
-			break;
-		}
-		else
-		{ }
-		break;
-	}
-	case Status::BlackMove:
-	{
-		if (inputClock.getElapsedTime().asMilliseconds() > DELAY_TIME)
-		{
-			bool validPressed = false;
-			inputClock.restart();
-			for (auto& tmpChess : tmpChessObj)
-			{
-				if (selectPathChess == tmpChess)
-					validPressed = true;
-			}
-
-			if (validPressed == false)
-			{
+		while (chessManager.getCommandNum()) {
+			std::vector<sf::Vector2f> tmpValidPath = chessManager.doCommand(*(this->selectChess));
+			// if valid path number >= 1 -> succcess move
+			if (tmpValidPath.size()) {
 				tmpChessObj.clear();
+				this->selectChess = nullptr;
+				playerBlack.setSelectChess(nullptr);
+				status = Status::WaitRedPressed;
+				break;
+			}
+			else {
+				tmpChessObj.clear();
+				this->selectChess = nullptr;
+				playerBlack.setSelectChess(nullptr);
 				status = Status::WaitBlackPressed;
 				break;
 			}
-			else
-			{
-				for (auto& tmpChess : tmpChessObj)
-				{
-					if (tmpChess->getIsPressed())
-						selectChess->move(tmpChess, board);
-					delete tmpChess;
-				}
-				tmpChessObj.clear();
-				status = Status::WaitRedPressed;
-				chessMovement.release();
-				break;
-			}
 		}
 		break;
-	}
 	case Status::WaitRedPressed:
-	{
-		for (auto& blackChess : playerBlack.getChessList())
-		{
-			blackChess->setSpritePosition(BoardToWindowPosition(blackChess->getPosition()));
-		}
-		for (auto& redChess : playerRed.getChessList())
-		{
-			if (!redChess->getActive())
-				continue;
-			redChess->setSpritePosition(BoardToWindowPosition(redChess->getPosition()));
-			redChess->update(*(this->window), ev);
-			if (redChess->getIsPressed())
-			{
-				selectChess = redChess;
-				status = Status::RedFindPath;
+		while (chessManager.getCommandNum()) {
+			std::vector<sf::Vector2f> tmpValidPath = chessManager.doCommand(*selectChess);
+			this->selectChess = chessManager.getSelectedChess();
+			playerRed.setSelectChess(this->selectChess);
+			// if valid path number >= 1
+			if (tmpValidPath.size()) {
+				validPath = std::make_unique<std::vector<sf::Vector2f>>(tmpValidPath);
+
+				Factory tmpChessfac;
+				for (const auto& path : *(validPath.get())) {
+					// create tmp chess
+					if (selectChess != nullptr && selectChess->getActive())
+					{
+						Chess* tmpChess = (tmpChessfac.getChess(selectChess->getCharacters(), selectChess->getTeam(), -1));
+						tmpChess->setPosition(path);
+						tmpChessObj.push_back(tmpChess);
+					}
+				}
+				playerRed.setValidMoveChessList(tmpChessObj);
+				status = Status::WaitRedPathPressed;
 			}
 		}
 		break;
-	}
-	case Status::RedFindPath:
-	{
-		chessMovement = std::make_unique<ChessMovement>(selectChess->findPath(this->board));
-		inputClock.restart();
-		if (chessMovement == nullptr)
-		{
-			status = Status::WaitRedPressed;
-			break;
-		}
-		else
-		{
-			Factory tmpChessfac;
-			for (const auto& validPath : chessMovement.get()->validPath) {
-				// create tmp chess
-				if (selectChess != nullptr && selectChess->getActive())
-				{
-					Chess* tmpChess = (tmpChessfac.getChess(selectChess->getCharacters(), selectChess->getTeam(), -1));
-					tmpChess->setPosition(validPath);
-					tmpChessObj.push_back(tmpChess);
-				}
-				else
-				{
-					status = Status::WaitRedPressed;
-					chessMovement.release();
-					break;
-				}
-			}
-			status = Status::WaitRedPathPressed;
-			break;
-		}
-		break;
-	}
 	case Status::WaitRedPathPressed:
-	{
-		bool isPressed = false, validPressed = false;
-
-		for (auto& tmpChess : tmpChessObj) {
-			tmpChess->setSpritePosition(BoardToWindowPosition(tmpChess->getPosition()));
-			tmpChess->update(*(this->window), ev);
-			if (ev.type == sf::Event::MouseButtonPressed)
-			{
-				isPressed = true;
-				if (tmpChess->getIsPressed())
-				{
-					validPressed = true;
-					selectPathChess = tmpChess;
-					break;
-				}
-			}
-			tmpChess->setSpritePosition(BoardToWindowPosition(tmpChess->getPosition()));
-		}
-		if (isPressed && validPressed)
-		{
-			status = Status::RedMove;
-			chessMovement.release();
-			break;
-		}
-		else if (isPressed && !validPressed)
-		{
-			status = Status::WaitRedPressed;
-			for (auto& tmpChess : tmpChessObj)
-			{
-				delete tmpChess;
-			}
-			tmpChessObj.clear();
-			chessMovement.release();
-			break;
-		}
-		else
-		{
-		}
-		break;
-	}
-	case Status::RedMove:
-	{
-		if (inputClock.getElapsedTime().asMilliseconds() > DELAY_TIME)
-		{
-			bool validPressed = false;
-			inputClock.restart();
-			for (auto& tmpChess : tmpChessObj)
-			{
-				if (selectPathChess == tmpChess)
-					validPressed = true;
-			}
-
-			if (validPressed == false)
-			{
+		while (chessManager.getCommandNum()) {
+			std::vector<sf::Vector2f> tmpValidPath = chessManager.doCommand(*(this->selectChess));
+			// if valid path number >= 1 -> succcess move
+			if (tmpValidPath.size()) {
 				tmpChessObj.clear();
+				this->selectChess = nullptr;
+				playerRed.setSelectChess(nullptr);
+				status = Status::WaitBlackPressed;
+				break;
+			}
+			else {
+				tmpChessObj.clear();
+				this->selectChess = nullptr;
+				playerRed.setSelectChess(nullptr);
 				status = Status::WaitRedPressed;
 				break;
 			}
-			else
-			{
-				for (auto& tmpChess : tmpChessObj)
-				{
-					if (tmpChess->getIsPressed())
-						selectChess->move(tmpChess, board);
-					delete tmpChess;
-				}
-				tmpChessObj.clear();
-				status = Status::WaitBlackPressed;
-				chessMovement.release();
-				break;
-			}
 		}
+		break;
+	default:
 		break;
 	}
 
+	//switch (status)
+	//{
+	//case Status::WaitBlackPressed:
+	//{
+	//	
+	//	for (auto& redChess : playerRed.getChessList())
+	//	{
+	//		if (redChess->getActive())
+	//			redChess->setSpritePosition(BoardToWindowPosition(redChess->getPosition()));
+	//	}
+	//	for (auto& blackChess : playerBlack.getChessList())
+	//	{
+	//		if (!blackChess->getActive())
+	//			continue;
+	//		
+	//		blackChess->setSpritePosition(BoardToWindowPosition(blackChess->getPosition()));
 
-	}
+	//		blackChess->update(*(this->window), ev);
+	//		if (blackChess->getIsPressed())
+	//		{
+	//			selectChess = blackChess;
+	//			status = Status::WaitBlackPathPressed;
+	//		}
+	//	}
+	//	break;
+	//}
+	//case Status::BlackFindPath:
+	//{
+	//	
+	//	validPath = std::make_unique<std::vector<sf::Vector2f>>(selectChess->findPath(this->board));
+	//	inputClock.restart();
+	//	
+	//	if (!validPath.get()->size())
+	//	{
+	//		status = Status::WaitBlackPressed;
+	//		break;
+	//	}
+	//	else
+	//	{
+	//		
+	//		
+	//		status = Status::WaitBlackPathPressed;
+	//		break;
+	//	}
+	//	break;
+	//}
+	//case Status::WaitBlackPathPressed:
+	//{
+	//	bool isPressed = false, validPressed = false;
+	//	
+	//	for (auto& tmpChess : tmpChessObj) {
+	//		tmpChess->setSpritePosition(BoardToWindowPosition(tmpChess->getPosition()));
+	//		tmpChess->update(*(this->window), ev);
+	//		if (ev.type == sf::Event::MouseButtonPressed)
+	//		{
+	//			isPressed = true;
+	//			if (tmpChess->getIsPressed()) 
+	//			{
+	//				validPressed = true;
+	//				selectPathChess = tmpChess;
+	//				break;
+	//			}
+	//		}
+	//		tmpChess->setSpritePosition(BoardToWindowPosition(tmpChess->getPosition()));
+	//	}
+	//	if (isPressed && validPressed)
+	//	{
+	//		status = Status::BlackMove;
+	//		validPath.release();
+	//		break;
+	//	}
+	//	else if(isPressed && !validPressed)
+	//	{
+	//		status = Status::WaitBlackPressed;
+	//		for (auto& tmpChess : tmpChessObj)
+	//		{
+	//			delete tmpChess;
+	//		}
+	//		tmpChessObj.clear();
+	//		validPath.release();
+	//		break;
+	//	}
+	//	else
+	//	{ }
+	//	break;
+	//}
+	//case Status::BlackMove:
+	//{
+	//	if (inputClock.getElapsedTime().asMilliseconds() > DELAY_TIME)
+	//	{
+	//		bool validPressed = false;
+	//		inputClock.restart();
+	//		for (auto& tmpChess : tmpChessObj)
+	//		{
+	//			if (selectPathChess == tmpChess)
+	//				validPressed = true;
+	//		}
+
+	//		if (validPressed == false)
+	//		{
+	//			tmpChessObj.clear();
+	//			status = Status::WaitBlackPressed;
+	//			break;
+	//		}
+	//		else
+	//		{
+	//			for (auto& tmpChess : tmpChessObj)
+	//			{
+	//				if (tmpChess->getIsPressed())
+	//					selectChess->move(tmpChess, board);
+	//				delete tmpChess;
+	//			}
+	//			tmpChessObj.clear();
+	//			status = Status::WaitRedPressed;
+	//			validPath.release();
+	//			break;
+	//		}
+	//	}
+	//	break;
+	//}
+	//case Status::WaitRedPressed:
+	//{
+	//	for (auto& blackChess : playerBlack.getChessList())
+	//	{
+	//		if(blackChess->getActive())
+	//			blackChess->setSpritePosition(BoardToWindowPosition(blackChess->getPosition()));
+	//	}
+	//	for (auto& redChess : playerRed.getChessList())
+	//	{
+	//		if (!redChess->getActive())
+	//			continue;
+	//		if(redChess->getActive())
+	//			redChess->setSpritePosition(BoardToWindowPosition(redChess->getPosition()));
+	//		redChess->update(*(this->window), ev);
+	//		if (redChess->getIsPressed())
+	//		{
+	//			selectChess = redChess;
+	//			status = Status::RedFindPath;
+	//		}
+	//	}
+	//	break;
+	//}
+	//case Status::RedFindPath:
+	//{
+	//	validPath = std::make_unique<std::vector<sf::Vector2f>>(selectChess->findPath(this->board));
+	//	inputClock.restart();
+	//	if (!validPath.get()->size())
+	//	{
+	//		status = Status::WaitRedPressed;
+	//		break;
+	//	}
+	//	else
+	//	{
+	//		Factory tmpChessfac;
+	//		for (const auto& path : *(validPath.get())) {
+	//			// create tmp chess
+	//			if (selectChess != nullptr && selectChess->getActive())
+	//			{
+	//				Chess* tmpChess = (tmpChessfac.getChess(selectChess->getCharacters(), selectChess->getTeam(), -1));
+	//				tmpChess->setPosition(path);
+	//				tmpChessObj.push_back(tmpChess);
+	//			}
+	//			else
+	//			{
+	//				status = Status::WaitRedPressed;
+	//				validPath.release();
+	//				break;
+	//			}
+	//		}
+	//		status = Status::WaitRedPathPressed;
+	//		break;
+	//	}
+	//	break;
+	//}
+	//case Status::WaitRedPathPressed:
+	//{
+	//	bool isPressed = false, validPressed = false;
+
+	//	for (auto& tmpChess : tmpChessObj) {
+	//		tmpChess->setSpritePosition(BoardToWindowPosition(tmpChess->getPosition()));
+	//		tmpChess->update(*(this->window), ev);
+	//		if (ev.type == sf::Event::MouseButtonPressed)
+	//		{
+	//			isPressed = true;
+	//			if (tmpChess->getIsPressed())
+	//			{
+	//				validPressed = true;
+	//				selectPathChess = tmpChess;
+	//				break;
+	//			}
+	//		}
+	//		tmpChess->setSpritePosition(BoardToWindowPosition(tmpChess->getPosition()));
+	//	}
+	//	if (isPressed && validPressed)
+	//	{
+	//		status = Status::RedMove;
+	//		validPath.release();
+	//		break;
+	//	}
+	//	else if (isPressed && !validPressed)
+	//	{
+	//		status = Status::WaitRedPressed;
+	//		for (auto& tmpChess : tmpChessObj)
+	//		{
+	//			delete tmpChess;
+	//		}
+	//		tmpChessObj.clear();
+	//		validPath.release();
+	//		break;
+	//	}
+	//	else
+	//	{
+	//	}
+	//	break;
+	//}
+	//case Status::RedMove:
+	//{
+	//	if (inputClock.getElapsedTime().asMilliseconds() > DELAY_TIME)
+	//	{
+	//		bool validPressed = false;
+	//		inputClock.restart();
+	//		for (auto& tmpChess : tmpChessObj)
+	//		{
+	//			if (selectPathChess == tmpChess)
+	//				validPressed = true;
+	//		}
+
+	//		if (validPressed == false)
+	//		{
+	//			tmpChessObj.clear();
+	//			status = Status::WaitRedPressed;
+	//			break;
+	//		}
+	//		else
+	//		{
+	//			for (auto& tmpChess : tmpChessObj)
+	//			{
+	//				if (tmpChess->getIsPressed())
+	//					selectChess->move(tmpChess, board);
+	//				delete tmpChess;
+	//			}
+	//			tmpChessObj.clear();
+	//			status = Status::WaitBlackPressed;
+	//			validPath.release();
+	//			break;
+	//		}
+	//	}
+	//	break;
+	//}
+	//}
 
 }
 void GameManager::render()
@@ -375,36 +483,30 @@ void GameManager::render()
 	window->draw(board.getSprite());
 	for (auto& tmpChess : playerBlack.getChessList()) {
 		if (tmpChess->getActive())
-			window->draw(tmpChess->getSprite());
+			window->draw(*tmpChess);
 	}
 	for (auto& tmpChess : playerRed.getChessList()) {
 		if (tmpChess->getActive())
-			window->draw(tmpChess->getSprite());
+			window->draw(*tmpChess);
 	}
 
 	for (auto& tmpChess : tmpChessObj) {
-		window->draw(tmpChess->getSprite());
+		window->draw(*tmpChess);
 	}
+	
+
 	window->display();
 }
 
 void GameManager::showStatus()
 {
 	if(status == Status::WaitBlackPressed)
-		std::cout << "1";
-	else if (status == Status::BlackFindPath)
-		std::cout << "2";
+		std::cout << "WaitBlackPressed";
 	else if (status == Status::WaitBlackPathPressed)
-		std::cout << "3";
-	else if (status == Status::BlackMove)
-		std::cout << "4";
+		std::cout << "WaitBlackPathPressed";
 	else if (status == Status::WaitRedPressed)
-		std::cout << "5";
-	else if (status == Status::RedFindPath)
-		std::cout << "6";
+		std::cout << "WaitRedPressed";
 	else if (status == Status::WaitRedPathPressed)
-		std::cout << "7";
-	else if (status == Status::RedMove)
-		std::cout << "8";
+		std::cout << "WaitRedPathPressed";
 	std::cout << "\n";
 }

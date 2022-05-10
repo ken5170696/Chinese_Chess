@@ -2,6 +2,7 @@
 
 Player::Player(Team _team)
 {
+	selectPathChess = nullptr;
 	team = _team;
 
 	Factory chessFac;
@@ -20,11 +21,28 @@ Player::Player(Team _team)
 		tmpChess = chessFac.getChess(Characters::Soldiers, team, tmpId++);
 		chessList.push_back(tmpChess);
 	}
-	setChess(chessList, *this);
+	setChessInitPos(chessList, *this);
+}
+void Player::handleEvent(const sf::Event& event, ChessManager& commands) {
+
+}
+
+void Player::handleRealtimeInput(ChessManager& commands, Status status, Board& board) {
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+		if (status == Status::WaitBlackPressed || status == Status::WaitRedPressed) {
+			ChessCommand* cmd = new ChessFindPath(chessList, board, sf::Mouse::getPosition());
+			commands.setCommand(cmd);
+		}
+		else if (status == Status::WaitBlackPathPressed || status == Status::WaitRedPathPressed) {
+			ChessCommand* cmd = new ChessMove(validMoveChessList, board, sf::Mouse::getPosition());
+
+			commands.setCommand(cmd);
+		}
+	}
 }
 
 // set chess initial position
-void setChess(std::vector<Chess*>& chessList, Player& player) {
+void setChessInitPos(std::vector<Chess*>& chessList, Player& player) {
 	if (player.team == Team::Red) {
 
 		chessList[0]->setPosition(sf::Vector2f(4, 0));
