@@ -16,6 +16,9 @@
     <Filter Include="Reference">
       <UniqueIdentifier>{1b51bb4a-7ebb-4553-9e6a-4e47bb337e62}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Chess">
+      <UniqueIdentifier>{ccd07ba9-118f-4159-ac5e-06caab591a36}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
@@ -42,15 +45,18 @@
     <ClCompile Include="SceneNode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ChessCommand.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ChessManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Board.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Chess.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GameHeader.h">
@@ -67,6 +73,15 @@
     </ClInclude>
     <ClInclude Include="SceneNode.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ChessManager.h">
+      <Filter>Header Files\Chess</Filter>
+    </ClInclude>
+    <ClInclude Include="Chess.h">
+      <Filter>Header Files\Chess</Filter>
+    </ClInclude>
+    <ClInclude Include="ChessCommand.h">
+      <Filter>Header Files\Chess</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

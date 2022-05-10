@@ -21,15 +21,19 @@ void Board::update(const Player& playerBlack, const Player& playerRed)
 	resetBoardArray();
 	for (auto& tmpChess : playerBlack.getChessList())
 	{
-		int x = tmpChess->getPosition().x;
-		int y = tmpChess->getPosition().y;
-		boardArray[y][x] = tmpChess;
+		if (tmpChess->getActive()) {
+			int x = tmpChess->getPosition().x;
+			int y = tmpChess->getPosition().y;
+			boardArray[y][x] = tmpChess;
+		}
 	}
 	for (auto& tmpChess : playerRed.getChessList())
 	{
-		int x = tmpChess->getPosition().x;
-		int y = tmpChess->getPosition().y;
-		boardArray[y][x] = tmpChess;
+		if (tmpChess->getActive()) {
+			int x = tmpChess->getPosition().x;
+			int y = tmpChess->getPosition().y;
+			boardArray[y][x] = tmpChess;
+		}
 	}
 }
 void Board::resetBoardArray()

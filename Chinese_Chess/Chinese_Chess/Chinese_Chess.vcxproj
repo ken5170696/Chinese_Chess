@@ -148,6 +148,8 @@
   <ItemGroup>
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="Chess.cpp" />
+    <ClCompile Include="ChessCommand.cpp" />
+    <ClCompile Include="ChessManager.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="SceneNode.cpp" />
@@ -161,6 +163,8 @@
     <None Include="Reference\Project2 Grading Sheet.docx" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ChessCommand.h" />
+    <ClInclude Include="ChessManager.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="ResourceHolder.h" />
     <ClInclude Include="SceneNode.h" />

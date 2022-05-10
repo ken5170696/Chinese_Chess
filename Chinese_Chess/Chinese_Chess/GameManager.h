@@ -19,12 +19,13 @@ private:
 	Board board;
 	Status status;
 
-	std::unique_ptr<ChessMovement> chessMovement;
+	ChessManager chessManager;
+	std::unique_ptr<std::vector<sf::Vector2f>> validPath;
 	std::vector<Chess*> tmpChessObj;
 	Chess* selectChess;
 	Chess* selectPathChess;
 	sf::Clock inputClock;
-
+	sf::Font font;
 public:
 	GameManager();
 	~GameManager();
@@ -35,7 +36,6 @@ private:
 
 	void initWindow();
 	void initVar();
-	void pullEvent();
 
 	sf::Vector2f BoardToWindowPosition(sf::Vector2f boardPosition);
 	sf::Vector2f WindowToBoardPosition(sf::Vector2f windowPosition);
