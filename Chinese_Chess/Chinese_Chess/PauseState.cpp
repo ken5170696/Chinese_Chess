@@ -20,7 +20,7 @@ PauseState::PauseState(StateStack& _stack, StateContext _context)
 	titleText.setOrigin(sf::Vector2f(titleText.getLocalBounds().width / 2
 		, titleText.getLocalBounds().height / 2));
 	titleText.setPosition(sf::Vector2f(_context.window->getSize().x / 2.f,
-		_context.window->getSize().y * 0.15f));
+		_context.window->getSize().y * 0.2f));
 
 	sf::Text playText;
 	playText.setFont(_context.fontHolder->get(Fonts::ID::BiauKai));

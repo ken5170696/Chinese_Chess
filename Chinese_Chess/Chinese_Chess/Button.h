@@ -29,4 +29,3 @@ public:
 	void handleEvent(sf::RenderWindow& win);
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 };
-

@@ -99,6 +99,10 @@ namespace States {
 	{
 		Title,
 		Menu,
+		ServerMenu,
+		ServerEnterIpMenu,
+		MultiplayerLobby,
+		MultiplayerGame,
 		Game,
 		Pause,
 		End,
