@@ -1,4 +1,5 @@
 #pragma once
+#include "ResourceHolder.h"
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include <SFML/Network.hpp>
@@ -23,6 +24,8 @@
 
 #define CHECKBOARD_IMG "./Asset/Image/Checkboard/Checkboard.jpg"
 
+#define FONT_FILE_PATH "./Asset/font/º–∑¢≈È.ttc"
+
 #define WINDOW_RESOLUTION_WIDTH 1280
 #define WINDOW_RESOLUTION_HEIGHT 800
 
@@ -30,6 +33,40 @@
 #define CHESSBOARD_IMG_SCALE 0.31f
 
 #define DELAY_TIME 100
+
+/* Resource */
+namespace Textures
+{
+	enum class ID {
+		Chess_King_Red,
+		Chess_Advisors_Red,
+		Chess_Minister_Red,
+		Chess_Chariots_Red,
+		Chess_Knights_Red,
+		Chess_Cannons_Red,
+		Chess_Soldiers_Red,
+
+		Chess_King_Black,
+		Chess_Advisors_Black,
+		Chess_Minister_Black,
+		Chess_Chariots_Black,
+		Chess_Knights_Black,
+		Chess_Cannons_Black,
+		Chess_Soldiers_Black,
+
+		CheckBoard
+	};
+}
+namespace Fonts {
+	enum class ID
+	{
+		BiauKai
+	};
+}
+
+typedef ResourceHolder<sf::Font, Fonts::ID> FontHolder;
+
+/* Game Status */
 enum class Status
 {
 	WaitBlackPressed,
@@ -38,6 +75,7 @@ enum class Status
 	WaitRedPressed,
 	WaitRedPathPressed,
 };
+/* Chess Characters */
 enum class Characters
 {
 	King,
@@ -48,9 +86,35 @@ enum class Characters
 	Cannons,
 	Soldiers,
 };
-
+/* Player Team */
 enum class Team
 {
 	Red,
 	Black
+};
+
+/* Global Status */
+namespace States {
+	enum class ID
+	{
+		Title,
+		Menu,
+		Game,
+		Pause,
+		End,
+	};
+}
+
+/* Global Status community */
+class StateContext
+{
+public:
+	StateContext(sf::RenderWindow* _window
+				, FontHolder* _fontHolder)
+	{
+		fontHolder = _fontHolder;
+		window = _window;
+	};
+	sf::RenderWindow* window;
+	FontHolder* fontHolder;
 };

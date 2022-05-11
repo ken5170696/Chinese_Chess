@@ -16,25 +16,49 @@
     <Filter Include="Reference">
       <UniqueIdentifier>{1b51bb4a-7ebb-4553-9e6a-4e47bb337e62}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Chess">
+    <Filter Include="Header Files\Scene Header">
+      <UniqueIdentifier>{dd463f84-e56f-488c-939e-fb3c959b6c6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Scene Header\TitleState">
+      <UniqueIdentifier>{60ff4634-6c02-4059-8762-0c628a3dcd4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Scene Header\MenuState">
+      <UniqueIdentifier>{b109082e-be84-4685-9cb3-cd3d76764794}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Scene Header\GameState">
+      <UniqueIdentifier>{f7c7f01d-e82e-4a36-94f6-e30d13460c64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Scene Header\GameState\Chess">
       <UniqueIdentifier>{ccd07ba9-118f-4159-ac5e-06caab591a36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scene Header">
+      <UniqueIdentifier>{018ca47a-a33f-4ad5-9d2f-f20628e6f87b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\States Manager">
+      <UniqueIdentifier>{0948aaa5-b53b-45de-b0b1-0357014d3425}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\States Manager">
+      <UniqueIdentifier>{50adc1de-6e13-40e7-9d61-586e691b9c1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scene Header\GameState">
+      <UniqueIdentifier>{06d73a6c-277b-43db-b073-b2fd0d8429e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scene Header\MenuState">
+      <UniqueIdentifier>{2f23dae5-285c-46e5-ad11-da8106ec6a7f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scene Header\TitleState">
+      <UniqueIdentifier>{1cb8d038-355f-4c6e-848c-01c1d02e3459}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Scene Header\PauseState">
+      <UniqueIdentifier>{67b2cf41-732f-487d-8249-031291798b02}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scene Header\PauseState">
+      <UniqueIdentifier>{e8bfdbcb-76d8-41ca-a965-e25910ccbaed}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
       <Filter>Resource Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GameManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Board.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Chess.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Viewer.cpp">
       <Filter>Source Files</Filter>
@@ -42,27 +66,48 @@
     <ClCompile Include="ResourceHolder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SceneNode.cpp">
+    <ClCompile Include="Application.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StateStack.cpp">
+      <Filter>Source Files\States Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="State.cpp">
+      <Filter>Source Files\States Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Board.cpp">
+      <Filter>Source Files\Scene Header\GameState</Filter>
+    </ClCompile>
+    <ClCompile Include="Chess.cpp">
+      <Filter>Source Files\Scene Header\GameState</Filter>
     </ClCompile>
     <ClCompile Include="ChessCommand.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Scene Header\GameState</Filter>
     </ClCompile>
     <ClCompile Include="ChessManager.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Scene Header\GameState</Filter>
+    </ClCompile>
+    <ClCompile Include="GameState.cpp">
+      <Filter>Source Files\Scene Header\GameState</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files\Scene Header\GameState</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuState.cpp">
+      <Filter>Source Files\Scene Header\MenuState</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleState.cpp">
+      <Filter>Source Files\Scene Header\TitleState</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>Source Files\Scene Header\MenuState</Filter>
+    </ClCompile>
+    <ClCompile Include="PauseState.cpp">
+      <Filter>Source Files\Scene Header\PauseState</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GameManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Board.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="GameHeader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Viewer.h">
@@ -71,17 +116,44 @@
     <ClInclude Include="ResourceHolder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SceneNode.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ChessManager.h">
-      <Filter>Header Files\Chess</Filter>
+      <Filter>Header Files\Scene Header\GameState\Chess</Filter>
     </ClInclude>
     <ClInclude Include="Chess.h">
-      <Filter>Header Files\Chess</Filter>
+      <Filter>Header Files\Scene Header\GameState\Chess</Filter>
     </ClInclude>
     <ClInclude Include="ChessCommand.h">
-      <Filter>Header Files\Chess</Filter>
+      <Filter>Header Files\Scene Header\GameState\Chess</Filter>
+    </ClInclude>
+    <ClInclude Include="StateStack.h">
+      <Filter>Header Files\States Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="State.h">
+      <Filter>Header Files\States Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="GameState.h">
+      <Filter>Header Files\Scene Header\GameState</Filter>
+    </ClInclude>
+    <ClInclude Include="Board.h">
+      <Filter>Header Files\Scene Header\GameState</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files\Scene Header\GameState</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleState.h">
+      <Filter>Header Files\Scene Header\TitleState</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuState.h">
+      <Filter>Header Files\Scene Header\MenuState</Filter>
+    </ClInclude>
+    <ClInclude Include="Application.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>Header Files\Scene Header\MenuState</Filter>
+    </ClInclude>
+    <ClInclude Include="PauseState.h">
+      <Filter>Header Files\Scene Header\PauseState</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -90,6 +162,9 @@
     </None>
     <None Include="ClassDiagram.cd" />
     <None Include="ClassDiagram1.cd" />
+    <None Include="ResourceHolder.ini">
+      <Filter>Header Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Reference\Project2 Grading Sheet.txt">
