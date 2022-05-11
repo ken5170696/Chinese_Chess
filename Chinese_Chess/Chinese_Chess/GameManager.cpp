@@ -1,8 +1,8 @@
-#include "Application.h"
+#include "GameManager.h"
 
-const sf::Time Application::TimePerFrame = sf::seconds(1.f / 60.f);
+const sf::Time GameManager::TimePerFrame = sf::seconds(1.f / 60.f);
 
-Application::Application()
+GameManager::GameManager()
 	:window(sf::VideoMode(WINDOW_RESOLUTION_WIDTH, WINDOW_RESOLUTION_HEIGHT),
 		"Game1", sf::Style::Close | sf::Style::Titlebar )
 	,stateStack(StateContext(&window, &fontHolder))
@@ -15,12 +15,12 @@ Application::Application()
 	fontHolder.load(Fonts::ID::BiauKai, FONT_FILE_PATH);
 }
 
-Application::~Application()
+GameManager::~GameManager()
 {
 
 }
 
-void Application::run()
+void GameManager::run()
 {
 	sf::Clock clock;
 	sf::Time timeSinceLastUpdate = sf::Time::Zero;
@@ -45,7 +45,7 @@ void Application::run()
 	}
 }
 
-void Application::registerStates()
+void GameManager::registerStates()
 {
 	/*stateStack.registerState<TitleStates>(States::ID::Title);*/
 	stateStack.registerState<MenuState>(States::ID::Menu);
@@ -53,7 +53,7 @@ void Application::registerStates()
 	stateStack.registerState<PauseState>(States::ID::Pause);
 }
 
-void Application::processEvent()
+void GameManager::processEvent()
 {
 	sf::Event event;
 	while (window.pollEvent(event))
@@ -65,12 +65,12 @@ void Application::processEvent()
 	}
 }
 
-void Application::update(sf::Time dt)
+void GameManager::update(sf::Time dt)
 {
 	stateStack.update(dt);
 }
 
-void Application::render()
+void GameManager::render()
 {
 	window.clear(sf::Color::White);
 
