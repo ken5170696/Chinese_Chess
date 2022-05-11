@@ -5,7 +5,9 @@ class State;
 #include <map>
 #include <assert.h>
 #include "State.h"
-
+/* State Manager */
+// load state to stack
+// game, pause
 class StateStack : private sf::NonCopyable
 {
 public:

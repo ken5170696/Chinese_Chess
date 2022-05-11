@@ -3,6 +3,9 @@
 #include "GameHeader.h"
 #include "StateStack.h"
 #include "GameState.h"
+#include "MultiplayerGameState.h"
+#include "MultiplayerLobbyState.h"
+#include "GameServer.h"
 #include "MenuState.h"
 #include "PauseState.h"
 class GameManager

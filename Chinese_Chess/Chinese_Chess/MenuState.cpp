@@ -37,7 +37,7 @@ MenuState::MenuState(StateStack& _stack, StateContext _context)
 	Button playButton(OptionNames::Play , buttonPos, playRect, playText);
 	mOptions.push_back(playButton);
 
-	playText.setString(L"離開遊戲");
+	playText.setString(L"多人遊戲");
 	playText.setCharacterSize(36);
 	playText.setFillColor(sf::Color::Black);
 	playRect.setSize(sf::Vector2f(window->getSize().x * 0.6
@@ -45,7 +45,18 @@ MenuState::MenuState(StateStack& _stack, StateContext _context)
 	playRect.setFillColor(sf::Color::White);
 	sf::Vector2f buttonPos2(_context.window->getSize().x / 2.f,
 		_context.window->getSize().y * 0.5f + playRect.getSize().y * 1.2);
-	Button exitButton(OptionNames::Exit, buttonPos2, playRect, playText);
+	Button multButton(OptionNames::Multplayer, buttonPos2, playRect, playText);
+	mOptions.push_back(multButton);
+
+	playText.setString(L"離開遊戲");
+	playText.setCharacterSize(36);
+	playText.setFillColor(sf::Color::Black);
+	playRect.setSize(sf::Vector2f(window->getSize().x * 0.6
+		, playText.getLocalBounds().height * 1.8f));
+	playRect.setFillColor(sf::Color::White);
+	sf::Vector2f buttonPos3(_context.window->getSize().x / 2.f,
+		_context.window->getSize().y * 0.5f + playRect.getSize().y * 2.4);
+	Button exitButton(OptionNames::Exit, buttonPos3, playRect, playText);
 	mOptions.push_back(exitButton);
 
 	menuView.objStack.push_back(&backgroundRect);
@@ -76,6 +87,10 @@ bool MenuState::handleEvent(const sf::Event& event)
 			if (button.getId() == OptionNames::Play) {
 				requestStackPop();
 				requestStackPush(States::ID::Game);
+			}
+			else if (button.getId() == OptionNames::Multplayer) {
+				requestStackPop();
+				requestStackPush(States::ID::ServerMenu);
 			}
 			else if (button.getId() == OptionNames::Exit) {
 				requestStackPop();

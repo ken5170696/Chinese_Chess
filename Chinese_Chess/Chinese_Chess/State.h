@@ -4,7 +4,7 @@ class StateStack;
 
 #include "GameHeader.h"
 #include "StateStack.h"
-
+// Base class about every state
 class State
 {
 public:

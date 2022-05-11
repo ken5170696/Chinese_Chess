@@ -9,6 +9,7 @@ private:
     enum OptionNames
     {
         Play,
+        Multplayer,
         Exit,
     };
     std::vector<Button> mOptions;
