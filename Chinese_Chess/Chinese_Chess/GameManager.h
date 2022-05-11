@@ -1,53 +1,27 @@
 #pragma once
-
+/* This class manage the whole program*/
 #include "GameHeader.h"
-#include "Player.h"
-#include "Board.h"
-
+#include "StateStack.h"
+#include "GameState.h"
+#include "MenuState.h"
+#include "PauseState.h"
 class GameManager
 {
-
 private:
-	sf::RenderWindow *window;
-	sf::VideoMode videoMode;
-	sf::Event ev;
-	sf::CircleShape cir;
-	
-private:
-	Player playerBlack;
-	Player playerRed;
-	Board board;
-	Status status;
+	StateStack stateStack;
+	sf::RenderWindow window;
+	FontHolder fontHolder;
 
-	bool blackRound;
-	bool redRound;
-
-	ChessManager chessManager;
-	std::unique_ptr<std::vector<sf::Vector2f>> validPath;
-	std::vector<Chess*> tmpChessObj;
-	Chess* selectChess;
-	Chess* selectPathChess;
-	sf::Clock inputClock;
-	sf::Font font;
 public:
-	GameManager();
+	GameManager();	
 	~GameManager();
 	void run();
 
 private:
-	void whoWin(const Player& playerBlack, const Player& playerRed);
-	void checkmate();
-
-	void initWindow();
-	void initVar();
-
-	sf::Vector2f BoardToWindowPosition(sf::Vector2f boardPosition);
-	sf::Vector2f WindowToBoardPosition(sf::Vector2f windowPosition);
-	
+	static const sf::Time TimePerFrame;
+	void registerStates();
 	void processEvent();
-	void update();
+	void update(sf::Time dt);
 	void render();
-
-	void showStatus();
 };
 
