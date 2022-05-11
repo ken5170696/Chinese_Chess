@@ -19,6 +19,9 @@ private:
 	Board board;
 	Status status;
 
+	bool blackRound;
+	bool redRound;
+
 	ChessManager chessManager;
 	std::unique_ptr<std::vector<sf::Vector2f>> validPath;
 	std::vector<Chess*> tmpChessObj;
@@ -33,6 +36,7 @@ public:
 
 private:
 	void whoWin(const Player& playerBlack, const Player& playerRed);
+	void checkmate();
 
 	void initWindow();
 	void initVar();

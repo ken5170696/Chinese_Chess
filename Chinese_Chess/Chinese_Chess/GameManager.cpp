@@ -10,6 +10,8 @@ GameManager::GameManager()
 	window->setFramerateLimit(144);
 	this->status = Status::WaitBlackPressed;
 	board.update(playerBlack, playerRed);
+	blackRound = true;
+	redRound = true;
 
 	if (!font.loadFromFile("arial.ttf"))
 	{
@@ -53,6 +55,69 @@ void GameManager::initWindow()
 	this->videoMode.width = WINDOW_RESOLUTION_WIDTH;
 	this->videoMode.height = WINDOW_RESOLUTION_HEIGHT;
 	this->window = new sf::RenderWindow(videoMode, "Game1", sf::Style::Close | sf::Style::Titlebar);
+
+}
+
+void GameManager::checkmate()
+{
+
+	bool find = false;
+	if (blackRound)
+	{
+		for (auto& tmpChess : playerBlack.getChessList())
+		{
+			std::vector<sf::Vector2f> tmpPath;
+			if (tmpChess->getActive())
+			{
+				tmpPath = tmpChess->findPath(board);
+				for (auto& tmpPos : tmpPath)
+				{
+					//std::cout <<tmpChess->getId()<< "->" << tmpPos.x << " " << tmpPos.y << "\t" << opponent.getChessList()[0]->getPosition().x << " " << opponent.getChessList()[0]->getPosition().y << std::endl;
+					if (tmpPos == playerRed.getChessList()[0]->getPosition())
+					{
+						find = true;
+						break;
+					}
+				}
+
+			}
+			if (find)
+				break;
+
+		}
+		if (find)
+		{
+			std::cout << "Black Checkmate!!!!!!!!!!!!!!!!!!!!!\n";
+		}
+	}
+	else if (redRound)
+	{
+		for (auto& tmpChess : playerRed.getChessList())
+		{
+			std::vector<sf::Vector2f> tmpPath;
+			if (tmpChess->getActive())
+			{
+				tmpPath = tmpChess->findPath(board);
+				for (auto& tmpPos : tmpPath)
+				{
+					//std::cout <<tmpChess->getId()<< "->" << tmpPos.x << " " << tmpPos.y << "\t" << opponent.getChessList()[0]->getPosition().x << " " << opponent.getChessList()[0]->getPosition().y << std::endl;
+					if (tmpPos == playerBlack.getChessList()[0]->getPosition())
+					{
+						find = true;
+						break;
+					}
+				}
+
+			}
+			if (find)
+				break;
+
+		}
+		if (find)
+		{
+			std::cout << "Red Checkmate!!!!!!!!!!!!!!!!!!!!!\n";
+		}
+	}
 
 }
 
@@ -101,9 +166,8 @@ void GameManager::processEvent()
 
 void GameManager::update()
 {
-	showStatus();
+	//showStatus();
 	whoWin(playerBlack, playerRed);
-
 	board.update(playerBlack, playerRed);
 	for (auto chess : playerBlack.getChessList()) {
 		if (chess->getActive()) {
@@ -131,6 +195,7 @@ void GameManager::update()
 	switch (status)
 	{
 	case Status::WaitBlackPressed:
+		checkmate();
 		while (chessManager.getCommandNum()) {
 			std::vector<sf::Vector2f> tmpValidPath = chessManager.doCommand(*selectChess);
 			this->selectChess = chessManager.getSelectedChess();
@@ -163,6 +228,8 @@ void GameManager::update()
 				this->selectChess = nullptr;
 				playerBlack.setSelectChess(nullptr);
 				status = Status::WaitRedPressed;
+				blackRound = false;
+				redRound = true;
 				break;
 			}
 			else {
@@ -175,6 +242,7 @@ void GameManager::update()
 		}
 		break;
 	case Status::WaitRedPressed:
+		checkmate();
 		while (chessManager.getCommandNum()) {
 			std::vector<sf::Vector2f> tmpValidPath = chessManager.doCommand(*selectChess);
 			this->selectChess = chessManager.getSelectedChess();
@@ -207,6 +275,8 @@ void GameManager::update()
 				this->selectChess = nullptr;
 				playerRed.setSelectChess(nullptr);
 				status = Status::WaitBlackPressed;
+				blackRound = true;
+				redRound = false;
 				break;
 			}
 			else {
@@ -220,6 +290,7 @@ void GameManager::update()
 		break;
 	default:
 		break;
+
 	}
 
 	//switch (status)
@@ -493,14 +564,14 @@ void GameManager::render()
 	for (auto& tmpChess : tmpChessObj) {
 		window->draw(*tmpChess);
 	}
-	
+
 
 	window->display();
 }
 
 void GameManager::showStatus()
 {
-	if(status == Status::WaitBlackPressed)
+	if (status == Status::WaitBlackPressed)
 		std::cout << "WaitBlackPressed";
 	else if (status == Status::WaitBlackPathPressed)
 		std::cout << "WaitBlackPathPressed";

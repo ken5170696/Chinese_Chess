@@ -12,6 +12,25 @@ void Board::setSpritePosition(const sf::Vector2f& pos)
 	sprite.setPosition(pos);
 }
 
+void Board::printChessPos()
+{
+	for (auto& y : this->boardArray)
+	{
+		for (auto& x : y)
+		{
+			if (x == nullptr)
+			{
+				std::cout << "X\t";
+				continue;
+			}
+				
+			std::cout << x->getId() << "\t";
+		}
+		std::cout << std::endl;
+	}
+	std::cout << "==========================\n";
+}
+
 sf::Sprite& Board::getSprite()
 {
 	return this->sprite;
