@@ -2,6 +2,7 @@
 
 MenuState::MenuState(StateStack& _stack, StateContext _context)
 	: State(_stack, _context)
+	, menuView()
 {
 	window = _context.window;
 
@@ -46,15 +47,16 @@ MenuState::MenuState(StateStack& _stack, StateContext _context)
 		_context.window->getSize().y * 0.5f + playRect.getSize().y * 1.2);
 	Button exitButton(OptionNames::Exit, buttonPos2, playRect, playText);
 	mOptions.push_back(exitButton);
+
+	menuView.objStack.push_back(&backgroundRect);
+	menuView.objStack.push_back(&titleText);
+	for (auto& button : mOptions)
+		menuView.objStack.push_back(&button);
 }
 
 void MenuState::draw()
 {
-	window->draw(backgroundRect);
-	window->draw(titleText);
-	for (const auto& button : mOptions)
-		window->draw(button);
-	
+	menuView.draw(window);
 }
 
 bool MenuState::update(sf::Time dt)

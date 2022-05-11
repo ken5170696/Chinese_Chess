@@ -1,10 +1,10 @@
-#include "Application.h"
+#include "GameManager.h"
 
 int main()
 {
 	try
 	{
-		Application app;
+		GameManager app;
 		app.run();
 	}
 	catch (std::exception& e)

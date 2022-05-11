@@ -5,7 +5,7 @@
 #include "GameState.h"
 #include "MenuState.h"
 #include "PauseState.h"
-class Application
+class GameManager
 {
 private:
 	StateStack stateStack;
@@ -13,8 +13,8 @@ private:
 	FontHolder fontHolder;
 
 public:
-	Application();	
-	~Application();
+	GameManager();	
+	~GameManager();
 	void run();
 
 private:
