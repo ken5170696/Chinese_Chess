@@ -1,7 +1,14 @@
-#include "GameManager.h"
+#include "Application.h"
 
 int main()
 {
-	GameManager game;
-	game.run();
+	try
+	{
+		Application app;
+		app.run();
+	}
+	catch (std::exception& e)
+	{
+		std::cout << "\nEXCEPTION: " << e.what() << std::endl;
+	}
 }
