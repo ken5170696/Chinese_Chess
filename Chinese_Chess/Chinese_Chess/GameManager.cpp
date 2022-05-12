@@ -70,6 +70,12 @@ void GameManager::registerStates()
 	stateStack.registerState<MultiplayerGameState>(States::ID::MultiplayerMenu);
 	stateStack.registerState<GameState>(States::ID::Game);
 	stateStack.registerState<PauseState>(States::ID::Pause);
+	stateStack.registerState<RedIsCeckMate>(States::ID::RedIsCheckMate);
+	stateStack.registerState<BlackIsCheckMate>(States::ID::BlackIsCheckMate);
+	stateStack.registerState<BlackIsStalemate>(States::ID::BlackIsStalemate);
+	stateStack.registerState<RedIsStalemate>(States::ID::RedIsStalemate);
+
+
 }
 
 void GameManager::processEvent()

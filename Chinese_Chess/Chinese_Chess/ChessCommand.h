@@ -1,6 +1,9 @@
 #pragma once
 #include <functional>
+
+#include "GameHeader.h"
 #include "Chess.h"
+
 // command interface
 class ChessCommand
 {
@@ -19,6 +22,7 @@ private:
 	sf::Vector2i mousePosition;
 public:
 	ChessFindPath(std::vector<Chess*> _chessList, const Board& _board, sf::Vector2i _mousePosition);
+	bool validMove(Chess& selectedChess, sf::Vector2f goalPos);
 	virtual std::vector<sf::Vector2f> execute(Chess& selectedChess) override;
 	virtual void undo() override;
 };
@@ -31,6 +35,7 @@ private:
 
 public:
 	ChessMove(std::vector<Chess*> _tmpChessList, Board& _board, sf::Vector2i _mousePosition);
+	
 	virtual std::vector<sf::Vector2f> execute(Chess& selectedChess) override;
 	virtual void undo() override;
 };

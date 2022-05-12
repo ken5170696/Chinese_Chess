@@ -76,6 +76,37 @@ void Player::handleRealtimeInput(ChessManager& commands, Status status, Board& b
 	}
 }
 
+void Player::checkmate(const Player& opponent, const Board& board)
+{
+	//std::cout << "_____________________________\n";
+	bool find = false;
+	for (auto& tmpChess : this->chessList)
+	{
+		std::vector<sf::Vector2f> tmpPath;
+		if (tmpChess->getActive())
+		{
+			tmpPath = tmpChess->findPath(board);
+			for (auto& tmpPos : tmpPath)
+			{
+				//std::cout <<tmpChess->getId()<< "->" << tmpPos.x << " " << tmpPos.y << "\t" << opponent.getChessList()[0]->getPosition().x << " " << opponent.getChessList()[0]->getPosition().y << std::endl;
+				if (tmpPos == opponent.getChessList()[0]->getPosition())
+				{
+					find = true;
+					break;
+				}
+			}
+
+		}
+		if (find)
+			break;
+		
+	}
+	if (find)
+	{
+		std::cout << "Checkmate!!!!!!!!!!!!!!!!!!!!!\n";
+	}
+}
+
 // set chess initial position
 void setChessInitPos(std::vector<Chess*>& chessList, Player& player) {
 	if (player.team == Team::Red) {
