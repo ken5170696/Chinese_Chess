@@ -1,16 +1,16 @@
 #pragma once
+#include "GameHeader.h"
 
 #include "Button.h"
 #include "State.h"
-
-class PauseState : public State
+class RedIsCeckMate :
+    public State
 {
 private:
     sf::RenderWindow* window;
     enum OptionNames
     {
-        Play,
-        Exit,
+        OK
     };
     std::vector<Button> mOptions;
     sf::Text text;
@@ -19,11 +19,12 @@ private:
 
 
 public:
-    PauseState(StateStack& _stack, StateContext _context);
+    RedIsCeckMate(StateStack& _stack, StateContext _context);
 
 private:
     virtual void draw() override;
     virtual bool update(sf::Time dt) override;
     virtual bool handleEvent(const sf::Event& event) override;
+
 };
 

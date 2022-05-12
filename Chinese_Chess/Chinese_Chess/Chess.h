@@ -47,8 +47,6 @@ public:
 
 	void resetIsPressed() { isPressed = false; };
 	bool getIsPressed() const { return this->isPressed; };
-
-
 };
 
 class King :public Chess

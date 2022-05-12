@@ -1,16 +1,14 @@
 #pragma once
-
 #include "Button.h"
 #include "State.h"
-
-class PauseState : public State
+class RedIsStalemate :
+    public State
 {
 private:
     sf::RenderWindow* window;
     enum OptionNames
     {
-        Play,
-        Exit,
+        OK
     };
     std::vector<Button> mOptions;
     sf::Text text;
@@ -19,7 +17,7 @@ private:
 
 
 public:
-    PauseState(StateStack& _stack, StateContext _context);
+    RedIsStalemate(StateStack& _stack, StateContext _context);
 
 private:
     virtual void draw() override;

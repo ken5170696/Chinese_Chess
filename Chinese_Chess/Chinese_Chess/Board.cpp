@@ -7,6 +7,26 @@ Board::Board()
 	sprite.setScale(CHESSBOARD_IMG_SCALE, CHESSBOARD_IMG_SCALE);
 	boardArray = std::vector <std::vector<Chess*>>(10, std::vector<Chess*>(9, nullptr));
 }
+void Board::printBoard()
+{
+	for (auto& y : boardArray)
+	{
+		for (auto& x : y)
+		{
+			if (x == nullptr)
+				std::cout << "X\t";
+			else
+				std::cout << x->getId() << "\t";
+
+		}
+		std::cout << "\n";
+	}
+}
+void Board::setBoard(Chess *startChess , sf::Vector2f goalPos)
+{
+	boardArray[startChess->getPosition().y][startChess->getPosition().x] = nullptr;
+	boardArray[goalPos.y][goalPos.x] = startChess;
+}
 void Board::setSpritePosition(const sf::Vector2f& pos)
 {
 	sprite.setPosition(pos);

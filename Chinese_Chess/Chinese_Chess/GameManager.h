@@ -8,6 +8,11 @@
 #include "GameServer.h"
 #include "MenuState.h"
 #include "PauseState.h"
+#include "BlackIsCheckMate.h"
+#include "RedIsCeckMate.h"
+#include "BlackIsStalemate.h"
+#include "RedIsStalemate.h"
+
 class GameManager
 {
 private:
