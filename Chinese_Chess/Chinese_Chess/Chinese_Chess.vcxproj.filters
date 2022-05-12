@@ -64,6 +64,12 @@
     <Filter Include="Header Files\GUI">
       <UniqueIdentifier>{b9444b67-c200-4d58-8c19-ce4babf304d3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\GUI">
+      <UniqueIdentifier>{3539990a-d088-4218-8dca-a81b0880c66f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Scene Header\GameState\MessageBox">
+      <UniqueIdentifier>{499fa982-c85d-4d9a-bdef-10a682230d55}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
@@ -105,9 +111,6 @@
     <ClCompile Include="TitleState.cpp">
       <Filter>Source Files\Scene Header\TitleState</Filter>
     </ClCompile>
-    <ClCompile Include="Button.cpp">
-      <Filter>Source Files\Scene Header\MenuState</Filter>
-    </ClCompile>
     <ClCompile Include="PauseState.cpp">
       <Filter>Source Files\Scene Header\PauseState</Filter>
     </ClCompile>
@@ -127,19 +130,16 @@
       <Filter>Source Files\Scene Header\MultiplayerGameState</Filter>
     </ClCompile>
     <ClCompile Include="TextBox.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\GUI</Filter>
     </ClCompile>
-    <ClCompile Include="RedIsCeckMate.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Button.cpp">
+      <Filter>Source Files\GUI</Filter>
     </ClCompile>
-    <ClCompile Include="BlackIsCheckMate.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="MessageBox.cpp">
+      <Filter>Source Files\GUI</Filter>
     </ClCompile>
-    <ClCompile Include="BlackIsStalemate.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="RedIsStalemate.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="GameMessage.cpp">
+      <Filter>Source Files\Scene Header\GameState</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -206,17 +206,11 @@
     <ClInclude Include="TextBox.h">
       <Filter>Header Files\GUI</Filter>
     </ClInclude>
-    <ClInclude Include="RedIsCeckMate.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="MessageBox.h">
+      <Filter>Header Files\GUI</Filter>
     </ClInclude>
-    <ClInclude Include="BlackIsCheckMate.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BlackIsStalemate.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RedIsStalemate.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="GameMessage.h">
+      <Filter>Header Files\Scene Header\GameState\MessageBox</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

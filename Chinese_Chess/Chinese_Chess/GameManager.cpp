@@ -63,17 +63,17 @@ void GameManager::run()
 void GameManager::registerStates()
 {
 	/*stateStack.registerState<TitleStates>(States::ID::Title);*/
-	stateStack.registerState<MenuState>(States::ID::Menu);
-	stateStack.registerState<MultiplayerGameState>(States::ID::MultiplayerGame);
-	stateStack.registerState<MutiplayerMenu>(States::ID::ServerMenu);
-	stateStack.registerState<ServerEnterIpMenu>(States::ID::ServerEnterIpMenu);
-	stateStack.registerState<MultiplayerGameState>(States::ID::MultiplayerMenu);
-	stateStack.registerState<GameState>(States::ID::Game);
-	stateStack.registerState<PauseState>(States::ID::Pause);
-	stateStack.registerState<RedIsCeckMate>(States::ID::RedIsCheckMate);
-	stateStack.registerState<BlackIsCheckMate>(States::ID::BlackIsCheckMate);
-	stateStack.registerState<BlackIsStalemate>(States::ID::BlackIsStalemate);
-	stateStack.registerState<RedIsStalemate>(States::ID::RedIsStalemate);
+	stateStack.registerState<MenuState>(			States::ID::Menu);
+	stateStack.registerState<MultiplayerGameState>(	States::ID::MultiplayerGame);
+	stateStack.registerState<MutiplayerMenu>(		States::ID::ServerMenu);
+	stateStack.registerState<ServerEnterIpMenu>(	States::ID::ServerEnterIpMenu);
+	stateStack.registerState<MultiplayerGameState>(	States::ID::MultiplayerMenu);
+	stateStack.registerState<GameState>(			States::ID::Game);
+	stateStack.registerState<PauseState>(			States::ID::Pause);
+	stateStack.registerState<RedIsCheckMate>(		States::ID::RedIsCheckMate);
+	stateStack.registerState<BlackIsCheckMate>(		States::ID::BlackIsCheckMate);
+	stateStack.registerState<BlackIsStalemate>(		States::ID::BlackIsStalemate);
+	stateStack.registerState<RedIsStalemate>(		States::ID::RedIsStalemate);
 
 
 }

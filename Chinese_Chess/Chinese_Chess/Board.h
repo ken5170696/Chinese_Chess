@@ -36,8 +36,8 @@ private:
 	std::vector <std::vector<Chess*>> boardArray;
 	sf::Texture textTure;
 	sf::Sprite sprite;
-	Player playerBlackExit;
-	Player playerRedExit;
+	/*Player playerBlackExit;
+	Player playerRedExit;*/
 
 public:
 	Board();

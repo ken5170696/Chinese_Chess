@@ -1,30 +1,27 @@
 #pragma once
-#include "GameHeader.h"
-
 #include "Button.h"
 #include "State.h"
-class RedIsCeckMate :
+class MessageBox :
     public State
 {
-private:
+protected:
     sf::RenderWindow* window;
     enum OptionNames
     {
-        OK
+        OK,
     };
     std::vector<Button> mOptions;
-    sf::Text text;
     sf::Text titleText;
     sf::RectangleShape backgroundRect;
 
 
 public:
-    RedIsCeckMate(StateStack& _stack, StateContext _context);
+    MessageBox(StateStack& _stack, StateContext _context);
 
-private:
+protected:
+    void setTitle(const std::string& titleString);
     virtual void draw() override;
     virtual bool update(sf::Time dt) override;
     virtual bool handleEvent(const sf::Event& event) override;
-
 };
 

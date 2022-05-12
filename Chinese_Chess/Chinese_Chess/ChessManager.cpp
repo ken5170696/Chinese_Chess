@@ -11,6 +11,7 @@ std::vector<sf::Vector2f> ChessManager::doCommand(Chess& selectedChess)
 	if (commandQueue.size()) {
 		validPath = commandQueue.front()->execute(selectedChess);
 		this->selectedChess = commandQueue.front()->getSelectedChess();
+		delete commandQueue.front();
 		commandQueue.pop_front();
 	}
 	return validPath;

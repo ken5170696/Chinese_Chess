@@ -35,7 +35,7 @@ bool MultiplayerGameState::update(sf::Time dt)
 		if (clientSocket.connect(serverIp, SERVER_POST) == sf::TcpSocket::Done) {
 			isConnected == true;
 		}
-		return;
+		return true;
 	}
 	handleIncomingPackets();
     return true;

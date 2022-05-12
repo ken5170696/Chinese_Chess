@@ -177,13 +177,11 @@ bool GameState::handleEvent(const sf::Event& event)
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
 				if (isPause == false) {
-					std::cout << "PAUSE\n";
 					requestStackPush(States::ID::Pause);
 					isPause = true;
 				}
 				else {
 					requestStackPop();
-					std::cout << "N   PAUSE\n";
 					isPause = false;
 				}
 			}
