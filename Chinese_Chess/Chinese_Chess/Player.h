@@ -17,10 +17,13 @@ private:
 	Chess* selectChess;
 
 public:
+	Player();
 	Player(Team _team);
+	Player(const Player& player);
 
 public:
 	std::vector<Chess*> getChessList() const { return chessList; }
+	void initialPlayer(Team _team);
 	void setValidMoveChessList(std::vector<Chess*>& _validMoveChessList) {
 		validMoveChessList = _validMoveChessList;
 	};
@@ -32,6 +35,7 @@ public:
 	}
 	void handleEvent(const sf::Event& event, ChessManager& commands);
 	void handleRealtimeInput(ChessManager& commands, Status status, Board& board);
+
 public:
 	friend void setChessInitPos(std::vector<Chess*>& chessList, Player& player);
 

@@ -65,6 +65,7 @@ namespace Fonts {
 }
 
 typedef ResourceHolder<sf::Font, Fonts::ID> FontHolder;
+typedef ResourceHolder<sf::Texture, Textures::ID> TextureHolder;
 
 /* Game Status */
 enum class Status
@@ -101,7 +102,7 @@ namespace States {
 		Menu,
 		ServerMenu,
 		ServerEnterIpMenu,
-		MultiplayerLobby,
+		MultiplayerMenu,
 		MultiplayerGame,
 		Game,
 		Pause,
@@ -114,11 +115,14 @@ class StateContext
 {
 public:
 	StateContext(sf::RenderWindow* _window
-				, FontHolder* _fontHolder)
+				, FontHolder* _fontHolder
+				, TextureHolder* _textureHolder)
 	{
 		fontHolder = _fontHolder;
 		window = _window;
+		textureHolder = _textureHolder;
 	};
 	sf::RenderWindow* window;
 	FontHolder* fontHolder;
+	TextureHolder* textureHolder;
 };

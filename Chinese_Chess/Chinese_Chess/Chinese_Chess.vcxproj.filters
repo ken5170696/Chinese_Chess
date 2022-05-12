@@ -114,7 +114,7 @@
     <ClCompile Include="MenuView.cpp">
       <Filter>Source Files\Scene Header\MenuState</Filter>
     </ClCompile>
-    <ClCompile Include="MultiplayerLobbyState.cpp">
+    <ClCompile Include="MutiplayerMenu.cpp">
       <Filter>Source Files\Scene Header\MultiplayerGameState</Filter>
     </ClCompile>
     <ClCompile Include="GameServer.cpp">
@@ -179,7 +179,7 @@
     <ClInclude Include="MultiplayerGameState.h">
       <Filter>Header Files\Scene Header\MultiplayerGameState</Filter>
     </ClInclude>
-    <ClInclude Include="MultiplayerLobbyState.h">
+    <ClInclude Include="MutiplayerMenu.h">
       <Filter>Header Files\Scene Header\MultiplayerGameState</Filter>
     </ClInclude>
     <ClInclude Include="GameServer.h">

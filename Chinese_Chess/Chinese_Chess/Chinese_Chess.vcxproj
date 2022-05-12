@@ -157,7 +157,7 @@
     <ClCompile Include="MenuState.cpp" />
     <ClCompile Include="MenuView.cpp" />
     <ClCompile Include="MultiplayerGameState.cpp" />
-    <ClCompile Include="MultiplayerLobbyState.cpp" />
+    <ClCompile Include="MutiplayerMenu.cpp" />
     <ClCompile Include="NetworkProtocol.cpp" />
     <ClCompile Include="PauseState.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -183,7 +183,7 @@
     <ClInclude Include="MenuState.h" />
     <ClInclude Include="MenuView.h" />
     <ClInclude Include="MultiplayerGameState.h" />
-    <ClInclude Include="MultiplayerLobbyState.h" />
+    <ClInclude Include="MutiplayerMenu.h" />
     <ClInclude Include="NetworkProtocol.h" />
     <ClInclude Include="PauseState.h" />
     <ClInclude Include="Player.h" />

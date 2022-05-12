@@ -1,13 +1,48 @@
 ﻿#include "Player.h"
 
+Player::Player()
+{
+}
+
 Player::Player(Team _team)
 {
+	selectChess = nullptr;
 	selectPathChess = nullptr;
 	team = _team;
-
 	Factory chessFac;
 	Chess* tmpChess;
 	
+	int tmpId = 0;
+	tmpChess = chessFac.getChess(Characters::King, team, tmpId++);
+	chessList.push_back(tmpChess);
+	for (int charIdx = int(Characters::Advisors); charIdx <= int(Characters::Cannons); charIdx++) {
+		for (int num = 0; num < 2; num++) {
+			tmpChess = chessFac.getChess(Characters(charIdx), team, tmpId++);
+			chessList.push_back(tmpChess);
+		}
+	}
+	for (int num = 0; num < 5; num++) {
+		tmpChess = chessFac.getChess(Characters::Soldiers, team, tmpId++);
+		chessList.push_back(tmpChess);
+	}
+	setChessInitPos(chessList, *this);
+}
+Player::Player(const Player& player)
+{
+	team = player.team;
+	chessList = player.chessList;
+	validMoveChessList = player.validMoveChessList;
+	selectPathChess = player.selectPathChess;
+	selectChess = player.selectChess;
+}
+void Player::initialPlayer(Team _team)
+{
+	selectChess = nullptr;
+	selectPathChess = nullptr;
+	team = _team;
+	Factory chessFac;
+	Chess* tmpChess;
+
 	int tmpId = 0;
 	tmpChess = chessFac.getChess(Characters::King, team, tmpId++);
 	chessList.push_back(tmpChess);
