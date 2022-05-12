@@ -24,6 +24,9 @@ private:
 	sf::Clock inputClock;
 	sf::Font font;
 	bool isPause;
+
+	bool checkStalemate;
+	bool hintHasShowed;
 public:
 	GameState(StateStack& stack, StateContext context);
 	~GameState();
@@ -31,6 +34,9 @@ public:
 
 private:
 	void whoWin(const Player& playerBlack, const Player& playerRed);
+	int checkmate();
+
+	bool validMove(Chess& _selectedChess, sf::Vector2f _goalPos);
 
 	sf::Vector2f BoardToWindowPosition(sf::Vector2f boardPosition);
 	sf::Vector2f WindowToBoardPosition(sf::Vector2f windowPosition);

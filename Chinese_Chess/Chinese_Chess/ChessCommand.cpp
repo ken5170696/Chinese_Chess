@@ -7,6 +7,54 @@ ChessFindPath::ChessFindPath(std::vector<Chess*> _chessList, const Board& _board
 	mousePosition = _mousePosition;
 }
 
+bool ChessFindPath::validMove(Chess& selectedChess, sf::Vector2f goalPos)
+{
+
+	Board tmpBoard = *board;
+	bool valid = true;
+	sf::Vector2f originalPos = selectedChess.getPosition();
+	sf::Vector2f kingPos;
+
+	tmpBoard.setBoard(&selectedChess, goalPos);
+
+	selectedChess.setPosition(goalPos);
+	for (auto const& chessY : tmpBoard.getBoard())
+	{
+		for (auto const& chessX : chessY)
+		{
+			if (chessX != nullptr && chessX->getTeam() == selectedChess.getTeam())
+			{
+				if (chessX->getCharacters() == Characters::King)
+				{
+					kingPos = chessX->getPosition();
+				}
+			}
+		}
+	}
+
+	for (int y = 0;y < 10;y++)
+	{
+		for (int x = 0;x < 9;x++)
+		{
+			if (tmpBoard.getBoard()[y][x] != nullptr && tmpBoard.getBoard()[y][x]->getTeam() != selectedChess.getTeam())
+			{
+				std::vector <sf::Vector2f> tmpPath = tmpBoard.getBoard()[y][x]->findPath(tmpBoard);
+				for (auto const& path : tmpPath)
+				{
+					if (path == kingPos)
+					{
+						selectedChess.setPosition(originalPos);
+						return false;
+					}
+
+				}
+			}
+		}
+	}
+	selectedChess.setPosition(originalPos);
+	return true;
+}
+
 std::vector<sf::Vector2f> ChessFindPath::execute(Chess& selectedChess)
 {
 	std::vector<sf::Vector2f> validPath;
@@ -15,6 +63,14 @@ std::vector<sf::Vector2f> ChessFindPath::execute(Chess& selectedChess)
 			break;
 		if (chess->getIsPressed()) {
 			validPath = chess->findPath(*board);
+			for (int index = 0;index < validPath.size();index++)
+			{
+				if (!validMove(*chess, validPath[index]))
+				{
+					validPath.erase(validPath.begin() + index);
+					index--;
+				}
+			}
 			this->selectedChess = chess;
 		}
 	}
@@ -32,6 +88,7 @@ ChessMove::ChessMove(std::vector<Chess*> _tmpChessList, Board& _board, sf::Vecto
 	mousePosition = _mousePosition;
 }
 
+
 std::vector<sf::Vector2f> ChessMove::execute(Chess& selectedChess)
 {
 	std::vector<sf::Vector2f> validPath;
@@ -41,6 +98,7 @@ std::vector<sf::Vector2f> ChessMove::execute(Chess& selectedChess)
 		if (chess->getIsPressed()) {
 			validPath.push_back(sf::Vector2f());
 			selectedChess.move(chess, *board);
+
 		}
 	}
 	return validPath;

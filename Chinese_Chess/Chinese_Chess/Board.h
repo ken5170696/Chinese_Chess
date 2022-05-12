@@ -43,6 +43,9 @@ public:
 	void resetBoardArray();
 	sf::Sprite& getSprite();
 	sf::Vector2f getBoardSize() const;
-	std::vector<std::vector<Chess*>> getBoard() const { return boardArray;	};
+	std::vector<std::vector<Chess*>> getBoard() const { return boardArray; };
+	void printBoard();
+	void setBoard(Chess* startChess, sf::Vector2f goalPos);
 	void setSpritePosition(const sf::Vector2f& pos);
+	void printChessPos();
 };

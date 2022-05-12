@@ -6,9 +6,11 @@ GameState::GameState(StateStack& stack, StateContext context)
 	, playerRed(Team::Red)
 	, board()
 	, chessManager()
-	,ev()
+	, ev()
 {
 	isPause = false;
+	hintHasShowed = false;
+	checkStalemate = false;
 	selectChess = nullptr;
 	selectPathChess = nullptr;
 	window = context.window;
@@ -50,6 +52,99 @@ void GameState::whoWin(const Player& playerBlack, const Player& playerRed)
 	}
 }
 
+int GameState::checkmate()
+{
+	//黑方剛移動完
+	if (status == Status::WaitRedPressed)
+	{
+		for (auto& tmpChess : playerBlack.getChessList())
+		{
+			if (tmpChess->getActive())
+			{
+				std::vector <sf::Vector2f> tmpPath = tmpChess->findPath(this->board);
+				for (auto& tmpPos : tmpPath)
+				{
+					if (tmpPos == playerRed.getChessList()[0]->getPosition())
+					{
+						//黑方將紅方軍
+						return 2;
+					}
+				}
+			}
+
+		}
+	}
+	//紅方剛移動完
+	else if (status == Status::WaitBlackPressed)
+	{
+		for (auto& tmpChess : playerRed.getChessList())
+		{
+			if (tmpChess->getActive())
+			{
+				std::vector <sf::Vector2f> tmpPath = tmpChess->findPath(this->board);
+				for (auto& tmpPos : tmpPath)
+				{
+
+					if (tmpPos == playerBlack.getChessList()[0]->getPosition())
+					{
+						//紅方將黑方軍
+						return 1;
+					}
+				}
+
+			}
+		}
+	}
+	return 0;
+}
+
+bool GameState::validMove(Chess& _selectedChess, sf::Vector2f _goalPos)
+{
+	Board tmpBoard = board;
+	bool valid = true;
+	sf::Vector2f originalPos = _selectedChess.getPosition();
+	sf::Vector2f kingPos;
+
+	tmpBoard.setBoard(&_selectedChess, _goalPos);
+
+	_selectedChess.setPosition(_goalPos);
+	for (auto const& chessY : tmpBoard.getBoard())
+	{
+		for (auto const& chessX : chessY)
+		{
+			if (chessX != nullptr && chessX->getTeam() == _selectedChess.getTeam())
+			{
+				if (chessX->getCharacters() == Characters::King)
+				{
+					kingPos = chessX->getPosition();
+				}
+			}
+		}
+	}
+
+	for (int y = 0;y < 10;y++)
+	{
+		for (int x = 0;x < 9;x++)
+		{
+			if (tmpBoard.getBoard()[y][x] != nullptr && tmpBoard.getBoard()[y][x]->getTeam() != _selectedChess.getTeam())
+			{
+				std::vector <sf::Vector2f> tmpPath = tmpBoard.getBoard()[y][x]->findPath(tmpBoard);
+				for (auto const& path : tmpPath)
+				{
+					if (path == kingPos)
+					{
+						_selectedChess.setPosition(originalPos);
+						return false;
+					}
+
+				}
+			}
+		}
+	}
+	_selectedChess.setPosition(originalPos);
+	return true;
+}
+
 sf::Vector2f GameState::BoardToWindowPosition(sf::Vector2f boardArrPosition)
 {
 	sf::Vector2f windowPosition;
@@ -72,13 +167,14 @@ sf::Vector2f GameState::WindowToBoardPosition(sf::Vector2f windowPosition)
 
 bool GameState::handleEvent(const sf::Event& event)
 {
-	if(getStackNum() == 1)
+	if (getStackNum() == 1)
 		isPause = false;
 	while (this->window->pollEvent(this->ev))
 	{
 		switch (event.type)
 		{
 		case sf::Event::KeyPressed: {
+
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
 				if (isPause == false) {
 					std::cout << "PAUSE\n";
@@ -104,11 +200,88 @@ bool GameState::handleEvent(const sf::Event& event)
 	if (status == Status::WaitRedPressed || status == Status::WaitRedPathPressed)
 		playerRed.handleRealtimeInput(chessManager, status, board);
 
+	//將軍&欠行跳出視窗
+	//紅方剛移動完
+	if (status == Status::WaitBlackPressed && !hintHasShowed)
+	{
+		bool end = true;
+		for (auto const& chess : playerBlack.getChessList())
+		{
+			//有路可走
+			if (chess->getActive() && chess->findPath(board).size() != 0)
+			{
+				std::vector <sf::Vector2f> validPath = chess->findPath(board);
+				for (auto const& path : validPath)
+				{
+					if (validMove(*chess, path))
+					{
+						end = false;
+						break;
+					}
+				}
+			}
+			if (!end)
+				break;
+		}
+		//欠行
+		if (end)
+		{
+			isPause = true;
+			requestStackPush(States::ID::BlackIsStalemate);
+		}
+		//將軍
+		else if (!hintHasShowed && checkmate() == 1)
+		{
+			isPause = true;
+			requestStackPush(States::ID::BlackIsCheckMate);
+		}
+		hintHasShowed = true;
+
+	}
+	//黑方剛移動完
+	else if (status == Status::WaitRedPressed && !hintHasShowed)
+	{
+		bool end = true;
+		for (auto const& chess : playerRed.getChessList())
+		{
+			//有路可走
+			if (chess->getActive() && chess->findPath(board).size() != 0)
+			{
+				std::vector <sf::Vector2f> validPath = chess->findPath(board);
+				for (auto const& path : validPath)
+				{
+					if (validMove(*chess, path))
+					{
+						end = false;
+						break;
+					}
+				}
+			}
+			if (!end)
+				break;
+		}
+		//欠行
+		if (end)
+		{
+			isPause = true;
+			requestStackPush(States::ID::RedIsStalemate);
+		}
+		//將軍
+		else if (checkmate() == 2)
+		{
+
+			isPause = true;
+			requestStackPush(States::ID::RedIsCheckMate);
+		}
+		hintHasShowed = true;
+	}
+
 	return true;
 }
 
 bool GameState::update(sf::Time dt)
 {
+
 	if (!isPause) {
 		whoWin(playerBlack, playerRed);
 
@@ -170,6 +343,8 @@ bool GameState::update(sf::Time dt)
 					tmpChessObj.clear();
 					this->selectChess = nullptr;
 					playerBlack.setSelectChess(nullptr);
+					hintHasShowed = false;
+					checkStalemate = false;
 					status = Status::WaitRedPressed;
 					break;
 				}
@@ -214,6 +389,8 @@ bool GameState::update(sf::Time dt)
 					tmpChessObj.clear();
 					this->selectChess = nullptr;
 					playerRed.setSelectChess(nullptr);
+					hintHasShowed = false;
+					checkStalemate = false;
 					status = Status::WaitBlackPressed;
 					break;
 				}

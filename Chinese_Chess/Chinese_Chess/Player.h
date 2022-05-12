@@ -32,6 +32,8 @@ public:
 	}
 	void handleEvent(const sf::Event& event, ChessManager& commands);
 	void handleRealtimeInput(ChessManager& commands, Status status, Board& board);
+
+	void checkmate(const Player& opponent, const Board& board);
 public:
 	friend void setChessInitPos(std::vector<Chess*>& chessList, Player& player);
 

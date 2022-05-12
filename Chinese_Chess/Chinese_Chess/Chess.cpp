@@ -44,6 +44,8 @@ void Chess::update(sf::RenderWindow& win, sf::Event ev)
 }
 
 
+
+
 King::King(const Team& _team, int _id)
 	:Chess(_team, _id)
 {
@@ -188,9 +190,7 @@ void King::move(Chess* chess, const Board& board)
 	//若目標位置為空
 	if (board.getBoard()[goalPos.y][goalPos.x] == nullptr)
 	{
-		board.getBoard()[this->boardPosition.y][this->boardPosition.x] = nullptr;
 		boardPosition = goalPos;
-		board.getBoard()[this->boardPosition.y][this->boardPosition.x] = this;
 	}
 	//若目標位置不為空
 	else
@@ -199,16 +199,12 @@ void King::move(Chess* chess, const Board& board)
 		if (board.getBoard()[goalPos.y][goalPos.x]->getActive())
 		{
 			board.getBoard()[goalPos.y][goalPos.x]->setActive(false);
-			board.getBoard()[this->boardPosition.y][this->boardPosition.x] = nullptr;
 			boardPosition = goalPos;
-			board.getBoard()[this->boardPosition.y][this->boardPosition.x] = this;
 		}
 		//若目標位置的棋子已死
 		else
 		{
-			board.getBoard()[this->boardPosition.y][this->boardPosition.x] = nullptr;
 			boardPosition = goalPos;
-			board.getBoard()[this->boardPosition.y][this->boardPosition.x] = this;
 		}
 	}
 
@@ -308,9 +304,7 @@ void Advisors::move(Chess* chess, const Board& board)
 	//若目標位置為空
 	if (board.getBoard()[goalPos.y][goalPos.x] == nullptr)
 	{
-		board.getBoard()[this->boardPosition.y][this->boardPosition.x] = nullptr;
 		boardPosition = goalPos;
-		board.getBoard()[this->boardPosition.y][this->boardPosition.x] = this;
 	}
 	//若目標位置不為空
 	else
@@ -319,18 +313,15 @@ void Advisors::move(Chess* chess, const Board& board)
 		if (board.getBoard()[goalPos.y][goalPos.x]->getActive())
 		{
 			board.getBoard()[goalPos.y][goalPos.x]->setActive(false);
-			board.getBoard()[this->boardPosition.y][this->boardPosition.x] = nullptr;
 			boardPosition = goalPos;
-			board.getBoard()[this->boardPosition.y][this->boardPosition.x] = this;
 		}
 		//若目標位置的棋子已死
 		else
 		{
-			board.getBoard()[this->boardPosition.y][this->boardPosition.x] = nullptr;
 			boardPosition = goalPos;
-			board.getBoard()[this->boardPosition.y][this->boardPosition.x] = this;
 		}
 	}
+
 
 }
 std::vector<sf::Vector2f> Advisors::findPath(const Board& board)
@@ -384,9 +375,7 @@ void Minister::move(Chess* chess, const Board& board)
 	//若目標位置為空
 	if (board.getBoard()[goalPos.y][goalPos.x] == nullptr)
 	{
-		board.getBoard()[this->boardPosition.y][this->boardPosition.x] = nullptr;
 		boardPosition = goalPos;
-		board.getBoard()[this->boardPosition.y][this->boardPosition.x] = this;
 	}
 	//若目標位置不為空
 	else
@@ -395,16 +384,12 @@ void Minister::move(Chess* chess, const Board& board)
 		if (board.getBoard()[goalPos.y][goalPos.x]->getActive())
 		{
 			board.getBoard()[goalPos.y][goalPos.x]->setActive(false);
-			board.getBoard()[this->boardPosition.y][this->boardPosition.x] = nullptr;
 			boardPosition = goalPos;
-			board.getBoard()[this->boardPosition.y][this->boardPosition.x] = this;
 		}
 		//若目標位置的棋子已死
 		else
 		{
-			board.getBoard()[this->boardPosition.y][this->boardPosition.x] = nullptr;
 			boardPosition = goalPos;
-			board.getBoard()[this->boardPosition.y][this->boardPosition.x] = this;
 		}
 	}
 
@@ -470,9 +455,7 @@ void Chariots::move(Chess* chess, const Board& board)
 	//若目標位置為空
 	if (board.getBoard()[goalPos.y][goalPos.x] == nullptr)
 	{
-		board.getBoard()[this->boardPosition.y][this->boardPosition.x] = nullptr;
 		boardPosition = goalPos;
-		board.getBoard()[this->boardPosition.y][this->boardPosition.x] = this;
 	}
 	//若目標位置不為空
 	else
@@ -481,18 +464,15 @@ void Chariots::move(Chess* chess, const Board& board)
 		if (board.getBoard()[goalPos.y][goalPos.x]->getActive())
 		{
 			board.getBoard()[goalPos.y][goalPos.x]->setActive(false);
-			board.getBoard()[this->boardPosition.y][this->boardPosition.x] = nullptr;
 			boardPosition = goalPos;
-			board.getBoard()[this->boardPosition.y][this->boardPosition.x] = this;
 		}
 		//若目標位置的棋子已死
 		else
 		{
-			board.getBoard()[this->boardPosition.y][this->boardPosition.x] = nullptr;
 			boardPosition = goalPos;
-			board.getBoard()[this->boardPosition.y][this->boardPosition.x] = this;
 		}
 	}
+
 
 }
 std::vector<sf::Vector2f> Chariots::findPath(const Board& board)
@@ -542,9 +522,7 @@ void Knights::move(Chess* chess, const Board& board)
 	//若目標位置為空
 	if (board.getBoard()[goalPos.y][goalPos.x] == nullptr)
 	{
-		board.getBoard()[this->boardPosition.y][this->boardPosition.x] = nullptr;
 		boardPosition = goalPos;
-		board.getBoard()[this->boardPosition.y][this->boardPosition.x] = this;
 	}
 	//若目標位置不為空
 	else
@@ -553,18 +531,15 @@ void Knights::move(Chess* chess, const Board& board)
 		if (board.getBoard()[goalPos.y][goalPos.x]->getActive())
 		{
 			board.getBoard()[goalPos.y][goalPos.x]->setActive(false);
-			board.getBoard()[this->boardPosition.y][this->boardPosition.x] = nullptr;
 			boardPosition = goalPos;
-			board.getBoard()[this->boardPosition.y][this->boardPosition.x] = this;
 		}
 		//若目標位置的棋子已死
 		else
 		{
-			board.getBoard()[this->boardPosition.y][this->boardPosition.x] = nullptr;
 			boardPosition = goalPos;
-			board.getBoard()[this->boardPosition.y][this->boardPosition.x] = this;
 		}
 	}
+
 
 }
 std::vector<sf::Vector2f> Knights::findPath(const Board& board)
@@ -621,9 +596,7 @@ void Cannons::move(Chess* chess, const Board& board)
 	//若目標位置為空
 	if (board.getBoard()[goalPos.y][goalPos.x] == nullptr)
 	{
-		board.getBoard()[this->boardPosition.y][this->boardPosition.x] = nullptr;
 		boardPosition = goalPos;
-		board.getBoard()[this->boardPosition.y][this->boardPosition.x] = this;
 	}
 	//若目標位置不為空
 	else
@@ -632,18 +605,15 @@ void Cannons::move(Chess* chess, const Board& board)
 		if (board.getBoard()[goalPos.y][goalPos.x]->getActive())
 		{
 			board.getBoard()[goalPos.y][goalPos.x]->setActive(false);
-			board.getBoard()[this->boardPosition.y][this->boardPosition.x] = nullptr;
 			boardPosition = goalPos;
-			board.getBoard()[this->boardPosition.y][this->boardPosition.x] = this;
 		}
 		//若目標位置的棋子已死
 		else
 		{
-			board.getBoard()[this->boardPosition.y][this->boardPosition.x] = nullptr;
 			boardPosition = goalPos;
-			board.getBoard()[this->boardPosition.y][this->boardPosition.x] = this;
 		}
 	}
+
 
 }
 std::vector<sf::Vector2f> Cannons::findPath(const Board& board)
@@ -689,6 +659,12 @@ std::vector<sf::Vector2f> Cannons::findPath(const Board& board)
 								findChessToEat = true;
 								break;
 							}
+							else if(board.getBoard()[goalPos.y][goalPos.x] != nullptr &&
+									board.getBoard()[goalPos.y][goalPos.x]->getTeam() == this->getTeam())
+							{
+								findChessToEat = true;
+									break;
+							}
 						}
 					}
 					if (findChessToEat)
@@ -709,9 +685,7 @@ void Soldiers::move(Chess* chess, const Board& board)
 	//若目標位置為空
 	if (board.getBoard()[goalPos.y][goalPos.x] == nullptr)
 	{
-		board.getBoard()[this->boardPosition.y][this->boardPosition.x] = nullptr;
 		boardPosition = goalPos;
-		board.getBoard()[this->boardPosition.y][this->boardPosition.x] = this;
 	}
 	//若目標位置不為空
 	else
@@ -720,16 +694,12 @@ void Soldiers::move(Chess* chess, const Board& board)
 		if (board.getBoard()[goalPos.y][goalPos.x]->getActive())
 		{
 			board.getBoard()[goalPos.y][goalPos.x]->setActive(false);
-			board.getBoard()[this->boardPosition.y][this->boardPosition.x] = nullptr;
 			boardPosition = goalPos;
-			board.getBoard()[this->boardPosition.y][this->boardPosition.x] = this;
 		}
 		//若目標位置的棋子已死
 		else
 		{
-			board.getBoard()[this->boardPosition.y][this->boardPosition.x] = nullptr;
 			boardPosition = goalPos;
-			board.getBoard()[this->boardPosition.y][this->boardPosition.x] = this;
 		}
 	}
 
