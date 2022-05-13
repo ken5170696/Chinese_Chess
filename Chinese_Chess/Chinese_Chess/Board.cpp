@@ -29,13 +29,37 @@ void Board::update(const std::vector<Chess*>& playerBlack, const std::vector<Che
 {
 	boardArray = std::vector<std::vector<Chess*>>(10, std::vector<Chess*>(9, nullptr));
 	for (const auto& tmpChess : playerBlack) {
-		const sf::Vector2f& tmpPos = tmpChess->getBoardPosition();
-		boardArray[tmpPos.y][tmpPos.x] = tmpChess;
+		if (tmpChess->getActive())
+		{
+			const sf::Vector2f& tmpPos = tmpChess->getBoardPosition();
+			boardArray[tmpPos.y][tmpPos.x] = tmpChess;
+		}
 	}
 	for (const auto& tmpChess : playerRed) {
-		const sf::Vector2f& tmpPos = tmpChess->getBoardPosition();
-		boardArray[tmpPos.y][tmpPos.x] = tmpChess;
+		if (tmpChess->getActive())
+		{
+			const sf::Vector2f& tmpPos = tmpChess->getBoardPosition();
+			boardArray[tmpPos.y][tmpPos.x] = tmpChess;
+		}
 	}
+}
+void Board::printChessPos() 
+{
+	for (auto& y : this->boardArray)
+	{
+		for (auto& x : y)
+		{
+			if (x == nullptr)
+			{
+				std::cout << "X\t";
+				continue;
+			}
+				
+			std::cout << x->getId() << "\t";
+		}
+		std::cout << std::endl;
+	}
+	std::cout << "==========================\n";
 }
 void Board::setSpritePosition(sf::Vector2f _pos)
 {
