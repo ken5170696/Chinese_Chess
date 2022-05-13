@@ -1,41 +1,6 @@
-#include "MultiplayerLobbyState.h"
+#include "MutiplayerMenu.h"
 
-MultiplayerLobby::MultiplayerLobby(StateStack& _stack, StateContext _context)
-	:State(_stack, _context)
-{
-	sf::IpAddress serverAddr;
-	sf::TcpListener listener;
-	sf::TcpSocket tcpSocket;
-
-	std::fstream ipFile(IPFILE);
-	// 找到ipFIle為房主, 沒有表示不為房主
-	if (ipFile) {
-
-	}
-	else {
-
-	}
-	ipFile.close();
-
-
-	window = _context.window;
-}
-
-void MultiplayerLobby::draw()
-{
-}
-
-bool MultiplayerLobby::update(sf::Time dt)
-{
-	return false;
-}
-
-bool MultiplayerLobby::handleEvent(const sf::Event& event)
-{
-	return false;
-}
-
-ServerMenu::ServerMenu(StateStack& _stack, StateContext _context)
+MutiplayerMenu::MutiplayerMenu(StateStack& _stack, StateContext _context)
 	: State(_stack, _context)
 {
 	window = _context.window;
@@ -94,7 +59,7 @@ ServerMenu::ServerMenu(StateStack& _stack, StateContext _context)
 	mOptions.push_back(exitButton);
 }
 
-void ServerMenu::draw()
+void MutiplayerMenu::draw()
 {
 	window->draw(backgroundRect);
 	window->draw(titleText);
@@ -103,7 +68,7 @@ void ServerMenu::draw()
 
 }
 
-bool ServerMenu::update(sf::Time dt)
+bool MutiplayerMenu::update(sf::Time dt)
 {
 
 	for (auto& button : mOptions)
@@ -112,17 +77,16 @@ bool ServerMenu::update(sf::Time dt)
 	return true;
 }
 
-bool ServerMenu::handleEvent(const sf::Event& event)
+bool MutiplayerMenu::handleEvent(const sf::Event& event)
 {
 	for (auto& button : mOptions) {
 		button.handleEvent(*window);
 		if (button.isPressed()) {
 			if (button.getId() == OptionNames::Host) {
-				requestStateClear();
-				requestStackPush(States::ID::Menu);
+				
+				requestStackPush(States::ID::MultiplayerGame);
 			}
 			if (button.getId() == OptionNames::Client) {
-				requestStateClear();
 				requestStackPush(States::ID::ServerEnterIpMenu);
 			}
 			else if (button.getId() == OptionNames::Exit) {
@@ -219,6 +183,7 @@ bool ServerEnterIpMenu::handleEvent(const sf::Event& event)
 		button.handleEvent(*window);
 		if (button.isPressed()) {
 			if (button.getId() == OptionNames::Submit) {
+
 				std::fstream ipFile;
 				ipFile.open(IPFILE, std::ios_base::out);
 				if (!ipFile)
@@ -240,7 +205,7 @@ bool ServerEnterIpMenu::handleEvent(const sf::Event& event)
 					continue;
 				}
 				requestStackPop();
-				requestStackPush(States::ID::MultiplayerLobby);
+				requestStackPush(States::ID::MultiplayerGame);
 			}
 			else if (button.getId() == OptionNames::Exit) {
 

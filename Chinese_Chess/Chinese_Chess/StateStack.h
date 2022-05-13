@@ -27,6 +27,7 @@ private:
 		};
 		PendingChange(Action _action) {
 			action = _action;
+			stateID = States::ID::None;
 		};
 		Action action;
 		States::ID stateID;

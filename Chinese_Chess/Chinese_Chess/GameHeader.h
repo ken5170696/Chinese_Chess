@@ -32,7 +32,7 @@
 #define CHESS_IMG_SCALE 0.11f
 #define CHESSBOARD_IMG_SCALE 0.31f
 
-#define DELAY_TIME 100
+#define DELAY_TIME 10
 
 /* Resource */
 namespace Textures
@@ -65,16 +65,8 @@ namespace Fonts {
 }
 
 typedef ResourceHolder<sf::Font, Fonts::ID> FontHolder;
+typedef ResourceHolder<sf::Texture, Textures::ID> TextureHolder;
 
-/* Game Status */
-enum class Status
-{
-	WaitBlackPressed,
-	WaitBlackPathPressed,
-
-	WaitRedPressed,
-	WaitRedPathPressed,
-};
 /* Chess Characters */
 enum class Characters
 {
@@ -90,7 +82,8 @@ enum class Characters
 enum class Team
 {
 	Red,
-	Black
+	Black,
+	none,
 };
 
 /* Global Status */
@@ -101,7 +94,7 @@ namespace States {
 		Menu,
 		ServerMenu,
 		ServerEnterIpMenu,
-		MultiplayerLobby,
+		MultiplayerMenu,
 		MultiplayerGame,
 		BlackIsCheckMate,
 		RedIsCheckMate,
@@ -110,6 +103,7 @@ namespace States {
 		Game,
 		Pause,
 		End,
+		None,
 	};
 }
 
@@ -118,11 +112,14 @@ class StateContext
 {
 public:
 	StateContext(sf::RenderWindow* _window
-				, FontHolder* _fontHolder)
+				, FontHolder* _fontHolder
+				, TextureHolder* _textureHolder)
 	{
 		fontHolder = _fontHolder;
 		window = _window;
+		textureHolder = _textureHolder;
 	};
 	sf::RenderWindow* window;
 	FontHolder* fontHolder;
+	TextureHolder* textureHolder;
 };

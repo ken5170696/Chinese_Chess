@@ -2,49 +2,50 @@
 
 void Chess::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-	target.draw(sprite, states);
+	if (active) {
+		target.draw(sprite, states);
+	}
 }
 
 Chess::Chess(const Team& _team, int _id)
 	: chessCharacter()
 {
-
 	id = _id;
 	active = true;
 	team = _team;
 	sprite.setScale(CHESS_IMG_SCALE, CHESS_IMG_SCALE);
-	isPressed = false;
-
 
 	if (id == -1)
 		sprite.setColor(sf::Color(230, 0, 0, 170));
 }
 
-void Chess::update(sf::RenderWindow& win, sf::Event ev)
+void Chess::update(const sf::RenderWindow& win)
 {
-	sf::Vector2i mousePos = sf::Mouse::getPosition(win);
-	//std::cout << mousePos.x << " " << mousePos.y << "\n";
-
-	if (sprite.getGlobalBounds().contains(win.mapPixelToCoords(sf::Mouse::getPosition(win)))) {
-		sprite.setScale(CHESS_IMG_SCALE + 0.01, CHESS_IMG_SCALE + 0.01);
-		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-		{
-			isPressed = true;
+	if (active) {
+		// update button appearance by status
+		sf::Vector2i mousePos = sf::Mouse::getPosition(win);
+		if (isHover()) {
+			sprite.setScale(CHESS_IMG_SCALE + 0.01, CHESS_IMG_SCALE + 0.01);
 		}
-		else
-		{
-			isPressed = false;
+		else {
+			sprite.setScale(CHESS_IMG_SCALE, CHESS_IMG_SCALE);
 		}
 	}
-	else {
-		sprite.setScale(CHESS_IMG_SCALE, CHESS_IMG_SCALE);
-		isPressed = false;
-	}
-
 }
 
-
-
+void Chess::handleEvent(sf::RenderWindow& win)
+{
+	if (active) {
+		buttonStatus = 0;
+		if (sprite.getGlobalBounds().contains(win.mapPixelToCoords(sf::Mouse::getPosition(win)))) {
+			buttonStatus += unsigned int(ButtonStatus::hover);
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+			{
+				buttonStatus += unsigned int(ButtonStatus::pressed);
+			}
+		}
+	}
+}
 
 King::King(const Team& _team, int _id)
 	:Chess(_team, _id)
@@ -183,9 +184,9 @@ Chess* Factory::getChess(const Characters& ch, const Team& team, int _id)
 	return nullptr;
 }
 
-void King::move(Chess* chess, const Board& board)
+void King::move(Chess* goalChess, const Board& board)
 {
-	sf::Vector2f goalPos = chess->getPosition();
+	sf::Vector2f goalPos = goalChess->getBoardPosition();
 
 	//若目標位置為空
 	if (board.getBoard()[goalPos.y][goalPos.x] == nullptr)
@@ -297,9 +298,9 @@ std::vector<sf::Vector2f> King::findPath(const Board& board)
 	}/**/
 	return validPath;
 }
-void Advisors::move(Chess* chess, const Board& board)
+void Advisors::move(Chess* goalChess, const Board& board)
 {
-	sf::Vector2f goalPos = chess->getPosition();
+	sf::Vector2f goalPos = goalChess->getBoardPosition();
 
 	//若目標位置為空
 	if (board.getBoard()[goalPos.y][goalPos.x] == nullptr)
@@ -368,9 +369,9 @@ std::vector<sf::Vector2f> Advisors::findPath(const Board& board)
 	}
 	return validPath;
 }
-void Minister::move(Chess* chess, const Board& board)
+void Minister::move(Chess* goalChess, const Board& board)
 {
-	sf::Vector2f goalPos = chess->getPosition();
+	sf::Vector2f goalPos = goalChess->getBoardPosition();
 
 	//若目標位置為空
 	if (board.getBoard()[goalPos.y][goalPos.x] == nullptr)
@@ -448,9 +449,9 @@ std::vector<sf::Vector2f> Minister::findPath(const Board& board)
 
 	return validPath;
 }
-void Chariots::move(Chess* chess, const Board& board)
+void Chariots::move(Chess* goalChess, const Board& board)
 {
-	sf::Vector2f goalPos = chess->getPosition();
+	sf::Vector2f goalPos = goalChess->getBoardPosition();
 
 	//若目標位置為空
 	if (board.getBoard()[goalPos.y][goalPos.x] == nullptr)
@@ -515,9 +516,9 @@ std::vector<sf::Vector2f> Chariots::findPath(const Board& board)
 	}
 	return validPath;
 }
-void Knights::move(Chess* chess, const Board& board)
+void Knights::move(Chess* goalChess, const Board& board)
 {
-	sf::Vector2f goalPos = chess->getPosition();
+	sf::Vector2f goalPos = goalChess->getBoardPosition();
 
 	//若目標位置為空
 	if (board.getBoard()[goalPos.y][goalPos.x] == nullptr)
@@ -589,9 +590,9 @@ std::vector<sf::Vector2f> Knights::findPath(const Board& board)
 
 	return validPath;
 }
-void Cannons::move(Chess* chess, const Board& board)
+void Cannons::move(Chess* goalChess, const Board& board)
 {
-	sf::Vector2f goalPos = chess->getPosition();
+	sf::Vector2f goalPos = goalChess->getBoardPosition();
 
 	//若目標位置為空
 	if (board.getBoard()[goalPos.y][goalPos.x] == nullptr)
@@ -678,9 +679,9 @@ std::vector<sf::Vector2f> Cannons::findPath(const Board& board)
 	}
 	return validPath;
 }
-void Soldiers::move(Chess* chess, const Board& board)
+void Soldiers::move(Chess* goalChess, const Board& board)
 {
-	sf::Vector2f goalPos = chess->getPosition();
+	sf::Vector2f goalPos = goalChess->getBoardPosition();
 
 	//若目標位置為空
 	if (board.getBoard()[goalPos.y][goalPos.x] == nullptr)

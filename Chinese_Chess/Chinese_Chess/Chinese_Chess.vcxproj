@@ -146,8 +146,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="BlackIsCheckMate.cpp" />
-    <ClCompile Include="BlackIsStalemate.cpp" />
+    <ClCompile Include="GameMessage.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="Button.cpp" />
@@ -158,13 +157,12 @@
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="MenuState.cpp" />
     <ClCompile Include="MenuView.cpp" />
+    <ClCompile Include="MessageBox.cpp" />
     <ClCompile Include="MultiplayerGameState.cpp" />
-    <ClCompile Include="MultiplayerLobbyState.cpp" />
+    <ClCompile Include="MutiplayerMenu.cpp" />
     <ClCompile Include="NetworkProtocol.cpp" />
     <ClCompile Include="PauseState.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="RedIsCeckMate.cpp" />
-    <ClCompile Include="RedIsStalemate.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="ResourceHolder.cpp" />
     <ClCompile Include="State.cpp" />
@@ -179,8 +177,7 @@
     <None Include="Reference\Project2 Grading Sheet.docx" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BlackIsCheckMate.h" />
-    <ClInclude Include="BlackIsStalemate.h" />
+    <ClInclude Include="GameMessage.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="ChessCommand.h" />
@@ -189,13 +186,12 @@
     <ClInclude Include="GameState.h" />
     <ClInclude Include="MenuState.h" />
     <ClInclude Include="MenuView.h" />
+    <ClInclude Include="MessageBox.h" />
     <ClInclude Include="MultiplayerGameState.h" />
-    <ClInclude Include="MultiplayerLobbyState.h" />
+    <ClInclude Include="MutiplayerMenu.h" />
     <ClInclude Include="NetworkProtocol.h" />
     <ClInclude Include="PauseState.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="RedIsCeckMate.h" />
-    <ClInclude Include="RedIsStalemate.h" />
     <ClInclude Include="ResourceHolder.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="StateStack.h" />

@@ -219,6 +219,7 @@ GameServer::~GameServer()
 }
 
 RemotePeer::RemotePeer()
+	: player(Team::Black)
 {
 	socket.setBlocking(false);
 	ready = false;

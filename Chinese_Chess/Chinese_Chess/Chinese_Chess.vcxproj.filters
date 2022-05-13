@@ -49,9 +49,6 @@
     <Filter Include="Source Files\Scene Header\TitleState">
       <UniqueIdentifier>{1cb8d038-355f-4c6e-848c-01c1d02e3459}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Scene Header\PauseState">
-      <UniqueIdentifier>{67b2cf41-732f-487d-8249-031291798b02}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Scene Header\PauseState">
       <UniqueIdentifier>{e8bfdbcb-76d8-41ca-a965-e25910ccbaed}</UniqueIdentifier>
     </Filter>
@@ -63,6 +60,15 @@
     </Filter>
     <Filter Include="Header Files\GUI">
       <UniqueIdentifier>{b9444b67-c200-4d58-8c19-ce4babf304d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GUI">
+      <UniqueIdentifier>{3539990a-d088-4218-8dca-a81b0880c66f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Scene Header\GameState\MessageBox">
+      <UniqueIdentifier>{499fa982-c85d-4d9a-bdef-10a682230d55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Scene Header\GameState\PauseState">
+      <UniqueIdentifier>{67b2cf41-732f-487d-8249-031291798b02}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -105,16 +111,13 @@
     <ClCompile Include="TitleState.cpp">
       <Filter>Source Files\Scene Header\TitleState</Filter>
     </ClCompile>
-    <ClCompile Include="Button.cpp">
-      <Filter>Source Files\Scene Header\MenuState</Filter>
-    </ClCompile>
     <ClCompile Include="PauseState.cpp">
       <Filter>Source Files\Scene Header\PauseState</Filter>
     </ClCompile>
     <ClCompile Include="MenuView.cpp">
       <Filter>Source Files\Scene Header\MenuState</Filter>
     </ClCompile>
-    <ClCompile Include="MultiplayerLobbyState.cpp">
+    <ClCompile Include="MutiplayerMenu.cpp">
       <Filter>Source Files\Scene Header\MultiplayerGameState</Filter>
     </ClCompile>
     <ClCompile Include="GameServer.cpp">
@@ -127,19 +130,16 @@
       <Filter>Source Files\Scene Header\MultiplayerGameState</Filter>
     </ClCompile>
     <ClCompile Include="TextBox.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\GUI</Filter>
     </ClCompile>
-    <ClCompile Include="RedIsCeckMate.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Button.cpp">
+      <Filter>Source Files\GUI</Filter>
     </ClCompile>
-    <ClCompile Include="BlackIsCheckMate.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="MessageBox.cpp">
+      <Filter>Source Files\GUI</Filter>
     </ClCompile>
-    <ClCompile Include="BlackIsStalemate.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="RedIsStalemate.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="GameMessage.cpp">
+      <Filter>Source Files\Scene Header\GameState</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -183,7 +183,7 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PauseState.h">
-      <Filter>Header Files\Scene Header\PauseState</Filter>
+      <Filter>Header Files\Scene Header\GameState\PauseState</Filter>
     </ClInclude>
     <ClInclude Include="MenuView.h">
       <Filter>Header Files\Scene Header\MenuState</Filter>
@@ -191,7 +191,7 @@
     <ClInclude Include="MultiplayerGameState.h">
       <Filter>Header Files\Scene Header\MultiplayerGameState</Filter>
     </ClInclude>
-    <ClInclude Include="MultiplayerLobbyState.h">
+    <ClInclude Include="MutiplayerMenu.h">
       <Filter>Header Files\Scene Header\MultiplayerGameState</Filter>
     </ClInclude>
     <ClInclude Include="GameServer.h">
@@ -206,17 +206,11 @@
     <ClInclude Include="TextBox.h">
       <Filter>Header Files\GUI</Filter>
     </ClInclude>
-    <ClInclude Include="RedIsCeckMate.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="MessageBox.h">
+      <Filter>Header Files\GUI</Filter>
     </ClInclude>
-    <ClInclude Include="BlackIsCheckMate.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BlackIsStalemate.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RedIsStalemate.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="GameMessage.h">
+      <Filter>Header Files\Scene Header\GameState\MessageBox</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

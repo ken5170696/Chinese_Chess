@@ -1,6 +1,5 @@
 #include "PauseState.h"
 
-
 PauseState::PauseState(StateStack& _stack, StateContext _context)
 	: State(_stack, _context)
 {
@@ -61,8 +60,9 @@ void PauseState::draw()
 bool PauseState::update(sf::Time dt)
 {
 
-	for (auto& button : mOptions)
+	for (auto& button : mOptions) {
 		button.update();
+	}
 
 	return true;
 }

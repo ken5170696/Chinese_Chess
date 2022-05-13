@@ -1,6 +1,6 @@
-#include "RedIsStalemate.h"
+#include "MessageBox.h"
 
-RedIsStalemate::RedIsStalemate(StateStack& _stack, StateContext _context)
+MessageBox::MessageBox(StateStack& _stack, StateContext _context)
 	: State(_stack, _context)
 {
 	window = _context.window;
@@ -12,10 +12,6 @@ RedIsStalemate::RedIsStalemate(StateStack& _stack, StateContext _context)
 	backgroundRect.setPosition(sf::Vector2f(window->getSize().x * 0.5, window->getSize().y * 0.5));
 
 	titleText.setFont(_context.fontHolder->get(Fonts::ID::BiauKai));
-	titleText.setString(L"¬õ¤è¤í¦æ");
-	titleText.setFillColor(sf::Color::Black);
-	titleText.setStyle(sf::Text::Style::Bold);
-	titleText.setCharacterSize(84);
 	titleText.setOrigin(sf::Vector2f(titleText.getLocalBounds().width / 2
 		, titleText.getLocalBounds().height / 2));
 	titleText.setPosition(sf::Vector2f(_context.window->getSize().x / 2.f,
@@ -36,8 +32,14 @@ RedIsStalemate::RedIsStalemate(StateStack& _stack, StateContext _context)
 	Button playButton(OptionNames::OK, buttonPos, playRect, playText);
 	mOptions.push_back(playButton);
 }
-
-void RedIsStalemate::draw()
+void MessageBox::setTitle(const std::string& titleString)
+{
+	titleText.setString(titleString);
+	titleText.setFillColor(sf::Color::Black);
+	titleText.setStyle(sf::Text::Style::Bold);
+	titleText.setCharacterSize(84);
+}
+void MessageBox::draw()
 {
 	window->draw(backgroundRect);
 	window->draw(titleText);
@@ -45,7 +47,7 @@ void RedIsStalemate::draw()
 		window->draw(button);
 }
 
-bool RedIsStalemate::update(sf::Time dt)
+bool MessageBox::update(sf::Time dt)
 {
 	for (auto& button : mOptions)
 		button.update();
@@ -53,7 +55,7 @@ bool RedIsStalemate::update(sf::Time dt)
 	return true;
 }
 
-bool RedIsStalemate::handleEvent(const sf::Event& event)
+bool MessageBox::handleEvent(const sf::Event& event)
 {
 	for (auto& button : mOptions) {
 		button.handleEvent(*window);
@@ -65,3 +67,4 @@ bool RedIsStalemate::handleEvent(const sf::Event& event)
 	}
 	return true;
 }
+
