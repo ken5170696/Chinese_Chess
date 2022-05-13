@@ -1,12 +1,13 @@
 #include "GameManager.h"
 
-const sf::Time GameManager::TimePerFrame = sf::seconds(1.f / 60.f);
+const sf::Time GameManager::TimePerFrame = sf::seconds(1.f / 144.f);
 
 GameManager::GameManager()
 	:window(sf::VideoMode(WINDOW_RESOLUTION_WIDTH, WINDOW_RESOLUTION_HEIGHT),
 		"Game1", sf::Style::Close | sf::Style::Titlebar )
 	,stateStack(StateContext(&window, &fontHolder, &textureHolder))
 {
+	pause = false;
 	window.setFramerateLimit(144);
 
 	registerStates();
@@ -83,16 +84,24 @@ void GameManager::processEvent()
 	sf::Event event;
 	while (window.pollEvent(event))
 	{
-		stateStack.handleEvent(event);
+
+		if (pause == false)
+			stateStack.handleEvent(event);
 
 		if (event.type == sf::Event::Closed)
 			window.close();
+
+		if (event.type == sf::Event::GainedFocus)
+			pause = false;
+		if (event.type == sf::Event::LostFocus)
+			pause = true;
 	}
 }
 
 void GameManager::update(sf::Time dt)
 {
-	stateStack.update(dt);
+	if(pause == false)
+		stateStack.update(dt);
 }
 
 void GameManager::render()

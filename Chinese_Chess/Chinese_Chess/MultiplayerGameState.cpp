@@ -3,7 +3,7 @@
 
 MultiplayerGameState::MultiplayerGameState(StateStack& _stack, StateContext _context)
     : State(_stack, _context)
-    , localBoard()
+    //, localBoard()
 {
     window = _context.window;
 	std::fstream ipFile;
@@ -19,7 +19,7 @@ MultiplayerGameState::MultiplayerGameState(StateStack& _stack, StateContext _con
     isInit = false;
     isReady = false;
 	localStatus = MutiplayerStatus::connecting;
-
+	isConnected = false;
 	background.setFillColor(sf::Color::White);
 	background.setSize(sf::Vector2f(window->getSize()));
 }
@@ -33,7 +33,7 @@ bool MultiplayerGameState::update(sf::Time dt)
 {
 	if (isConnected == false) {
 		if (clientSocket.connect(serverIp, SERVER_POST) == sf::TcpSocket::Done) {
-			isConnected == true;
+			isConnected = true;
 		}
 		return true;
 	}

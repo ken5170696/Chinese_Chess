@@ -21,9 +21,9 @@ class MultiplayerGameState
 	};
 private:
 	sf::RenderWindow* window;
-	Board localBoard;
+	/*Board localBoard;
 	Player LocalPlayer;
-	Player RemotePlayer;
+	Player RemotePlayer;*/
 	bool isInit;
 	bool isReady;
 	bool isConnected;

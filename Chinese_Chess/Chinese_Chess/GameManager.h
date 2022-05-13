@@ -17,7 +17,7 @@ private:
 	sf::RenderWindow window;
 	FontHolder fontHolder;
 	TextureHolder textureHolder;
-
+	bool pause;
 public:
 	GameManager();	
 	~GameManager();

@@ -58,8 +58,6 @@ void StateStack::handleEvent(const sf::Event& event)
 			return;
 	}
 
-	while (sf::Mouse::isButtonPressed(sf::Mouse::Left));
-
 	applyPendingChanges();
 }
 

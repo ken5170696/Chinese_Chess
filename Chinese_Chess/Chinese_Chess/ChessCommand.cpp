@@ -12,12 +12,12 @@ bool ChessFindPath::validMove(Chess& selectedChess, sf::Vector2f goalPos)
 
 	Board tmpBoard = *board;
 	bool valid = true;
-	sf::Vector2f originalPos = selectedChess.getPosition();
+	sf::Vector2f originalPos = selectedChess.getBoardPosition();
 	sf::Vector2f kingPos;
 
 	tmpBoard.setBoard(&selectedChess, goalPos);
 
-	selectedChess.setPosition(goalPos);
+	selectedChess.setBoardPosition(goalPos);
 	for (auto const& chessY : tmpBoard.getBoard())
 	{
 		for (auto const& chessX : chessY)
@@ -43,7 +43,7 @@ bool ChessFindPath::validMove(Chess& selectedChess, sf::Vector2f goalPos)
 				{
 					if (path == kingPos)
 					{
-						selectedChess.setPosition(originalPos);
+						selectedChess.setBoardPosition(originalPos);
 						return false;
 					}
 
@@ -51,7 +51,7 @@ bool ChessFindPath::validMove(Chess& selectedChess, sf::Vector2f goalPos)
 			}
 		}
 	}
-	selectedChess.setPosition(originalPos);
+	selectedChess.setBoardPosition(originalPos);
 	return true;
 }
 
@@ -61,7 +61,7 @@ std::vector<sf::Vector2f> ChessFindPath::execute(Chess& selectedChess)
 	for (auto& chess : chessList) {
 		if (validPath.size() != 0)
 			break;
-		if (chess->getIsPressed()) {
+		if (chess->isPressed()) {
 			validPath = chess->findPath(*board);
 			for (int index = 0;index < validPath.size();index++)
 			{
@@ -95,7 +95,7 @@ std::vector<sf::Vector2f> ChessMove::execute(Chess& selectedChess)
 	for (const auto& chess : tmpChessList) {
 		if (validPath.size() != 0)
 			break;
-		if (chess->getIsPressed()) {
+		if (chess->isPressed()) {
 			validPath.push_back(sf::Vector2f());
 			selectedChess.move(chess, *board);
 

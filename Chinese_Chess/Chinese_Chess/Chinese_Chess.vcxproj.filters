@@ -49,9 +49,6 @@
     <Filter Include="Source Files\Scene Header\TitleState">
       <UniqueIdentifier>{1cb8d038-355f-4c6e-848c-01c1d02e3459}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Scene Header\PauseState">
-      <UniqueIdentifier>{67b2cf41-732f-487d-8249-031291798b02}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Scene Header\PauseState">
       <UniqueIdentifier>{e8bfdbcb-76d8-41ca-a965-e25910ccbaed}</UniqueIdentifier>
     </Filter>
@@ -69,6 +66,9 @@
     </Filter>
     <Filter Include="Header Files\Scene Header\GameState\MessageBox">
       <UniqueIdentifier>{499fa982-c85d-4d9a-bdef-10a682230d55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Scene Header\GameState\PauseState">
+      <UniqueIdentifier>{67b2cf41-732f-487d-8249-031291798b02}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -183,7 +183,7 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PauseState.h">
-      <Filter>Header Files\Scene Header\PauseState</Filter>
+      <Filter>Header Files\Scene Header\GameState\PauseState</Filter>
     </ClInclude>
     <ClInclude Include="MenuView.h">
       <Filter>Header Files\Scene Header\MenuState</Filter>
