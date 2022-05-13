@@ -261,12 +261,12 @@ std::vector<sf::Vector2f> King::findPath(const Board& board)
 			sf::Vector2f goalPos = boardPosition + dxy;
 			if (8 >= goalPos.x && goalPos.x >= 0 && 9 >= goalPos.y && goalPos.y >= 0)
 			{
-				if (board.getBoard()[goalPos.y][goalPos.x] != nullptr && 
+				if (board.getBoard()[goalPos.y][goalPos.x] != nullptr &&
 					board.getBoard()[goalPos.y][goalPos.x]->getCharacters() == Characters::King)
 				{
 					validPath.push_back(goalPos);
 				}
-				else if(board.getBoard()[goalPos.y][goalPos.x] != nullptr)
+				else if (board.getBoard()[goalPos.y][goalPos.x] != nullptr)
 				{
 					break;
 				}
@@ -293,6 +293,10 @@ std::vector<sf::Vector2f> King::findPath(const Board& board)
 				{
 					break;
 				}
+			}
+			else
+			{
+				break;
 			}
 		}
 	}/**/

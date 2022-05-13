@@ -37,11 +37,16 @@ public:
     Board board;
     SelectedChess* selectedChess;
     bool isPressed;
+    bool hintHasShowed;
 private:
     virtual void draw() override;
     virtual bool update(sf::Time dt) override;
     virtual bool handleEvent(const sf::Event& event) override;
     void whoWin(const Player& playerBlack, const Player& playerRed);
+
+    void hint();
+    int checkmate();
+    bool validMove(Chess& _selectedChess, sf::Vector2f goalPos);
 };
 
 

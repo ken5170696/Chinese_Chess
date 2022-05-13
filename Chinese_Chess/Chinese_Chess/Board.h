@@ -39,6 +39,9 @@ public:
 	std::vector<std::vector<Chess*>> getBoard() const;
 	void setBoard(Chess* startChess, sf::Vector2f goalPos);
 	void update(const std::vector<Chess*>& playerBlack, const std::vector<Chess*>& playerRed);
+
+	void printChessPos();
+
 	void setSpritePosition(sf::Vector2f _pos);
 	sf::Vector2f BoardToWindowPosition(sf::Vector2f boardPosition);
 	sf::Vector2f WindowToBoardPosition(sf::Vector2f windowPosition);

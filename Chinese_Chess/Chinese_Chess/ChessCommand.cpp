@@ -26,6 +26,7 @@ bool ChessFindPath::validMove(Chess& selectedChess, sf::Vector2f goalPos)
 			{
 				if (chessX->getCharacters() == Characters::King)
 				{
+					
 					kingPos = chessX->getPosition();
 				}
 			}
