@@ -55,9 +55,9 @@ void GameState::hint()
 		return;
 	if (hintHasShowed)
 		return;
+	//紅方剛移動完
 	if (currentStatus == Status::WaitBlackPressed)
 	{
-
 		bool end = true;
 		for (auto const& chess : playerBlack.getChessList())
 		{
@@ -100,13 +100,20 @@ void GameState::hint()
 			//有路可走
 			if (chess->getActive() && chess->findPath(board).size() != 0)
 			{
+				std::cout << chess->getId() << "<-\n";
 				std::vector <sf::Vector2f> validPath = chess->findPath(board);
 				for (auto const& path : validPath)
 				{
 					if (validMove(*chess, path))
 					{
+						std::cout << "O\n";
 						end = false;
 						break;
+					}
+					else
+					{
+						std::cout << chess->getBoardPosition().x << " " << chess->getBoardPosition().y << " =>" << path.x << " " << path.y;
+						std::cout << "X\n";
 					}
 				}
 				if (!end)
@@ -115,7 +122,7 @@ void GameState::hint()
 		}
 		//欠行
 
-		
+
 		if (end)
 		{
 			requestStackPush(States::ID::RedIsStalemate);
@@ -133,7 +140,6 @@ int GameState::checkmate()
 	//黑方剛移動完
 	if (currentStatus == Status::WaitRedPressed)
 	{
-		board.printChessPos();
 		for (auto& tmpChess : playerBlack.getChessList())
 		{
 			if (tmpChess->getActive())
@@ -155,7 +161,6 @@ int GameState::checkmate()
 	//紅方剛移動完
 	else if (currentStatus == Status::WaitBlackPressed)
 	{
-		board.printChessPos();
 		for (auto& tmpChess : playerRed.getChessList())
 		{
 			if (tmpChess->getActive())
@@ -183,36 +188,54 @@ bool GameState::validMove(Chess& _selectedChess, sf::Vector2f goalPos)
 	bool valid = true;
 	sf::Vector2f originalPos = _selectedChess.getBoardPosition();
 	sf::Vector2f kingPos;
-
-	tmpBoard.setBoard(&_selectedChess, goalPos);
-
-	_selectedChess.setBoardPosition(goalPos);
-	tmpBoard.update(playerBlack.getChessList(), playerRed.getChessList());
-	for (auto const& chessY : tmpBoard.getBoard())
+	//先移動
+	int indexOfAliveChess = -1;
+	if (tmpBoard.getBoard()[goalPos.y][goalPos.x]!=nullptr && tmpBoard.getBoard()[goalPos.y][goalPos.x]->getActive())
 	{
-		for (auto const& chessX : chessY)
+		for (int index=0;index<16;index++)
 		{
-			if (chessX != nullptr && chessX->getTeam() == _selectedChess.getTeam())
+			if (goalPos == playerBlack.getChessList()[index]->getBoardPosition()&& 
+				playerBlack.getChessList()[index]->getActive())
 			{
-
-				if (chessX->getCharacters() == Characters::King)
-				{
-					kingPos = chessX->getBoardPosition();
-				}
+				indexOfAliveChess = index;
+				playerBlack.getChessList()[index]->setActive(false);
+				break;
+			}
+			if (goalPos == playerRed.getChessList()[index]->getBoardPosition() &&
+				playerRed.getChessList()[index]->getActive())
+			{
+				indexOfAliveChess = index;
+				playerRed.getChessList()[index]->setActive(false);
+				break;
 			}
 		}
 	}
+	_selectedChess.setBoardPosition(goalPos);
+	
+	tmpBoard.update(playerBlack.getChessList(), playerRed.getChessList());
+
+	//若被選擇的棋子是黑色的
 	if (_selectedChess.getTeam() == Team::Black)
 	{
+		//先找出黑色將軍位置
+		kingPos = playerBlack.getChessList()[0]->getBoardPosition();
+		//遍歷紅色棋子的下一步
 		for (auto const& tmpChess : playerRed.getChessList())
 		{
 			if (tmpChess->getActive())
 			{
 				std::vector <sf::Vector2f> tmpPath = tmpChess->findPath(tmpBoard);
+				
 				for (auto const& path : tmpPath)
 				{
+					//若任一紅色棋子的下一步為黑色將軍位置
+					//非法的路徑
 					if (path == kingPos)
 					{
+						if (indexOfAliveChess != -1)
+						{
+							playerRed.getChessList()[indexOfAliveChess]->setActive(true);
+						}
 						_selectedChess.setBoardPosition(originalPos);
 						return false;
 					}
@@ -220,10 +243,17 @@ bool GameState::validMove(Chess& _selectedChess, sf::Vector2f goalPos)
 				}
 			}
 		}
-
+		if (indexOfAliveChess != -1)
+		{
+			playerRed.getChessList()[indexOfAliveChess]->setActive(true);
+		}
 	}
+	//若被選擇的棋子是紅色的
 	else if (_selectedChess.getTeam() == Team::Red)
 	{
+		//先找出紅色將軍位置
+		kingPos = playerRed.getChessList()[0]->getBoardPosition();
+		//遍歷黑色棋子的下一步
 		for (auto const& tmpChess : playerBlack.getChessList())
 		{
 			if (tmpChess->getActive())
@@ -231,14 +261,24 @@ bool GameState::validMove(Chess& _selectedChess, sf::Vector2f goalPos)
 				std::vector <sf::Vector2f> tmpPath = tmpChess->findPath(tmpBoard);
 				for (auto const& path : tmpPath)
 				{
+					//若任一黑色棋子的下一步為紅色將軍位置
+					//非法的路徑
 					if (path == kingPos)
 					{
+						if (indexOfAliveChess != -1)
+						{
+							playerBlack.getChessList()[indexOfAliveChess]->setActive(true);
+						}
 						_selectedChess.setBoardPosition(originalPos);
 						return false;
 					}
 
 				}
 			}
+		}
+		if (indexOfAliveChess != -1)
+		{
+			playerBlack.getChessList()[indexOfAliveChess]->setActive(true);
 		}
 	}
 	_selectedChess.setBoardPosition(originalPos);
@@ -658,9 +698,13 @@ void GameState::draw()
 		window->draw(*tmpChess);
 	}
 	if (selectedChess != nullptr && selectedChess->validSpot.size()) {
-		for (const auto& validPathChess : selectedChess->validSpot) {
-			if(validPathChess!=nullptr)
+		for (const auto& validPathChess : selectedChess->validSpot)
+		{
+			if (validPathChess != nullptr)
+			{
 				window->draw(*validPathChess);
+			}
+
 		}
 	}
 }
