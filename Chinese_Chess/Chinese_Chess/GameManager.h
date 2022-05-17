@@ -19,7 +19,7 @@ private:
 	TextureHolder textureHolder;
 	bool pause;
 public:
-	GameManager();	
+	GameManager();
 	~GameManager();
 	void run();
 
@@ -30,4 +30,3 @@ private:
 	void update(sf::Time dt);
 	void render();
 };
-

@@ -6,7 +6,6 @@ void Chess::draw(sf::RenderTarget& target, sf::RenderStates states) const
 		target.draw(sprite, states);
 	}
 }
-
 Chess::Chess(const Team& _team, int _id)
 	: chessCharacter()
 {
@@ -18,7 +17,6 @@ Chess::Chess(const Team& _team, int _id)
 	if (id == -1)
 		sprite.setColor(sf::Color(230, 0, 0, 170));
 }
-
 void Chess::update(const sf::RenderWindow& win)
 {
 	if (active) {
@@ -32,7 +30,6 @@ void Chess::update(const sf::RenderWindow& win)
 		}
 	}
 }
-
 void Chess::handleEvent(sf::RenderWindow& win)
 {
 	if (active) {

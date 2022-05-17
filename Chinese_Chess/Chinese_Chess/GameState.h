@@ -38,6 +38,7 @@ public:
     SelectedChess* selectedChess;
     bool isPressed;
     bool hintHasShowed;
+
 private:
     virtual void draw() override;
     virtual bool update(sf::Time dt) override;
