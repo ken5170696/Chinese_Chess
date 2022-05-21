@@ -96,7 +96,7 @@ void MultiplayerGameState::handleIncomingPackets()
 				}
 				break;
 			}
-			case static_cast<sf::Int32>(Server::PacketType::InitialRemotePlayer) :
+			case static_cast<sf::Int32>(Server::PacketType::InitialRemotePlayer):
 			{
 				std::cout << "Client Log: Get InitialRemotePlayer\n";
 				sf::Int32 playerTeam;
@@ -106,6 +106,13 @@ void MultiplayerGameState::handleIncomingPackets()
 				for (const auto& tmpChess : RemotePlayer.getChessList()) {
 					tmpChess->setSpritePosition(localBoard.BoardToWindowPosition(tmpChess->getBoardPosition()));
 				}
+				break;
+			}
+			case static_cast<sf::Int32>(Server::PacketType::RemotePlayerQuit):
+			{
+				std::cout << "Client Log: RemotePlayerQuit!\n";
+
+				RemotePlayer = Player();
 				break;
 			}
 			default:

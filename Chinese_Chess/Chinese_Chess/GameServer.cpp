@@ -110,7 +110,7 @@ void GameServer::handleIncomingConnections()
 	// someone try to connect when serverListener.accept() == sf::TcpListener::Done
 	if (serverListener.accept(peerList[connectedPlayersNumber]->socket) == sf::TcpListener::Done)
 	{
-		std::cout << peerList[connectedPlayersNumber]->socket.getRemoteAddress() << " : connected!\n";
+		std::cout << "Server Log: " << peerList[connectedPlayersNumber]->socket.getRemoteAddress() << " : connected!\n";
 		sf::Packet packet;
 		/* Sending information to client*/
 		packet << static_cast<sf::Int32>(Server::PacketType::InitialState);
@@ -158,7 +158,8 @@ void GameServer::handlingDisconnections()
 	{
 		if (connectedPlayersNumber &&(*peerItr)->timedOut)
 		{
-			std::cout << (*peerItr)->socket.getRemoteAddress() << " : Dissconnected\n";
+			std::cout << "Server Log: " << (*peerItr)->socket.getRemoteAddress() << " : Dissconnected\n";
+
 			connectedPlayersNumber--;
 			peerItr = peerList.erase(peerItr);
 
@@ -167,6 +168,18 @@ void GameServer::handlingDisconnections()
 			{
 				peerList.push_back(PeerPtr(new RemotePeer()));
 				setListening(true);
+			}
+
+			for (std::size_t i = 0; i < connectedPlayersNumber; ++i)
+			{
+				if (peerList[i]->ready)
+				{
+					sf::Packet packet;
+					/* Sending information to client*/
+					packet << static_cast<sf::Int32>(Server::PacketType::RemotePlayerQuit);
+
+					peerList[i]->socket.send(packet);
+				}
 			}
 
 			broadcastMessage("An ally has disconnected.");
