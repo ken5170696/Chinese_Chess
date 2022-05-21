@@ -31,8 +31,8 @@ private:
 	int maxConnectedPlayers;
 	sf::Clock serverClock;
 	sf::Time clientTimeoutTime;
-
-	bool serverTeamArr[2];
+	Board board;
+	bool teamArr[2]; // 0: black, 1: Red
 
 	void executionThread();
 	void setListening(bool enable);

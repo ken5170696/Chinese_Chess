@@ -3,6 +3,7 @@
 // This is the Server Thread!
 void GameServer::executionThread()
 {
+	std::cout << "Server Log: Server Thread Started!\n";
 	// initialize
 	setListening(true);
 
@@ -96,6 +97,8 @@ void GameServer::handleIncomingPackets()
 
 void GameServer::handleIncomingPacket(sf::Packet& packet, RemotePeer& receivingPeer, bool& detectedTimeout)
 {
+	sf::Int32 packetType;
+	packet >> packetType;
 }
 
 void GameServer::handleIncomingConnections()
@@ -109,10 +112,33 @@ void GameServer::handleIncomingConnections()
 	{
 		std::cout << peerList[connectedPlayersNumber]->socket.getRemoteAddress() << " : connected!\n";
 		sf::Packet packet;
-
 		/* Sending information to client*/
+		packet << static_cast<sf::Int32>(Server::PacketType::InitialState);
+		// send Team
+		if (connectedPlayersNumber == 0) {
+			Player tmpPlayer(Team::Black);
+			peerList[connectedPlayersNumber]->player = tmpPlayer;
+			packet << static_cast<sf::Int32>(Team::Black);
+			peerList[connectedPlayersNumber]->socket.send(packet);
 
-		peerList[connectedPlayersNumber]->socket.send(packet);
+		}else {
+			Player tmpPlayer(Team::Red);
+			peerList[connectedPlayersNumber]->player = tmpPlayer;
+			packet << static_cast<sf::Int32>(Team::Red);
+			peerList[connectedPlayersNumber]->socket.send(packet);
+			packet.clear();
+
+			packet << static_cast<sf::Int32>(Server::PacketType::InitialRemotePlayer);
+			packet << static_cast<sf::Int32>(Team::Black);
+			peerList[connectedPlayersNumber]->socket.send(packet);
+
+			sf::Packet oldPlayerpacket;
+			oldPlayerpacket << static_cast<sf::Int32>(Server::PacketType::InitialRemotePlayer);
+			oldPlayerpacket << static_cast<sf::Int32>(Team::Red);
+			peerList[0]->socket.send(oldPlayerpacket);
+
+		}
+
 		peerList[connectedPlayersNumber]->ready = true;
 		peerList[connectedPlayersNumber]->lastPacketTime = now(); // prevent initial timeouts
 		connectedPlayersNumber++;
@@ -155,6 +181,13 @@ void GameServer::handlingDisconnections()
 
 void GameServer::updateLogic()
 {
+	Player playerBlack, playerRed;
+	if (connectedPlayersNumber == 1)
+		playerBlack = peerList[0]->player;
+	if (connectedPlayersNumber == 1)
+		playerRed = peerList[1]->player;
+
+	board.update(playerBlack.getChessList(), playerRed.getChessList());
 }
 
 void GameServer::tick()
@@ -168,7 +201,7 @@ void GameServer::broadcastMessage(const std::string& message)
 		if (peerList[i]->ready)
 		{
 			sf::Packet packet;
-			packet << static_cast<sf::Int32>(Server::BroadcastMessage);
+			packet << static_cast<sf::Int32>(Server::PacketType::BroadcastMessage);
 			packet << message;
 
 			peerList[i]->socket.send(packet);
@@ -184,8 +217,10 @@ sf::Time GameServer::now() const
 
 GameServer::GameServer()
 	:peerList(1),
+	board(),
 	serverThread(&GameServer::executionThread, this)
 {
+	std::cout << "Server Log: Server Started!\n";
 	serverListener.setBlocking(false);
 	serverPort = SERVER_POST;     
 	listeningState = false;
@@ -200,12 +235,13 @@ GameServer::GameServer()
 	ipFile.open(IPFILE, std::ios_base::out);
 	if (!ipFile)
 	{
-		std::cerr << "Can't open file!\n";
+		std::cerr << "Server Log: Can't open file!\n";
 	}
 	ipFile << sf::IpAddress::getLocalAddress().toString();
 	ipFile.close();
 
 	// Starting the server
+	std::cout << "Server Log: Initialize finished, now start server thread.\n";
 	serverThread.launch();
 }
 

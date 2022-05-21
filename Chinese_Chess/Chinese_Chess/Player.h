@@ -8,7 +8,7 @@ private:
 	Team team;
 	std::vector<Chess*> chessList;
 	std::vector<Chess*> validMoveChessList;
-
+	sf::String name;
 public:
 	Player();
 	Player(Team _team);
@@ -18,6 +18,8 @@ public:
 	void setInitChess(Team _team);
 	void setChessList(const std::vector<Chess*>& _chessList);
 	std::vector<Chess*> getChessList() const;
+	void setName(const sf::String& _name);
+	sf::String getName() const;
 	friend void setChessInitPos(std::vector<Chess*>& chessList, Player& player);
 	void handleRealtimeInput();
 	

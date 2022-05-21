@@ -2,7 +2,6 @@
 
 int main()
 {
-	GameServer gs;
 	try
 	{
 		GameManager app;
