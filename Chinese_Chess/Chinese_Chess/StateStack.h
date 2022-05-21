@@ -50,6 +50,7 @@ public:
 	int getStackNum() const;
 	template <typename T>
 	void registerState(States::ID stateID);
+	bool inStack(States::ID stateID)  const;
 
 private:
 	std::unique_ptr<State> createState(States::ID stateID);

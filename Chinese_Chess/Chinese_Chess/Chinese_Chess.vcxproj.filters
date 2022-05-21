@@ -70,6 +70,9 @@
     <Filter Include="Header Files\Scene Header\GameState\PauseState">
       <UniqueIdentifier>{67b2cf41-732f-487d-8249-031291798b02}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Scene Header\GameState\EndState">
+      <UniqueIdentifier>{f1ce9b62-1a16-4f75-b690-fd3746638ee1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
@@ -139,6 +142,9 @@
       <Filter>Source Files\GUI</Filter>
     </ClCompile>
     <ClCompile Include="GameMessage.cpp">
+      <Filter>Source Files\Scene Header\GameState</Filter>
+    </ClCompile>
+    <ClCompile Include="EndState.cpp">
       <Filter>Source Files\Scene Header\GameState</Filter>
     </ClCompile>
   </ItemGroup>
@@ -211,6 +217,9 @@
     </ClInclude>
     <ClInclude Include="GameMessage.h">
       <Filter>Header Files\Scene Header\GameState\MessageBox</Filter>
+    </ClInclude>
+    <ClInclude Include="EndState.h">
+      <Filter>Header Files\Scene Header\GameState\EndState</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -9,6 +9,7 @@
 #include "MenuState.h"
 #include "PauseState.h"
 #include "GameMessage.h"
+#include "EndState.h"
 
 class GameManager
 {

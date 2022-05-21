@@ -146,6 +146,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="EndState.cpp" />
     <ClCompile Include="GameMessage.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="Board.cpp" />
@@ -178,6 +179,7 @@
     <None Include="Reference\Project2 Grading Sheet.docx" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="EndState.h" />
     <ClInclude Include="GameMessage.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="Button.h" />

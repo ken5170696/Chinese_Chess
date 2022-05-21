@@ -38,6 +38,7 @@ public:
     SelectedChess* selectedChess;
     bool isPressed;
     bool hintHasShowed;
+    bool isPause;
 
 private:
     virtual void draw() override;

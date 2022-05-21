@@ -71,6 +71,7 @@ void GameManager::registerStates()
 	stateStack.registerState<MultiplayerGameState>(	States::ID::MultiplayerMenu);
 	stateStack.registerState<GameState>(			States::ID::Game);
 	stateStack.registerState<PauseState>(			States::ID::Pause);
+	stateStack.registerState<EndState>(			States::ID::End);
 	stateStack.registerState<RedIsCheckMate>(		States::ID::RedIsCheckMate);
 	stateStack.registerState<BlackIsCheckMate>(		States::ID::BlackIsCheckMate);
 	stateStack.registerState<BlackIsStalemate>(		States::ID::BlackIsStalemate);
@@ -90,7 +91,6 @@ void GameManager::processEvent()
 
 		if (event.type == sf::Event::Closed)
 			window.close();
-
 		if (event.type == sf::Event::GainedFocus)
 			pause = false;
 		if (event.type == sf::Event::LostFocus)
@@ -108,7 +108,8 @@ void GameManager::render()
 {
 	window.clear(sf::Color::White);
 
-	stateStack.draw();
+	if (pause == false)
+		stateStack.draw();
 
 	window.display();
 }
