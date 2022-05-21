@@ -1,5 +1,6 @@
 #pragma once
 #include <fstream>
+#include "GameServer.h"
 #include "NetworkProtocol.h"
 #include "Button.h"
 #include "TextBox.h"
@@ -21,7 +22,7 @@ private:
 	sf::Text text;
 	sf::Text titleText;
 	sf::RectangleShape backgroundRect;
-
+	std::unique_ptr<GameServer> gs;
 public:
 	MutiplayerMenu(StateStack& _stack, StateContext _context);
 	virtual void draw() override;

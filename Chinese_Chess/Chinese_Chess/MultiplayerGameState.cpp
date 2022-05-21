@@ -2,52 +2,116 @@
 
 
 MultiplayerGameState::MultiplayerGameState(StateStack& _stack, StateContext _context)
-    : State(_stack, _context)
-    //, localBoard()
+	: State(_stack, _context)
+	//, localBoard()
 {
-    window = _context.window;
+	std::cout << "Client Log: Starting\n";
+	window = _context.window;
+
 	std::fstream ipFile;
 	ipFile.open(IPFILE, std::ios_base::in);
 	if (!ipFile)
 	{
-		std::cerr << "Can't open file!\n";
+		std::cerr << "Client Log: Can't open file!\n";
 	}
 	ipFile >> serverIp;
+	std::cout << "Client Log: serverIp: " << serverIp << "\n";
 	ipFile.close();
+
 	clientSocket.setBlocking(false);
-	clientSocket.connect(serverIp, SERVER_POST);
-    isInit = false;
-    isReady = false;
+	isInit = false;
+	isReady = false;
 	localStatus = MutiplayerStatus::connecting;
 	isConnected = false;
 	background.setFillColor(sf::Color::White);
 	background.setSize(sf::Vector2f(window->getSize()));
+	sf::Vector2f tmpPos(window->getSize().x / 20, (window->getSize().y - localBoard.getBoardSize().y) / 2);
+	this->localBoard.setSpritePosition(tmpPos);
 }
 
 void MultiplayerGameState::draw()
 {
 	window->draw(background);
+	window->draw(localBoard);
+	for (const auto& tmpChess : LocalPlayer.getChessList()) {
+		window->draw(*tmpChess);
+	}
+	for (const auto& tmpChess : RemotePlayer.getChessList()) {
+		window->draw(*tmpChess);
+	}
+	if (selectedChess != nullptr && selectedChess->validSpot.size()) {
+		for (const auto& validPathChess : selectedChess->validSpot)
+		{
+			if (validPathChess != nullptr)
+			{
+				window->draw(*validPathChess);
+			}
+
+		}
+	}
 }
 
 bool MultiplayerGameState::update(sf::Time dt)
 {
 	if (isConnected == false) {
-		if (clientSocket.connect(serverIp, SERVER_POST) == sf::TcpSocket::Done) {
+		std::fstream ipFile;
+		if (clientSocket.connect(serverIp, SERVER_POST) != sf::Socket::Status::Disconnected) {
+			std::cout << "Client Log:  --------------Connected\n";
 			isConnected = true;
 		}
 		return true;
 	}
 	handleIncomingPackets();
-    return true;
+	return true;
 }
 
 bool MultiplayerGameState::handleEvent(const sf::Event& event)
 {
-    return true;
+	return true;
 }
 
 void MultiplayerGameState::handleIncomingPackets()
 {
+	sf::Packet sendPacket;
+	sendPacket << unsigned int (Client::PacketType::None);
+	clientSocket.send(sendPacket);
+
+	sf::Packet packet;
+	if (clientSocket.receive(packet) == sf::Socket::Done)
+	{
+		std::cout << "Client Log: Get packet\n";
+		sf::Int32 packetType;
+		packet >> packetType;
+		switch (packetType)
+		{
+			case static_cast<sf::Int32>(Server::PacketType::InitialState) :
+			{
+				std::cout << "Client Log: Get InitialState\n";
+				sf::Int32 playerTeam;
+				packet >> playerTeam;
+				std::cout << "Client Log: PlayerTeam: " << playerTeam << "\n";
+				LocalPlayer = Player(Team(playerTeam));
+				for (const auto& tmpChess : LocalPlayer.getChessList()) {
+					tmpChess->setSpritePosition(localBoard.BoardToWindowPosition(tmpChess->getBoardPosition()));
+				}
+				break;
+			}
+			case static_cast<sf::Int32>(Server::PacketType::InitialRemotePlayer) :
+			{
+				std::cout << "Client Log: Get InitialRemotePlayer\n";
+				sf::Int32 playerTeam;
+				packet >> playerTeam;
+				std::cout << "Client Log: RemotePlayerTeam: " << playerTeam << "\n";
+				RemotePlayer = Player(Team(playerTeam));
+				for (const auto& tmpChess : RemotePlayer.getChessList()) {
+					tmpChess->setSpritePosition(localBoard.BoardToWindowPosition(tmpChess->getBoardPosition()));
+				}
+				break;
+			}
+			default:
+				break;
+		}
+	}
 }
 
 sf::Time MultiplayerGameState::now() const

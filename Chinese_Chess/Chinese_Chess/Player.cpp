@@ -47,6 +47,14 @@ std::vector<Chess*> Player::getChessList() const
 {
 	return chessList;
 }
+void Player::setName(const sf::String& _name)
+{
+	name = _name;
+}
+sf::String Player::getName() const
+{
+	return name;
+}
 void Player::handleRealtimeInput()
 {
 }

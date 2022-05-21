@@ -9,7 +9,7 @@ namespace Server
 {
 	// Packets originated in the server
 	// format: [Int32:packetType]
-	enum PacketType
+	enum class PacketType
 	{
 		/*
 			This takes a std::stringand is used to send a message
@@ -17,24 +17,28 @@ namespace Server
 		*/
 		BroadcastMessage,	// format: [Int32:packetType] [string:message]
 		InitialState,
-		PlayerEvent,
-		PlayerRealtimeChange,
-		PlayerConnect,
+		InitialRemotePlayer,
 		PlayerDisconnect,
-		UpdateClientState,
+		RemotePlayerDisconnect,
 	};
 }
+
+
+struct ServerCommand
+{
+	Server::PacketType packetType;
+
+};
 
 namespace Client
 {
 	// Packets originated in the client
-	enum PacketType
+	enum class PacketType
 	{
 		PlayerEvent,
 		PlayerRealtimeChange,
-		RequestCoopPartner,
-		PositionUpdate,
 		GameEvent,
-		Quit
+		Quit,
+		None
 	};
 }

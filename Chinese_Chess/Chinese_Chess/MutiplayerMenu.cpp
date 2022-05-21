@@ -70,32 +70,35 @@ void MutiplayerMenu::draw()
 
 bool MutiplayerMenu::update(sf::Time dt)
 {
-
-	for (auto& button : mOptions)
-		button.update();
+	if (!inStack(States::ID::MultiplayerGame)) {
+		for (auto& button : mOptions)
+			button.update();
+	}
 
 	return true;
 }
 
 bool MutiplayerMenu::handleEvent(const sf::Event& event)
 {
-	for (auto& button : mOptions) {
-		button.handleEvent(*window);
-		if (button.isPressed()) {
-			if (button.getId() == OptionNames::Host) {
-				
-				requestStackPush(States::ID::MultiplayerGame);
-			}
-			if (button.getId() == OptionNames::Client) {
-				requestStackPush(States::ID::ServerEnterIpMenu);
-			}
-			else if (button.getId() == OptionNames::Exit) {
-				requestStateClear();
-				requestStackPush(States::ID::Menu);
+	if (!inStack(States::ID::MultiplayerGame) && !inStack(States::ID::ServerEnterIpMenu)) {
+		for (auto& button : mOptions) {
+			button.handleEvent(*window);
+			if (button.isPressed()) {
+				if (button.getId() == OptionNames::Host) {
+					gs = std::make_unique<GameServer>();
+
+					requestStackPush(States::ID::MultiplayerGame);
+				}
+				if (button.getId() == OptionNames::Client) {
+					requestStackPush(States::ID::ServerEnterIpMenu);
+				}
+				else if (button.getId() == OptionNames::Exit) {
+					requestStateClear();
+					requestStackPush(States::ID::Menu);
+				}
 			}
 		}
 	}
-
 	return true;
 }
 
@@ -122,7 +125,7 @@ ServerEnterIpMenu::ServerEnterIpMenu(StateStack& _stack, StateContext _context)
 
 	sf::Text playText;
 	playText.setFont(_context.fontHolder->get(Fonts::ID::BiauKai));
-	playText.setString(L"建立房間");
+	playText.setString(L"進入房間");
 	playText.setCharacterSize(36);
 	playText.setFillColor(sf::Color::Black);
 
@@ -211,7 +214,7 @@ bool ServerEnterIpMenu::handleEvent(const sf::Event& event)
 
 				std::remove(IPFILE);
 
-				requestStackPop();
+				requestStateClear();
 				requestStackPush(States::ID::Menu);
 			}
 		}

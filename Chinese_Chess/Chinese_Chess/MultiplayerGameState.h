@@ -4,6 +4,8 @@
 #include "NetworkProtocol.h"
 #include "GameHeader.h"
 #include "Board.h"
+#include "Chess.h"
+#include "Player.h"
 #include "State.h"
 class MultiplayerGameState
 	: public State
@@ -20,10 +22,12 @@ class MultiplayerGameState
 		End,
 	};
 private:
+    typedef struct SelectedChess {
+        Chess* selectChess;
+        std::vector<Chess*> validSpot;
+        ~SelectedChess();
+    };
 	sf::RenderWindow* window;
-	/*Board localBoard;
-	Player LocalPlayer;
-	Player RemotePlayer;*/
 	bool isInit;
 	bool isReady;
 	bool isConnected;
@@ -33,6 +37,11 @@ private:
 	MutiplayerStatus localStatus;
 
 	sf::RectangleShape background;
+
+	Board localBoard;
+	Player LocalPlayer;
+	Player RemotePlayer;
+	SelectedChess* selectedChess;
 
 private:
 	class ConnectingState

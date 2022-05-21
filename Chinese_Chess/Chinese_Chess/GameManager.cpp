@@ -94,7 +94,7 @@ void GameManager::processEvent()
 		if (event.type == sf::Event::GainedFocus)
 			pause = false;
 		if (event.type == sf::Event::LostFocus)
-			pause = true;
+			pause = false;
 	}
 }
 
