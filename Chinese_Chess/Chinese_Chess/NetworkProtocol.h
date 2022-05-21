@@ -20,6 +20,7 @@ namespace Server
 		InitialRemotePlayer,
 		PlayerDisconnect,
 		RemotePlayerDisconnect,
+		RemotePlayerQuit,
 	};
 }
 
