@@ -24,6 +24,7 @@ protected:
 	sf::Sprite sprite;
 	unsigned int buttonStatus;
 	bool active;
+
 public:
 	virtual void move(Chess* goalChess, const Board& board) = 0;
 	virtual std::vector<sf::Vector2f> findPath(const Board& board) = 0;
@@ -44,14 +45,10 @@ public:
 	void setTeam(const Team& _team) { team = _team; };
 
 	Characters getCharacters() const { return chessCharacter; };
-
 	sf::Sprite getSprite() const { return this->sprite; };
 
-
 	void setSpritePosition(const sf::Vector2f& _pos) { sprite.setPosition(_pos); };
-
 	int getId() { return id; };
-
 	bool isPressed() const { 
 		return (buttonStatus >> 1) & 1;
 	};

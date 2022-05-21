@@ -1,0 +1,333 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="GameManager" Collapsed="true">
+    <Position X="18.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAACAAAAAEAAIACIAAAAAAAAAIAAAAAEBUIAA=</HashCode>
+      <FileName>GameManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ResourceHolder&lt;Resource, Identifier&gt;" Collapsed="true">
+    <Position X="11.75" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAAAAAAAQAAAAAAAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>ResourceHolder.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StateContext" Collapsed="true">
+    <Position X="18.5" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAAAAAAAAACIAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>GameHeader.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TitleState" Collapsed="true">
+    <Position X="1.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAIEBAABAIAAAACAAAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>TitleState.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MenuState" Collapsed="true">
+    <Position X="6" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAAAABgABgIAAAAAAAAAAAAICAAAAAAEAAA=</HashCode>
+      <FileName>MenuState.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MenuView" Collapsed="true">
+    <Position X="22" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAEAAAAAAA=</HashCode>
+      <FileName>MenuView.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameState" Collapsed="true">
+    <Position X="12.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAYAAQAAAQCBAAAAIAAAAAoAACAAAIIAAACgAEIAA=</HashCode>
+      <FileName>GameState.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Player" Collapsed="true">
+    <Position X="23.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAACAEAAAgAAAAAAAAAAAQAAAQAAAAAQAGAAA=</HashCode>
+      <FileName>Player.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Board" Collapsed="true">
+    <Position X="18.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACBAAgAAAAAAAAAAgIDAEAAABAAAAAAAAAAACAUAAA=</HashCode>
+      <FileName>Board.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ChessCommand" Collapsed="true">
+    <Position X="5" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAAAAAAAAEAAAAgAAAAAAAACAAAAAAAAA=</HashCode>
+      <FileName>ChessCommand.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ChessFindPath" Collapsed="true">
+    <Position X="3.75" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAIAAEACAAAAAAgAAEAAAAAAAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>ChessCommand.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ChessMove" Collapsed="true">
+    <Position X="6" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAMAAAAEAAAAAAAAAAAEAAAAAEAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>ChessCommand.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ChessManager" Collapsed="true">
+    <Position X="22" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAAAAAABAAAAAAIgAAQAAAAACAAAAAAAAA=</HashCode>
+      <FileName>ChessManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Chess" Collapsed="true">
+    <Position X="8.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ggEAAAAAAQAAADCAABICABAFkJAQggAAAAAAKBAECgA=</HashCode>
+      <FileName>Chess.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="King" Collapsed="true">
+    <Position X="10.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAACAAAAAAAAAgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Chess.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Advisors" Collapsed="true">
+    <Position X="12.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAACAEAAAAAAAgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Chess.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Minister" Collapsed="true">
+    <Position X="15" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAgAAACAAAAAAAAAgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Chess.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Chariots" Collapsed="true">
+    <Position X="1.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAACAAAAAAAAAiAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Chess.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Knights" Collapsed="true">
+    <Position X="3.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAACAAAAAAAAAgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Chess.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cannons" Collapsed="true">
+    <Position X="6" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAACAAAAAAAAAgAAAAAQAAAAAAAAAAAA=</HashCode>
+      <FileName>Chess.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Soldiers" Collapsed="true">
+    <Position X="8.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAACAAAAAAAAAgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Chess.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Factory" Collapsed="true">
+    <Position X="23.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Chess.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BlackIsCheckMate" Collapsed="true">
+    <Position X="19.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAA=</HashCode>
+      <FileName>GameMessage.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BlackIsStalemate" Collapsed="true">
+    <Position X="21.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAA=</HashCode>
+      <FileName>GameMessage.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RedIsCheckMate" Collapsed="true">
+    <Position X="15" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>GameMessage.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RedIsStalemate" Collapsed="true">
+    <Position X="17.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameMessage.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PauseState" Collapsed="true">
+    <Position X="10.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABCAAAAAAAAAABgABAIAAAAAAAAAAAAIAAAAAAAEAAA=</HashCode>
+      <FileName>PauseState.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameServer" Collapsed="true">
+    <Position X="20.25" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gABAgAAgQAACAGIAAACBIAAQERgACAEAAAAAAAAQABA=</HashCode>
+      <FileName>GameServer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MultiplayerGameState" Collapsed="true">
+    <Position X="24" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAgAAAAABCAAEIAYBAQAAAIAAAoAAAAAAAEIAA=</HashCode>
+      <FileName>MultiplayerGameState.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MutiplayerMenu" Collapsed="true">
+    <Position X="3.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAACABgABAIAAAAAAAAAAAAIAAAAAAAEAAA=</HashCode>
+      <FileName>MutiplayerMenu.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ServerEnterIpMenu" Collapsed="true">
+    <Position X="8.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAAAABgABAoAAAAAAAAAAAAIAAAAAAgEAAA=</HashCode>
+      <FileName>MutiplayerMenu.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="State" Collapsed="true">
+    <Position X="12.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAABBAAAAIAAAIAAAAAAICAAAAABAAkABA=</HashCode>
+      <FileName>State.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StateStack" Collapsed="true">
+    <Position X="20.25" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAQABABhAAQAKABIIAAgAAAAAAAAAAIAAEQAA=</HashCode>
+      <FileName>StateStack.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Button" Collapsed="true">
+    <Position X="20.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AkAAAAAAAAAAABAAAAIAIBAEAAAAgAAAAAAgCAAEAgA=</HashCode>
+      <FileName>Button.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MessageBox" Collapsed="true">
+    <Position X="18.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAIAAAABBgABAIAAAAAAAAAAAAIAAAAAAAEAAA=</HashCode>
+      <FileName>MessageBox.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TextBox" Collapsed="true">
+    <Position X="22" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ggAAAAAFAAIAADIAAAIAIFAAIAAAACAAAAAAAEAEAgA=</HashCode>
+      <FileName>TextBox.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="RemotePeer" Collapsed="true">
+    <Position X="18.5" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACQAAAAAAAAAAAACAAAAAIAABAAEAAAAAAAA=</HashCode>
+      <FileName>GameServer.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Typedef Name="FontHolder" Collapsed="true">
+    <Position X="13" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameHeader.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="TextureHolder" Collapsed="true">
+    <Position X="10.5" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameHeader.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="PeerPtr" Collapsed="true">
+    <Position X="18.5" Y="11.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameServer.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Enum Name="Characters" Collapsed="true">
+    <Position X="18.5" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAQggAAAAEAAAAAAACAAAAAQAAAAAAAAAAAA=</HashCode>
+      <FileName>GameHeader.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Team" Collapsed="true">
+    <Position X="22" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAEAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameHeader.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Textures::ID" Collapsed="true">
+    <Position X="20.25" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAFIAAAICAAAAACAAAAAEkAQQABAAAAgCCAAAA=</HashCode>
+      <FileName>GameHeader.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Fonts::ID" Collapsed="true">
+    <Position X="22" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameHeader.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="States::ID" Collapsed="true">
+    <Position X="23.75" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAMgAAAAAAAAAEAACAAAAAACAAgIAAAQAgQAAAkCAAA=</HashCode>
+      <FileName>GameHeader.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Server::PacketType" Collapsed="true">
+    <Position X="18.5" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQAEAAACAIABAAAQAAAAAAAAAAAAAABAA=</HashCode>
+      <FileName>NetworkProtocol.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Client::PacketType" Collapsed="true">
+    <Position X="20.25" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAACAAABAQCAAAAAAAAAAAACAAAQA=</HashCode>
+      <FileName>NetworkProtocol.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

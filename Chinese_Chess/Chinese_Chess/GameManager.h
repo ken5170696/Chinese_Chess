@@ -9,6 +9,7 @@
 #include "MenuState.h"
 #include "PauseState.h"
 #include "GameMessage.h"
+#include "EndState.h"
 
 class GameManager
 {
@@ -19,7 +20,7 @@ private:
 	TextureHolder textureHolder;
 	bool pause;
 public:
-	GameManager();	
+	GameManager();
 	~GameManager();
 	void run();
 
@@ -30,4 +31,3 @@ private:
 	void update(sf::Time dt);
 	void render();
 };
-

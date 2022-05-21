@@ -115,6 +115,7 @@ public:
 				, FontHolder* _fontHolder
 				, TextureHolder* _textureHolder)
 	{
+		
 		fontHolder = _fontHolder;
 		window = _window;
 		textureHolder = _textureHolder;
@@ -122,4 +123,5 @@ public:
 	sf::RenderWindow* window;
 	FontHolder* fontHolder;
 	TextureHolder* textureHolder;
+	States::ID stateID;
 };

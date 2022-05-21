@@ -16,6 +16,7 @@ void StateStack::applyPendingChanges()
 		{
 		case Push:
 			statesStack.push_back(createState(change.stateID));
+			statesStack.back()->setStateID(change.stateID);
 			break;
 		case Pop:
 			statesStack.pop_back();
@@ -84,4 +85,13 @@ bool StateStack::isEmpty() const
 int StateStack::getStackNum() const
 {
 	return statesStack.size();
+}
+
+bool StateStack::inStack(States::ID stateID) const
+{
+	for (const auto& stackElement : statesStack)
+		if (stateID == stackElement->getStateID())
+			return true;
+
+	return false;
 }

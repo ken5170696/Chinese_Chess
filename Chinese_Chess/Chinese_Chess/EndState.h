@@ -1,25 +1,27 @@
 #pragma once
+
 #include "Button.h"
 #include "State.h"
-class MessageBox :
-    public State
+
+class EndState : public State
 {
-protected:
+private:
     sf::RenderWindow* window;
     enum OptionNames
     {
-        OK,
+        Play,
+        Exit,
     };
     std::vector<Button> mOptions;
+    sf::Text text;
     sf::Text titleText;
     sf::RectangleShape backgroundRect;
 
 
 public:
-    MessageBox(StateStack& _stack, StateContext _context);
+    EndState(StateStack& _stack, StateContext _context);
 
-protected:
-    void setTitle(const sf::String& titleString);
+private:
     virtual void draw() override;
     virtual bool update(sf::Time dt) override;
     virtual bool handleEvent(const sf::Event& event) override;

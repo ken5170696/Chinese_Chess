@@ -12,6 +12,7 @@ class BlackIsStalemate : public MessageBox
 {
 public:
     BlackIsStalemate(StateStack& _stack, StateContext _context);
+    virtual bool handleEvent(const sf::Event& event) override;
 };
 class RedIsCheckMate : public MessageBox
 {
@@ -22,4 +23,5 @@ class RedIsStalemate : public MessageBox
 {
 public:
     RedIsStalemate(StateStack& _stack, StateContext _context);
+    virtual bool handleEvent(const sf::Event& event) override;
 };
