@@ -8,6 +8,14 @@ Player::Player()
 Player::Player(Team _team)
 {
 	setInitChess(_team);
+	if (_team == Team::Black)
+	{
+		name = L"黑色玩家";
+	}
+	else if (_team == Team::Red)
+	{
+		name = L"紅色玩家";
+	}
 }
 Player::Player(const Player& player)
 {
@@ -47,12 +55,81 @@ std::vector<Chess*> Player::getChessList() const
 {
 	return chessList;
 }
-void Player::setName(const sf::String& _name)
+void Player::setName(sf::RenderWindow* window)
 {
-	name = _name;
+	this->name.clear();
+	
+	sf::Font font;
+	font.loadFromFile(FONT_FILE_PATH);
+
+	sf::Event event;
+
+	sf::Text nameText;
+	nameText.setPosition(WINDOW_RESOLUTION_WIDTH / 2, WINDOW_RESOLUTION_HEIGHT / 2);
+	nameText.setFillColor(sf::Color::Black);
+	nameText.setCharacterSize(40);
+	nameText.setFont(font);
+	
+	sf::Text titleText;
+	if (team == Team::Black)
+	{
+		titleText.setString(L"   為黑方取名\n輸入完請按Enter");
+		titleText.setFillColor(sf::Color::Black);
+	}
+	else if (team == Team::Red)
+	{
+		titleText.setString(L"   為紅方取名\n輸入完請按Enter");
+		titleText.setFillColor(sf::Color::Red);
+	}
+	titleText.setFont(font);
+	titleText.setStyle(sf::Text::Style::Bold);
+	titleText.setCharacterSize(72);
+	titleText.setOrigin(sf::Vector2f(titleText.getLocalBounds().width / 2
+		, titleText.getLocalBounds().height / 2));
+	titleText.setPosition(WINDOW_RESOLUTION_WIDTH / 2.f,
+		WINDOW_RESOLUTION_HEIGHT * 0.2f);
+	
+	bool out = false;
+
+	while (!out)
+	{
+		while (window->pollEvent(event))
+		{
+			if (event.type == sf::Event::TextEntered)
+			{
+				//Backspace
+				if (event.text.unicode == 8)
+				{
+					if (name.getSize())
+					{
+						name.erase(name.getSize() - 1);
+						nameText.setString(name);
+					}
+				}
+				//Enter
+				else if (event.text.unicode == 13)
+				{
+					out = true;
+				}
+				else if (event.text.unicode)
+				{
+					name += event.text.unicode;
+					nameText.setString(name);
+				}
+			}
+
+		}
+		window->clear(sf::Color::White);
+
+		nameText.setPosition(WINDOW_RESOLUTION_WIDTH / 2 - nameText.getString().getSize()*7.5, WINDOW_RESOLUTION_HEIGHT / 2);
+		window->draw(nameText);
+		window->draw(titleText);
+		window->display();
+	}
 }
 sf::String Player::getName() const
 {
+	std::cout << name.toAnsiString() << std::endl;
 	return name;
 }
 void Player::handleRealtimeInput()
@@ -86,7 +163,7 @@ void setChessInitPos(std::vector<Chess*>& chessList, Player& player) {
 
 	}
 	else if (player.team == Team::Black) {
-		
+
 		chessList[0]->setBoardPosition(sf::Vector2f(4, 9));
 
 		chessList[1]->setBoardPosition(sf::Vector2f(3, 9));

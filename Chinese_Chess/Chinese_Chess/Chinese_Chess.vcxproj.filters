@@ -147,6 +147,9 @@
     <ClCompile Include="EndState.cpp">
       <Filter>Source Files\Scene Header\GameState</Filter>
     </ClCompile>
+    <ClCompile Include="SystemInformation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameHeader.h">
@@ -220,6 +223,9 @@
     </ClInclude>
     <ClInclude Include="EndState.h">
       <Filter>Header Files\Scene Header\GameState\EndState</Filter>
+    </ClInclude>
+    <ClInclude Include="SystemInformation.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

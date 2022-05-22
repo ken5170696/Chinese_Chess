@@ -168,6 +168,7 @@
     <ClCompile Include="ResourceHolder.cpp" />
     <ClCompile Include="State.cpp" />
     <ClCompile Include="StateStack.cpp" />
+    <ClCompile Include="SystemInformation.cpp" />
     <ClCompile Include="TextBox.cpp" />
     <ClCompile Include="TitleState.cpp" />
   </ItemGroup>
@@ -198,6 +199,7 @@
     <ClInclude Include="ResourceHolder.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="StateStack.h" />
+    <ClInclude Include="SystemInformation.h" />
     <ClInclude Include="TextBox.h" />
     <ClInclude Include="TitleState.h" />
     <Text Include="Reference\Project2 Grading Sheet.txt" />

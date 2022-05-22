@@ -3,7 +3,7 @@
 #include "Player.h"
 #include "Board.h"
 #include "State.h"
-
+#include "SystemInformation.h"
 class GameState : public State
 {
 private:
@@ -36,6 +36,7 @@ public:
     Player playerRed;
     Board board;
     SelectedChess* selectedChess;
+    SystemInformation sysInfo;
     bool isPressed;
     bool hintHasShowed;
     bool isPause;

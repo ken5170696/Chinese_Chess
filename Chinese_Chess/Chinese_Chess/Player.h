@@ -18,7 +18,7 @@ public:
 	void setInitChess(Team _team);
 	void setChessList(const std::vector<Chess*>& _chessList);
 	std::vector<Chess*> getChessList() const;
-	void setName(const sf::String& _name);
+	void setName(sf::RenderWindow* window);
 	sf::String getName() const;
 	friend void setChessInitPos(std::vector<Chess*>& chessList, Player& player);
 	void handleRealtimeInput();
