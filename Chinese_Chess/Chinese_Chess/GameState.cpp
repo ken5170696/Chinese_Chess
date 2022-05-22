@@ -681,8 +681,15 @@ GameState::GameState(StateStack& _stack, StateContext _context)
 	, board()
 	, playerRed(Team::Red)
 	, playerBlack(Team::Black)
+	, sysInfo()
 {
+	
 	window = _context.window;
+	//player setName
+	playerRed.setName(window);
+	playerBlack.setName(window);
+	sysInfo.setName(playerRed.getName(), playerBlack.getName());
+
 	currentStatus = Status::intitialize;
 	sf::Vector2f tmpPos(window->getSize().x / 20, (window->getSize().y - board.getBoardSize().y) / 2);
 	this->board.setSpritePosition(tmpPos);
@@ -711,8 +718,24 @@ void GameState::draw()
 
 		}
 	}
+	sysInfo.draw(window);
+	/*sf::Text nameOfRed;
+	sf::Font font;
+	if (font.loadFromFile(FONT_FILE_PATH))
+	{
+		nameOfRed.setFont(font);
+		nameOfRed.setFillColor(sf::Color::Red);
+		nameOfRed.setCharacterSize(30);
+		nameOfRed.setPosition(WINDOW_RESOLUTION_WIDTH *0.55, WINDOW_RESOLUTION_HEIGHT *0.1);
+		nameOfRed.setString(playerRed.getName());
+		window->draw(nameOfRed);
+	}
+	else
+	{
+		std::cout<< "!\n";
+	}*/
+	
 }
-
 bool GameState::update(sf::Time dt)
 {
 	if (!isPause) {
@@ -734,6 +757,7 @@ bool GameState::update(sf::Time dt)
 		}
 		else if (currentStatus == Status::WaitBlackPressed) {
 			// update chess
+			sysInfo.setArrow(true);
 			for (const auto& tmpChess : playerRed.getChessList()) {
 				tmpChess->setSpritePosition(board.BoardToWindowPosition(tmpChess->getBoardPosition()));
 			}
@@ -789,6 +813,7 @@ bool GameState::update(sf::Time dt)
 			}
 		}
 		else if (currentStatus == Status::WaitRedPressed) {
+			sysInfo.setArrow(false);
 			// update chess
 			for (const auto& tmpChess : playerBlack.getChessList()) {
 				tmpChess->setSpritePosition(board.BoardToWindowPosition(tmpChess->getBoardPosition()));
