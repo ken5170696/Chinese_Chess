@@ -9,20 +9,25 @@ private:
 	std::vector<Chess*> chessList;
 	std::vector<Chess*> validMoveChessList;
 	sf::String name;
+	sf::Font font;
+	sf::Event event;
+	sf::Text nameText;
+	bool out;
 public:
 	Player();
 	Player(Team _team);
 	Player(const Player& player);
 
-	void update(const sf::RenderWindow& window);
+	void draw(sf::RenderWindow* window);
+	void update(sf::RenderWindow* window);
 	void setInitChess(Team _team);
 	void setChessList(const std::vector<Chess*>& _chessList);
 	std::vector<Chess*> getChessList() const;
 	void setName(sf::RenderWindow* window);
 	sf::String getName() const;
 	friend void setChessInitPos(std::vector<Chess*>& chessList, Player& player);
-	void handleRealtimeInput();
-
+	void handleRealtimeInput(sf::RenderWindow* window);
+	
 };
 
 //class ChessManager;

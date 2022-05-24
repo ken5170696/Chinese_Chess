@@ -719,22 +719,6 @@ void GameState::draw()
 		}
 	}
 	sysInfo.draw(window);
-	/*sf::Text nameOfRed;
-	sf::Font font;
-	if (font.loadFromFile(FONT_FILE_PATH))
-	{
-		nameOfRed.setFont(font);
-		nameOfRed.setFillColor(sf::Color::Red);
-		nameOfRed.setCharacterSize(30);
-		nameOfRed.setPosition(WINDOW_RESOLUTION_WIDTH *0.55, WINDOW_RESOLUTION_HEIGHT *0.1);
-		nameOfRed.setString(playerRed.getName());
-		window->draw(nameOfRed);
-	}
-	else
-	{
-		std::cout<< "!\n";
-	}*/
-	
 }
 bool GameState::update(sf::Time dt)
 {

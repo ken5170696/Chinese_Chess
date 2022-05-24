@@ -11,18 +11,18 @@ SystemInformation::SystemInformation()
 		nameOfRed.setFont(font);
 		nameOfRed.setFillColor(sf::Color::Red);
 		nameOfRed.setCharacterSize(fontSize);
-		nameOfRed.setPosition(WINDOW_RESOLUTION_WIDTH * 0.55, WINDOW_RESOLUTION_HEIGHT * 0.02);
+		nameOfRed.setPosition(WINDOW_RESOLUTION_WIDTH * 0.6, WINDOW_RESOLUTION_HEIGHT * 0.02);
 		
 
 		nameOfBlack.setFont(font);
 		nameOfBlack.setFillColor(sf::Color::Black);
 		nameOfBlack.setCharacterSize(fontSize);
-		nameOfBlack.setPosition(WINDOW_RESOLUTION_WIDTH * 0.55, WINDOW_RESOLUTION_HEIGHT * 0.52);
+		nameOfBlack.setPosition(WINDOW_RESOLUTION_WIDTH * 0.6, WINDOW_RESOLUTION_HEIGHT * 0.52);
 
 
 		arrow.setFont(font);
 		arrow.setCharacterSize(fontSize);
-		arrow.setString("<-");
+		arrow.setString("=>");
 	}
 }
 sf::Text SystemInformation::get()
@@ -34,12 +34,12 @@ void SystemInformation::setArrow(bool flag)
 	if (flag)
 	{
 		arrow.setFillColor(sf::Color::Black);
-		arrow.setPosition(WINDOW_RESOLUTION_WIDTH * 0.55 + nameOfBlack.getString().getSize() * fontSize, WINDOW_RESOLUTION_HEIGHT * 0.52);
+		arrow.setPosition(WINDOW_RESOLUTION_WIDTH * 0.6 - fontSize, WINDOW_RESOLUTION_HEIGHT * 0.52);
 	}
 	else
 	{
 		arrow.setFillColor(sf::Color::Red);
-		arrow.setPosition(WINDOW_RESOLUTION_WIDTH * 0.55 + nameOfRed.getString().getSize() * fontSize, WINDOW_RESOLUTION_HEIGHT * 0.02);
+		arrow.setPosition(WINDOW_RESOLUTION_WIDTH * 0.6 - fontSize, WINDOW_RESOLUTION_HEIGHT * 0.02);
 	}
 }
 void SystemInformation::draw(sf::RenderWindow* window)
