@@ -22,7 +22,7 @@ public:
 	sf::String getName() const;
 	friend void setChessInitPos(std::vector<Chess*>& chessList, Player& player);
 	void handleRealtimeInput();
-	
+
 };
 
 //class ChessManager;
